@@ -4,9 +4,26 @@
     "XYZ"
   ],
   "key": {
-    "X": {
-      "tag": "minecraft:axes"
-    },
+    "X": [
+      {
+        "item": "minecraft:wooden_axe"
+      },
+      {
+        "item": "minecraft:netherite_axe"
+      },
+      {
+        "item": "minecraft:golden_axe"
+      },
+      {
+        "item": "minecraft:iron_axe"
+      },
+      {
+        "item": "minecraft:stone_axe"
+      },
+      {
+        "item": "minecraft:diamond_axe"
+      }
+    ],
     "Y": {
       "item": "pm_equips:item_kcorp_ampoule"
     },

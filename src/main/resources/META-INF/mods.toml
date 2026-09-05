@@ -4,7 +4,7 @@ license = "${mod_license}"
 
 [[mods]]
 modId = "pm_equips"
-version = "5.0"
+version = "5.1"
 displayName = "ProjectMoon Equipment Mod"
 authors = "Rei"
 description = "Face the fear, Make the future."

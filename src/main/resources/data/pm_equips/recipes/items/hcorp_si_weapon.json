@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XYZ"
+  ],
+  "key": {
+    "X": {
+      "tag": "minecraft:swords"
+    },
+    "Y": {
+      "item": "minecraft:stick"
+    },
+    "Z": {
+      "item": "pm_equips:item_hcorp_bolus_si"
+    }
+  },
+  "result": {
+    "item": "pm_equips:hcorp_si_weapon"
+  }
+}

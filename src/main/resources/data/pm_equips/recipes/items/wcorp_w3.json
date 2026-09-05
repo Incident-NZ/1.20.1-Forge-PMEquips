@@ -10,9 +10,26 @@
     "Y": {
       "item": "pm_equips:item_wcorp_battery"
     },
-    "Z": {
-      "tag": "minecraft:axes"
-    }
+    "Z": [
+      {
+        "item": "minecraft:wooden_axe"
+      },
+      {
+        "item": "minecraft:netherite_axe"
+      },
+      {
+        "item": "minecraft:golden_axe"
+      },
+      {
+        "item": "minecraft:iron_axe"
+      },
+      {
+        "item": "minecraft:stone_axe"
+      },
+      {
+        "item": "minecraft:diamond_axe"
+      }
+    ]
   },
   "result": {
     "item": "pm_equips:wcorp_w3"

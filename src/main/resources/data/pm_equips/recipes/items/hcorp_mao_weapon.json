@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XYZ"
+  ],
+  "key": {
+    "X": {
+      "item": "pm_equips:item_hcorp_bolus_mao"
+    },
+    "Y": {
+      "item": "pm_equips:item_metal"
+    },
+    "Z": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "pm_equips:hcorp_mao_weapon"
+  }
+}
