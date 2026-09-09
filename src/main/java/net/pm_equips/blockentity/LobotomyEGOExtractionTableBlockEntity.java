@@ -2,6 +2,7 @@ package net.pm_equips.blockentity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
@@ -17,9 +18,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.pm_equips.BlockEntityInit;
-import net.pm_equips.BlockInit;
-import net.pm_equips.TagInit;
+import net.pm_equips.PMERegistryBlockEntity;
+import net.pm_equips.PMERegistryBlock;
+import net.pm_equips.PMERegistryTag;
 import net.pm_equips.menu.LobotomyEGOExtractionMenu;
 import org.jetbrains.annotations.Nullable;
 
@@ -35,7 +36,7 @@ public class LobotomyEGOExtractionTableBlockEntity extends BlockEntity implement
     private final NonNullList<ItemStack> items = NonNullList.withSize(CONTAINER_SIZE, ItemStack.EMPTY);
 
     public LobotomyEGOExtractionTableBlockEntity(BlockPos pos, BlockState state) {
-        super(BlockEntityInit.LOBOTOMY_EGO_EXTRACTION_TABLE.get(), pos, state);
+        super(PMERegistryBlockEntity.LOBOTOMY_EGO_EXTRACTION_TABLE.get(), pos, state);
     }
 
     @Override
@@ -71,7 +72,7 @@ public class LobotomyEGOExtractionTableBlockEntity extends BlockEntity implement
     }
 
     public boolean canPlaceInput(ItemStack stack) {
-        return stack.is(TagInit.Items.E_BOX);
+        return stack.is(PMERegistryTag.Items.E_BOX);
     }
 
     private static ItemStack getRandomResult(Level level, TagKey<Item> tagKey) {
@@ -100,7 +101,7 @@ public class LobotomyEGOExtractionTableBlockEntity extends BlockEntity implement
     private boolean canMoveToOutput(ItemStack generated) {
         ItemStack output = items.get(OUTPUT_SLOT);
         return output.isEmpty()
-                || (ItemStack.isSameItemSameTags(output, generated) && output.getCount() < output.getMaxStackSize());
+                || (ItemStack.isSameItemSameComponents(output, generated) && output.getCount() < output.getMaxStackSize());
     }
 
     private void moveToOutput(ItemStack generated) {
@@ -155,16 +156,16 @@ public class LobotomyEGOExtractionTableBlockEntity extends BlockEntity implement
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-        net.minecraft.world.ContainerHelper.saveAllItems(tag, items);
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.saveAdditional(tag, registries);
+        net.minecraft.world.ContainerHelper.saveAllItems(tag, items, registries);
     }
 
     @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
+    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.loadAdditional(tag, registries);
         items.clear();
-        net.minecraft.world.ContainerHelper.loadAllItems(tag, items);
+        net.minecraft.world.ContainerHelper.loadAllItems(tag, items, registries);
     }
 
     @Override
@@ -225,20 +226,20 @@ public class LobotomyEGOExtractionTableBlockEntity extends BlockEntity implement
 
     private record ExtractionRule(Item input, int cost, TagKey<Item> resultTag) {
         private static ExtractionRule forInput(ItemStack stack) {
-            if (stack.is(BlockInit.BlockItems.ZAYIN_PE_BOX.get())) {
-                return new ExtractionRule(BlockInit.BlockItems.ZAYIN_PE_BOX.get(), 15, TagInit.Items.EGO_T1_ZAYIN);
+            if (stack.is(PMERegistryBlock.BlockItems.ZAYIN_PE_BOX.get())) {
+                return new ExtractionRule(PMERegistryBlock.BlockItems.ZAYIN_PE_BOX.get(), 15, PMERegistryTag.Items.EGO_T1_ZAYIN);
             }
-            if (stack.is(BlockInit.BlockItems.TETH_PE_BOX.get())) {
-                return new ExtractionRule(BlockInit.BlockItems.TETH_PE_BOX.get(), 30, TagInit.Items.EGO_T2_TETH);
+            if (stack.is(PMERegistryBlock.BlockItems.TETH_PE_BOX.get())) {
+                return new ExtractionRule(PMERegistryBlock.BlockItems.TETH_PE_BOX.get(), 30, PMERegistryTag.Items.EGO_T2_TETH);
             }
-            if (stack.is(BlockInit.BlockItems.HE_PE_BOX.get())) {
-                return new ExtractionRule(BlockInit.BlockItems.HE_PE_BOX.get(), 45, TagInit.Items.EGO_T3_HE);
+            if (stack.is(PMERegistryBlock.BlockItems.HE_PE_BOX.get())) {
+                return new ExtractionRule(PMERegistryBlock.BlockItems.HE_PE_BOX.get(), 45, PMERegistryTag.Items.EGO_T3_HE);
             }
-            if (stack.is(BlockInit.BlockItems.WAW_PE_BOX.get())) {
-                return new ExtractionRule(BlockInit.BlockItems.WAW_PE_BOX.get(), 60, TagInit.Items.EGO_T4_WAW);
+            if (stack.is(PMERegistryBlock.BlockItems.WAW_PE_BOX.get())) {
+                return new ExtractionRule(PMERegistryBlock.BlockItems.WAW_PE_BOX.get(), 60, PMERegistryTag.Items.EGO_T4_WAW);
             }
-            if (stack.is(BlockInit.BlockItems.ALEPH_PE_BOX.get())) {
-                return new ExtractionRule(BlockInit.BlockItems.ALEPH_PE_BOX.get(), 120, TagInit.Items.EGO_T5_ALEPH);
+            if (stack.is(PMERegistryBlock.BlockItems.ALEPH_PE_BOX.get())) {
+                return new ExtractionRule(PMERegistryBlock.BlockItems.ALEPH_PE_BOX.get(), 120, PMERegistryTag.Items.EGO_T5_ALEPH);
             }
             return null;
         }

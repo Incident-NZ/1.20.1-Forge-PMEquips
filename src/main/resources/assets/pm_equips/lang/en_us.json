@@ -1,6 +1,4 @@
 {
-  "curios.identifier.core_page": "Core Pages",
-  "curios.modifiers.core_page": "When equipped as Core Page",
 
   "itemGroup.pm_lobotomy_ego": "PM Mod Lobotomy E.G.O",
   "itemGroup.pm_base": "PM Mod Material Items",
@@ -219,3 +217,4 @@
   "effect.pm_equips.effect_sin_rcorp": "R.Corp Singularity",
   "effect.pm_equips.effect_sin_wcorp": "W.Corp Singularity"
 }
+

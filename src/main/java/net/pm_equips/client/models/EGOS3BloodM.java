@@ -1,22 +1,22 @@
 package net.pm_equips.client.models;
 
 import net.minecraft.resources.ResourceLocation;
-import net.pm_equips.items.EGOP3Blood;
+import net.pm_equips.items.LCorpEGOL3Blood;
 import software.bernie.geckolib.model.GeoModel;
 
-public class EGOS3BloodM extends GeoModel<EGOP3Blood> {
+public class EGOS3BloodM extends GeoModel<LCorpEGOL3Blood> {
     @Override
-    public ResourceLocation getModelResource(EGOP3Blood animatable) {
-        return new ResourceLocation("pm_equips", "geo/ego_armor_type1.geo.json");
+    public ResourceLocation getModelResource(LCorpEGOL3Blood animatable) {
+        return ResourceLocation.fromNamespaceAndPath("pm_equips", "geo/ego_armor_type1.geo.json");
     }
 
     @Override
-    public ResourceLocation getTextureResource(EGOP3Blood animatable) {
-        return new ResourceLocation("pm_equips", "textures/armor/ego_s3_blood.png");
+    public ResourceLocation getTextureResource(LCorpEGOL3Blood animatable) {
+        return ResourceLocation.fromNamespaceAndPath("pm_equips", "textures/armor/ego_s3_blood.png");
     }
 
     @Override
-    public ResourceLocation getAnimationResource(EGOP3Blood animatable) {
-        return new ResourceLocation("pm_equips", "animations/ego_armor.animation.json");
+    public ResourceLocation getAnimationResource(LCorpEGOL3Blood animatable) {
+        return ResourceLocation.fromNamespaceAndPath("pm_equips", "animations/ego_armor.animation.json");
     }
 }

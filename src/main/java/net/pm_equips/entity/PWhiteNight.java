@@ -1,6 +1,8 @@
 package net.pm_equips.entity;
 
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerEntity;
+
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.world.entity.Entity;
@@ -10,8 +12,8 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.entity.IEntityAdditionalSpawnData;
-import net.minecraftforge.network.NetworkHooks;
+import net.neoforged.neoforge.entity.IEntityWithComplexSpawn;
+import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -20,7 +22,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class PWhiteNight extends Projectile implements IEntityAdditionalSpawnData {
+public class PWhiteNight extends Projectile implements IEntityWithComplexSpawn {
 
     private static final int LIFETIME = 40; // 40 ticks = 2 seconds
     private int ticksExisted = 0;
@@ -72,10 +74,10 @@ public class PWhiteNight extends Projectile implements IEntityAdditionalSpawnDat
         this.setNoGravity(true);
         this.noPhysics = true;
         this.setDeltaMovement(Vec3.ZERO);
-        
+
         if (!this.level().isClientSide) {
             ticksExisted++;
-            
+
             // Despawn after LIFETIME
             if (ticksExisted >= LIFETIME) {
                 this.discard();
@@ -84,7 +86,7 @@ public class PWhiteNight extends Projectile implements IEntityAdditionalSpawnDat
 
             // Detect collisions with entities in immediate area
             AABB hitbox = this.getBoundingBox().inflate(0.8);
-            List<LivingEntity> targets = this.level().getEntitiesOfClass(LivingEntity.class, hitbox, 
+            List<LivingEntity> targets = this.level().getEntitiesOfClass(LivingEntity.class, hitbox,
                 e -> e != this.getOwner() && !hitEntities.contains(e.getId()));
 
             for (LivingEntity target : targets) {
@@ -102,10 +104,10 @@ public class PWhiteNight extends Projectile implements IEntityAdditionalSpawnDat
     }
 
     @Override
-    protected void defineSynchedData() {
-        this.entityData.define(TEXTURE_ID, 0);
-        this.entityData.define(WEAPON_TYPE, 0);
-        this.entityData.define(RENDER_SCALE, DEFAULT_RENDER_SCALE);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        builder.define(TEXTURE_ID, 0);
+        builder.define(WEAPON_TYPE, 0);
+        builder.define(RENDER_SCALE, DEFAULT_RENDER_SCALE);
     }
 
     public int getTextureId() {
@@ -133,7 +135,7 @@ public class PWhiteNight extends Projectile implements IEntityAdditionalSpawnDat
     }
 
     @Override
-    public void writeSpawnData(FriendlyByteBuf buffer) {
+    public void writeSpawnData(RegistryFriendlyByteBuf buffer) {
         buffer.writeInt(this.entityData.get(TEXTURE_ID));
         buffer.writeInt(this.entityData.get(WEAPON_TYPE));
         buffer.writeFloat(this.getYRot());
@@ -141,7 +143,7 @@ public class PWhiteNight extends Projectile implements IEntityAdditionalSpawnDat
     }
 
     @Override
-    public void readSpawnData(FriendlyByteBuf buffer) {
+    public void readSpawnData(RegistryFriendlyByteBuf buffer) {
         this.entityData.set(TEXTURE_ID, buffer.readInt());
         this.entityData.set(WEAPON_TYPE, buffer.readInt());
         this.setYRot(buffer.readFloat());
@@ -149,7 +151,7 @@ public class PWhiteNight extends Projectile implements IEntityAdditionalSpawnDat
     }
 
     @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
+    public Packet<ClientGamePacketListener> getAddEntityPacket(ServerEntity serverEntity) {
+        return new ClientboundAddEntityPacket(this, serverEntity);
     }
 }

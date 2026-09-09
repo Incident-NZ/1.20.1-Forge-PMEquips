@@ -1,22 +1,22 @@
 package net.pm_equips.client.models;
 
-import net.pm_equips.items.EGOP5Twilight;
+import net.pm_equips.items.LCorpEGOL5Twilight;
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib.model.GeoModel;
 
-public class EGOS5TwilightM extends GeoModel<EGOP5Twilight> {
+public class EGOS5TwilightM extends GeoModel<LCorpEGOL5Twilight> {
     @Override
-    public ResourceLocation getModelResource(EGOP5Twilight animatable) {
-        return new ResourceLocation("pm_equips", "geo/ego_armor_type1.geo.json");
+    public ResourceLocation getModelResource(LCorpEGOL5Twilight animatable) {
+        return ResourceLocation.fromNamespaceAndPath("pm_equips", "geo/ego_armor_type1.geo.json");
     }
 
     @Override
-    public ResourceLocation getTextureResource(EGOP5Twilight animatable) {
-        return new ResourceLocation("pm_equips", "textures/armor/ego_s5_twilight.png");
+    public ResourceLocation getTextureResource(LCorpEGOL5Twilight animatable) {
+        return ResourceLocation.fromNamespaceAndPath("pm_equips", "textures/armor/ego_s5_twilight.png");
     }
 
     @Override
-    public ResourceLocation getAnimationResource(EGOP5Twilight animatable) {
-        return new ResourceLocation("pm_equips", "animations/ego_armor.animation.json");
+    public ResourceLocation getAnimationResource(LCorpEGOL5Twilight animatable) {
+        return ResourceLocation.fromNamespaceAndPath("pm_equips", "animations/ego_armor.animation.json");
     }
 }

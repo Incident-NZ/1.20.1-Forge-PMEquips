@@ -1,61 +1,38 @@
 package net.pm_equips;
 
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.pm_equips.config.CommonConfig;
-import net.pm_equips.compat.Curios;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.pm_equips.energy.EnergyCapabilities;
+import net.pm_equips.network.ModPackets;
 import software.bernie.geckolib.GeckoLib;
-import top.theillusivec4.curios.api.CuriosApi;
-import top.theillusivec4.curios.api.SlotTypeMessage;
-import net.minecraftforge.fml.InterModComms;
 
 @Mod(PMEquipsMain.MOD_ID)
 public class PMEquipsMain {
 
     public static final String MOD_ID = "pm_equips";
 
-    public PMEquipsMain() {
-        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        BlockInit.Blocks.BLOCKS.register(modEventBus);
-        BlockInit.BlockItems.BLOCK_ITEMS.register(modEventBus);
-        BlockEntityInit.BLOCK_ENTITIES.register(modEventBus);
-        MenuInit.MENUS.register(modEventBus);
-        ItemInit.ITEMS.register(modEventBus);
-        TabInit.CREATIVE_TABS.register(modEventBus);
-        EntityInit.ENTITY_TYPES.register(modEventBus);
-        MobEffectInit.MOB_EFFECTS.register(modEventBus);
-        SoundInit.SOUNDS.register(modEventBus);
+    public PMEquipsMain(IEventBus modEventBus, ModContainer modContainer) {
+        PMERegistryBlock.Blocks.BLOCKS.register(modEventBus);
+        PMERegistryBlock.BlockItems.BLOCK_ITEMS.register(modEventBus);
+        PMERegistryBlockEntity.BLOCK_ENTITIES.register(modEventBus);
+        PMERegistryMenu.MENUS.register(modEventBus);
+        PMERegistryItem.ITEMS.register(modEventBus);
+        PMERegistryTab.CREATIVE_TABS.register(modEventBus);
+        PMERegistryEntity.ENTITY_TYPES.register(modEventBus);
+        PMERegistryMobEffect.MOB_EFFECTS.register(modEventBus);
+        PMERegistrySound.SOUNDS.register(modEventBus);
 
         modEventBus.addListener(this::setup);
-        modEventBus.addListener(this::registerCurioSlot);
-        ModLoadingContext.get().registerConfig(net.minecraftforge.fml.config.ModConfig.Type.COMMON,
+        modEventBus.addListener(ModPackets::register);
+        modEventBus.addListener(EnergyCapabilities::register);
+        modContainer.registerConfig(ModConfig.Type.COMMON,
                 CommonConfig.COMMON_CONFIG, MOD_ID + "-common.toml");
-
-        MinecraftForge.EVENT_BUS.register(this);
     }
 
     private void setup(final FMLCommonSetupEvent event) {
-        GeckoLib.initialize();
-        net.pm_equips.network.ModPackets.register();
     }
-
-    private void registerCurioSlot(final InterModEnqueueEvent event) {
-        InterModComms.sendTo(CuriosApi.MODID, SlotTypeMessage.REGISTER_TYPE,
-                () -> new SlotTypeMessage.Builder(Curios.CORE_PAGE_SLOT)
-                        .size(1)
-                        .build());
-    }
-
-    @SubscribeEvent
-    public static void onLoad(final ModConfigEvent.Loading event) {}
-
-    @SubscribeEvent
-    public static void onReload(final ModConfigEvent.Reloading event) {}
 }

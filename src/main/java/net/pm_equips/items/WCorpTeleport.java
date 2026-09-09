@@ -1,5 +1,7 @@
 package net.pm_equips.items;
 
+
+import net.pm_equips.energy.EnergyUtils;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
@@ -9,7 +11,7 @@ import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.neoforged.neoforge.capabilities.Capabilities;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -38,7 +40,7 @@ final class WCorpTeleport {
         }
 
         AtomicBoolean teleported = new AtomicBoolean(false);
-        stack.getCapability(ForgeCapabilities.ENERGY).ifPresent(storage -> {
+        EnergyUtils.get(stack).ifPresent(storage -> {
             if (storage.getEnergyStored() >= energyCost) {
                 storage.extractEnergy(energyCost, false);
                 teleportForward(level, player);

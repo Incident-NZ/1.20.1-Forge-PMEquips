@@ -1,214 +1,170 @@
 package net.pm_equips.network;
 
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.network.NetworkEvent;
-import net.minecraftforge.network.NetworkRegistry;
-import net.minecraftforge.network.simple.SimpleChannel;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.pm_equips.items.LCorpEGOR4MagicBullet;
+import net.pm_equips.items.FixerRolandLogicHG;
+import net.pm_equips.items.FixerRolandLogicSG;
 import net.pm_equips.menu.LobotomyEGOExtractionMenu;
-import net.pm_equips.items.EGOW4MagicBullet;
-import net.pm_equips.items.WeaponRolandLogicHG;
-import net.pm_equips.items.WeaponRolandLogicSG;
+import net.pm_equips.util.ItemStackData;
 
 import java.util.UUID;
-import java.util.function.Supplier;
 
-public class ModPackets {
-    private static final String PROTOCOL_VERSION = "1";
-    public static final SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(
-            new net.minecraft.resources.ResourceLocation("pm_equips", "main"),
-            () -> PROTOCOL_VERSION, PROTOCOL_VERSION::equals, PROTOCOL_VERSION::equals);
+public final class ModPackets {
+    private ModPackets() {}
 
-    public static void register() {
-        INSTANCE.registerMessage(0, ActivateAbilityPacket.class,
-                ActivateAbilityPacket::encode, ActivateAbilityPacket::decode, ActivateAbilityPacket::handle);
-
-        INSTANCE.registerMessage(1, ReloadPacket.class,
-                ReloadPacket::encode, ReloadPacket::decode, ReloadPacket::handle);
-
-        INSTANCE.registerMessage(2, LobotomyEGOExtractPacket.class,
-                LobotomyEGOExtractPacket::encode, LobotomyEGOExtractPacket::decode, LobotomyEGOExtractPacket::handle);
-
-        INSTANCE.registerMessage(3, CorePageActivatePacket.class,
-                CorePageActivatePacket::encode, CorePageActivatePacket::decode, CorePageActivatePacket::handle);
+    public static void register(RegisterPayloadHandlersEvent event) {
+        var registrar = event.registrar("1");
+        registrar.playToServer(ActivateAbilityPacket.TYPE, ActivateAbilityPacket.STREAM_CODEC,
+                ActivateAbilityPacket::handle);
+        registrar.playToServer(ReloadPacket.TYPE, ReloadPacket.STREAM_CODEC, ReloadPacket::handle);
+        registrar.playToServer(LobotomyEGOExtractPacket.TYPE, LobotomyEGOExtractPacket.STREAM_CODEC,
+                LobotomyEGOExtractPacket::handle);
+        registrar.playToServer(CorePageActivatePacket.TYPE, CorePageActivatePacket.STREAM_CODEC,
+                CorePageActivatePacket::handle);
     }
 
-    public static class ActivateAbilityPacket {
-        private final UUID targetUUID;
+    public record ActivateAbilityPacket(UUID targetUUID) implements CustomPacketPayload {
+        public static final Type<ActivateAbilityPacket> TYPE = new Type<>(
+                ResourceLocation.fromNamespaceAndPath("pm_equips", "activate_ability"));
+        public static final StreamCodec<FriendlyByteBuf, ActivateAbilityPacket> STREAM_CODEC =
+                StreamCodec.of((buffer, packet) -> buffer.writeUUID(packet.targetUUID),
+                        buffer -> new ActivateAbilityPacket(buffer.readUUID()));
 
-        public ActivateAbilityPacket(UUID targetUUID) {
-            this.targetUUID = targetUUID;
+        @Override
+        public Type<? extends CustomPacketPayload> type() {
+            return TYPE;
         }
 
-        public static void encode(ActivateAbilityPacket msg, FriendlyByteBuf buf) {
-            buf.writeUUID(msg.targetUUID);
-        }
-
-        public static ActivateAbilityPacket decode(FriendlyByteBuf buf) {
-            return new ActivateAbilityPacket(buf.readUUID());
-        }
-
-        public static void handle(ActivateAbilityPacket msg, Supplier<NetworkEvent.Context> ctx) {
-            ctx.get().enqueueWork(() -> {
-                net.minecraft.server.level.ServerPlayer player = ctx.get().getSender();
-                if (player != null) {
-                    net.minecraft.world.item.ItemStack gun = player.getMainHandItem();
-                    if (gun.getItem() instanceof EGOW4MagicBullet && gun.getOrCreateTag().getInt("abilityCharges") > 0) {
-                        gun.getOrCreateTag().putBoolean("abilityActive", true);
-                        gun.getOrCreateTag().putUUID("targetUUID", msg.targetUUID);
-                    }
-                }
-            });
-            ctx.get().setPacketHandled(true);
+        private static void handle(ActivateAbilityPacket packet, IPayloadContext context) {
+            if (!(context.player() instanceof ServerPlayer player)) {
+                return;
+            }
+            ItemStack gun = player.getMainHandItem();
+            if (gun.getItem() instanceof LCorpEGOR4MagicBullet
+                    && ItemStackData.getInt(gun, "abilityCharges") > 0) {
+                ItemStackData.update(gun, tag -> {
+                    tag.putBoolean("abilityActive", true);
+                    tag.putUUID("targetUUID", packet.targetUUID);
+                });
+            }
         }
     }
 
-    public static class ReloadPacket {
-        public ReloadPacket() {}
+    public record ReloadPacket() implements CustomPacketPayload {
+        public static final Type<ReloadPacket> TYPE = new Type<>(
+                ResourceLocation.fromNamespaceAndPath("pm_equips", "reload"));
+        public static final StreamCodec<FriendlyByteBuf, ReloadPacket> STREAM_CODEC =
+                StreamCodec.unit(new ReloadPacket());
 
-        public static void encode(ReloadPacket msg, FriendlyByteBuf buf) {}
-
-        public static ReloadPacket decode(FriendlyByteBuf buf) { return new ReloadPacket(); }
-
-        public static void handle(ReloadPacket msg, Supplier<NetworkEvent.Context> ctx) {
-            ctx.get().enqueueWork(() -> {
-                net.minecraft.server.level.ServerPlayer player = ctx.get().getSender();
-                if (player != null) {
-                    tryStartReload(player, player.getMainHandItem());
-                    tryStartReload(player, player.getOffhandItem());
-                }
-            });
-            ctx.get().setPacketHandled(true);
+        @Override
+        public Type<? extends CustomPacketPayload> type() {
+            return TYPE;
         }
 
-        private static void tryStartReload(net.minecraft.server.level.ServerPlayer player, ItemStack stack) {
+        private static void handle(ReloadPacket packet, IPayloadContext context) {
+            if (context.player() instanceof ServerPlayer player) {
+                tryStartReload(player, player.getMainHandItem());
+                tryStartReload(player, player.getOffhandItem());
+            }
+        }
+
+        private static void tryStartReload(ServerPlayer player, ItemStack stack) {
             if (stack.isEmpty()) {
                 return;
             }
 
-            if (stack.getItem() instanceof WeaponRolandLogicHG) {
-                ((WeaponRolandLogicHG) stack.getItem()).startReload(stack, player);
-
-            } else if (stack.getItem() instanceof WeaponRolandLogicSG) {
-                ((WeaponRolandLogicSG) stack.getItem()).startReload(stack, player);
-
-            } else if (stack.getItem() instanceof net.pm_equips.items.EGOW1Soda) {
-                ((net.pm_equips.items.EGOW1Soda) stack.getItem()).startReload(stack, player);
-
-            } else if (stack.getItem() instanceof net.pm_equips.items.EGOW2Solitude) {
-                ((net.pm_equips.items.EGOW2Solitude) stack.getItem()).startReload(stack, player);
-
-            } else if (stack.getItem() instanceof net.pm_equips.items.EGOW2Today) {
-                ((net.pm_equips.items.EGOW2Today) stack.getItem()).startReload(stack, player);
-
-            } else if (stack.getItem() instanceof net.pm_equips.items.EGOW2Beak) {
-                ((net.pm_equips.items.EGOW2Beak) stack.getItem()).startReload(stack, player);
-
-            } else if (stack.getItem() instanceof net.pm_equips.items.EGOW2Match) {
-                ((net.pm_equips.items.EGOW2Match) stack.getItem()).startReload(stack, player);
-
-            } else if (stack.getItem() instanceof net.pm_equips.items.EGOW3Laetitia) {
-                ((net.pm_equips.items.EGOW3Laetitia) stack.getItem()).startReload(stack, player);
-
-            } else if (stack.getItem() instanceof net.pm_equips.items.EGOW3Harmony) {
-                ((net.pm_equips.items.EGOW3Harmony) stack.getItem()).startReload(stack, player);
-
-            } else if (stack.getItem() instanceof net.pm_equips.items.EGOW4LamentR) {
-                ((net.pm_equips.items.EGOW4LamentR) stack.getItem()).startReload(stack, player);
-
-            } else if (stack.getItem() instanceof net.pm_equips.items.EGOW4Hornet) {
-                ((net.pm_equips.items.EGOW4Hornet) stack.getItem()).startReload(stack, player);
-
-            } else if (stack.getItem() instanceof net.pm_equips.items.EGOW4CrimsonScarL) {
-                ((net.pm_equips.items.EGOW4CrimsonScarL) stack.getItem()).startReload(stack, player);
-
-            } else if (stack.getItem() instanceof net.pm_equips.items.EGOW4MagicBullet) {
-                ((net.pm_equips.items.EGOW4MagicBullet) stack.getItem()).startReload(stack, player);
-
-            } else if (stack.getItem() instanceof net.pm_equips.items.EGOW4Aroma) {
-                ((net.pm_equips.items.EGOW4Aroma) stack.getItem()).startReload(stack, player);
-
-            } else if (stack.getItem() instanceof net.pm_equips.items.EGOW5Pink) {
-                ((net.pm_equips.items.EGOW5Pink) stack.getItem()).startReload(stack, player);
-
-            } else if (stack.getItem() instanceof net.pm_equips.items.RCorpRabbitRifle) {
-                ((net.pm_equips.items.RCorpRabbitRifle) stack.getItem()).startReload(stack, player);
+            switch (stack.getItem()) {
+                case FixerRolandLogicHG weapon -> weapon.startReload(stack, player);
+                case FixerRolandLogicSG weapon -> weapon.startReload(stack, player);
+                case net.pm_equips.items.LCorpEGOR1Soda weapon -> weapon.startReload(stack, player);
+                case net.pm_equips.items.LCorpEGOR2Solitude weapon -> weapon.startReload(stack, player);
+                case net.pm_equips.items.LCorpEGOR2Today weapon -> weapon.startReload(stack, player);
+                case net.pm_equips.items.LCorpEGOR2Beak weapon -> weapon.startReload(stack, player);
+                case net.pm_equips.items.LCorpEGOR2Match weapon -> weapon.startReload(stack, player);
+                case net.pm_equips.items.LCorpEGOR3Laetitia weapon -> weapon.startReload(stack, player);
+                case net.pm_equips.items.LCorpEGOR3Harmony weapon -> weapon.startReload(stack, player);
+                case net.pm_equips.items.LCorpEGOR4LamentR weapon -> weapon.startReload(stack, player);
+                case net.pm_equips.items.LCorpEGOR4Hornet weapon -> weapon.startReload(stack, player);
+                case net.pm_equips.items.LCorpEGOR4CrimsonScarL weapon -> weapon.startReload(stack, player);
+                case LCorpEGOR4MagicBullet weapon -> weapon.startReload(stack, player);
+                case net.pm_equips.items.LCorpEGOR4Aroma weapon -> weapon.startReload(stack, player);
+                case net.pm_equips.items.LCorpEGOR5Pink weapon -> weapon.startReload(stack, player);
+                case net.pm_equips.items.WingsRCorp4thRabbitWeapon1 weapon -> weapon.startReload(stack, player);
+                default -> {
+                }
             }
         }
     }
 
-    public static class CorePageActivatePacket {
-        public CorePageActivatePacket() {}
+    public record CorePageActivatePacket() implements CustomPacketPayload {
+        public static final Type<CorePageActivatePacket> TYPE = new Type<>(
+                ResourceLocation.fromNamespaceAndPath("pm_equips", "activate_core_page"));
+        public static final StreamCodec<FriendlyByteBuf, CorePageActivatePacket> STREAM_CODEC =
+                StreamCodec.unit(new CorePageActivatePacket());
 
-        public static void encode(CorePageActivatePacket msg, FriendlyByteBuf buf) {}
-
-        public static CorePageActivatePacket decode(FriendlyByteBuf buf) {
-            return new CorePageActivatePacket();
+        @Override
+        public Type<? extends CustomPacketPayload> type() {
+            return TYPE;
         }
 
-        public static void handle(CorePageActivatePacket msg, Supplier<NetworkEvent.Context> ctx) {
-            ctx.get().enqueueWork(() -> {
-                net.minecraft.server.level.ServerPlayer player = ctx.get().getSender();
-                if (player == null) {
-                    return;
-                }
+        private static void handle(CorePageActivatePacket packet, IPayloadContext context) {
+            if (!(context.player() instanceof ServerPlayer player)) {
+                return;
+            }
 
-                ItemStack stack = net.pm_equips.items.CorePageItem.findEquippedAbilityItem(player)
-                        .orElse(ItemStack.EMPTY);
-                if (stack.isEmpty()) {
-                    return;
-                }
+            ItemStack stack = player.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.LEGS);
+            if (!(stack.getItem() instanceof net.pm_equips.items.GeoArmorItem armor) || !armor.hasActiveAbility()) {
+                stack = ItemStack.EMPTY;
+            }
+            if (stack.isEmpty()) {
+                return;
+            }
 
-                if (stack.getItem() instanceof net.pm_equips.items.WCorpArmor) {
-                    activateEffect(player, stack, 1000, net.pm_equips.MobEffectInit.WCORP_SIN.get());
-                } else if (stack.getItem() instanceof net.pm_equips.items.RCorp4thRabbitArmor) {
-                    activateEffect(player, stack, 2000, net.pm_equips.MobEffectInit.RCORP_SIN.get());
-                } else if (stack.getItem() instanceof net.pm_equips.items.KCorpAgentArmor
-                        || stack.getItem() instanceof net.pm_equips.items.KCorpOfficerArmor) {
-                    activateEffect(player, stack, 1500, net.pm_equips.MobEffectInit.KCORP_SIN.get());
-                }
-            });
-            ctx.get().setPacketHandled(true);
+            if (stack.getItem() instanceof net.pm_equips.items.WingsWCorpArmorTier1) {
+                activateEffect(player, stack, 1000, net.pm_equips.PMERegistryMobEffect.WCORP_SIN.getDelegate());
+            } else if (stack.getItem() instanceof net.pm_equips.items.WingsRCorp4thRabbitArmorTier1) {
+                activateEffect(player, stack, 2000, net.pm_equips.PMERegistryMobEffect.RCORP_SIN.getDelegate());
+            } else if (stack.getItem() instanceof net.pm_equips.items.WingsKCorpAgentArmorTier3
+                    || stack.getItem() instanceof net.pm_equips.items.WingsKCorpOfficerArmorTier1) {
+                activateEffect(player, stack, 1500, net.pm_equips.PMERegistryMobEffect.KCORP_SIN.getDelegate());
+            }
         }
 
-        private static void activateEffect(
-                ServerPlayer player,
-                ItemStack stack,
-                int cost,
-                MobEffect effect
-        ) {
-            stack.getCapability(ForgeCapabilities.ENERGY)
-                    .map(storage -> {
-                        if (storage.getEnergyStored() < cost) {
-                            return false;
-                        }
-                        storage.extractEnergy(cost, false);
-                        player.addEffect(new net.minecraft.world.effect.MobEffectInstance(effect, 12000, 0));
-                        return true;
-                    });
+        private static void activateEffect(ServerPlayer player, ItemStack stack, int cost,
+                                           net.minecraft.core.Holder<net.minecraft.world.effect.MobEffect> effect) {
+            var storage = stack.getCapability(Capabilities.EnergyStorage.ITEM);
+            if (storage != null && storage.getEnergyStored() >= cost) {
+                storage.extractEnergy(cost, false);
+                player.addEffect(new MobEffectInstance(effect, 12000, 0));
+            }
         }
     }
 
-    public static class LobotomyEGOExtractPacket {
-        public LobotomyEGOExtractPacket() {}
+    public record LobotomyEGOExtractPacket() implements CustomPacketPayload {
+        public static final Type<LobotomyEGOExtractPacket> TYPE = new Type<>(
+                ResourceLocation.fromNamespaceAndPath("pm_equips", "extract_ego"));
+        public static final StreamCodec<FriendlyByteBuf, LobotomyEGOExtractPacket> STREAM_CODEC =
+                StreamCodec.unit(new LobotomyEGOExtractPacket());
 
-        public static void encode(LobotomyEGOExtractPacket msg, FriendlyByteBuf buf) {}
-
-        public static LobotomyEGOExtractPacket decode(FriendlyByteBuf buf) {
-            return new LobotomyEGOExtractPacket();
+        @Override
+        public Type<? extends CustomPacketPayload> type() {
+            return TYPE;
         }
 
-        public static void handle(LobotomyEGOExtractPacket msg, Supplier<NetworkEvent.Context> ctx) {
-            ctx.get().enqueueWork(() -> {
-                net.minecraft.server.level.ServerPlayer player = ctx.get().getSender();
-                if (player != null && player.containerMenu instanceof LobotomyEGOExtractionMenu menu) {
-                    menu.craft(player);
-                }
-            });
-            ctx.get().setPacketHandled(true);
+        private static void handle(LobotomyEGOExtractPacket packet, IPayloadContext context) {
+            if (context.player() instanceof ServerPlayer player
+                    && player.containerMenu instanceof LobotomyEGOExtractionMenu menu) {
+                menu.craft(player);
+            }
         }
     }
 }

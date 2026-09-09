@@ -1,20 +1,8 @@
-buildscript {
-    repositories {
-        maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
-    }
-}
-
 plugins {
-    id 'eclipse'
+    id 'java-library'
     id 'idea'
-    id 'net.minecraftforge.gradle' version '[6.0.16,6.2)'
+    id 'net.neoforged.moddev' version '2.0.147'
 }
-
-apply plugin: 'org.spongepowered.mixin'
 
 group = mod_group_id
 version = mod_version
@@ -27,117 +15,187 @@ java {
     toolchain.languageVersion = JavaLanguageVersion.of(21)
 }
 
-minecraft {
-    mappings channel: 'official', version: '1.20.1'
-
-    copyIdeResources = true
-
-    runs {
-        configureEach {
-            workingDirectory project.file('run')
-
-            property 'forge.logging.markers', 'REGISTRIES'
-
-
-            property 'forge.logging.console.level', 'debug'
-
-            mods {
-                "${mod_id}" {
-                    source sourceSets.main
-                }
-            }
-        }
-
-        client {
-            args "--mixin", "pm_equips.mixins.json"
-            property 'forge.enabledGameTestNamespaces', mod_id
-        }
-
-        server {
-            property 'forge.enabledGameTestNamespaces', mod_id
-            args '--nogui'
-        }
-
-        gameTestServer {
-            property 'forge.enabledGameTestNamespaces', mod_id
-        }
-
-        data {
-            workingDirectory project.file('run-data')
-
-            args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
-        }
-    }
+sourceSets.main.resources {
+    srcDir 'src/generated/resources'
 }
-
-mixin {
-    add sourceSets.main, "${mod_id}.refmap.json"
-
-    add sourceSets.main, "pm_equips.refmap.json"
-    config "${mod_id}.mixins.json"
-}
-
-sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
-
-    maven { url "https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/" }
-    mavenCentral()
-
-    maven { url = "https://maven.theillusivec4.top/" }
-
     maven {
-        url = "https://maven.blamejared.com/"
+        name = 'GeckoLib'
+        url = 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
+        content { includeGroup 'software.bernie.geckolib' }
     }
+    maven {
+        name = "C4's Maven"
+        url = 'https://maven.theillusivec4.top/'
+        content { includeGroup 'top.theillusivec4.curios' }
+    }
+    maven {
+        name = "Modrinth"
+        url = "https://api.modrinth.com/maven"
+    }
+    mavenCentral()
+}
+
+neoForge {
+    version = project.neo_version
+
+    runs {
+        client {
+            client()
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+        }
+        server {
+            server()
+            programArgument '--nogui'
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+        }
+        gameTestServer {
+            type = 'gameTestServer'
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+        }
+        data {
+            data()
+            programArguments.addAll '--mod', project.mod_id, '--all', '--output',
+                    file('src/generated/resources/').getAbsolutePath(), '--existing',
+                    file('src/main/resources/').getAbsolutePath()
+        }
+        configureEach {
+            systemProperty 'forge.logging.markers', 'REGISTRIES'
+            logLevel = org.slf4j.event.Level.DEBUG
+        }
+    }
+
+    mods {
+        "${mod_id}" {
+            sourceSet sourceSets.main
+        }
+    }
+}
+
+configurations {
+    runtimeClasspath.extendsFrom localRuntime
 }
 
 dependencies {
-    minecraft "net.minecraftforge:forge:1.20.1-47.4.10"
+    implementation "software.bernie.geckolib:geckolib-neoforge-${minecraft_version}:${geckolib_version}"
 
-    // GeckoLib 4.4.9
-    implementation fg.deobf("software.bernie.geckolib:geckolib-forge-1.20.1:4.7.4")
+    compileOnly "top.theillusivec4.curios:curios-neoforge:${curios_version}:api"
+    localRuntime "top.theillusivec4.curios:curios-neoforge:${curios_version}"
 
-    // Curios API 5.14.1
-    implementation fg.deobf('top.theillusivec4.curios:curios-forge:5.14.1+1.20.1')
-    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:5.14.1+1.20.1:api")
-    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:5.14.1+1.20.1")
+    implementation "maven.modrinth:u6dRKJwZ:TKsCmRlt"
 
-    // JEI API
-    compileOnly fg.deobf("mezz.jei:jei-1.20.1-forge-api:15.20.0.106")
-    // 開発環境用
-    runtimeOnly fg.deobf("mezz.jei:jei-1.20.1-forge:15.20.0.106")
-
-    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    annotationProcessor 'org.spongepowered:mixin:0.8.7:processor'
 }
 
-tasks.named('processResources', ProcessResources).configure {
-    var replaceProperties = [minecraft_version   : minecraft_version, minecraft_version_range: minecraft_version_range,
-                             forge_version       : forge_version, forge_version_range: forge_version_range,
-                             loader_version_range: loader_version_range,
-                             mod_id              : mod_id, mod_name: mod_name, mod_license: mod_license, mod_version: mod_version,
-                             mod_authors         : mod_authors, mod_description: mod_description,]
+def mixinMappingsFile = layout.buildDirectory.file('tmp/mixin/pm_equips.srg')
+def mixinRefmapFile = layout.buildDirectory.file('generated/resources/pm_equips.refmap.json')
 
+sourceSets.main.resources.srcDir(layout.buildDirectory.dir('generated/resources'))
+
+tasks.register('generateMixinMappings') {
+    dependsOn(tasks.named('createMinecraftArtifacts'))
+    outputs.file(mixinMappingsFile)
+
+    doLast {
+        def mappingCache = new File(System.getProperty('user.home'), '.gradle/caches/neoformruntime/intermediate_results')
+        def inputMappings = fileTree(mappingCache) {
+            include 'mergeMappings_*_output.tsrg'
+        }.files.find { candidate ->
+            def contents = candidate.getText('UTF-8')
+            contents.contains('net/minecraft/client/model/HumanoidModel') &&
+                    contents.contains('a (Lbtn;FFFFF)V setupAnim')
+        }
+        if (inputMappings == null) {
+            throw new GradleException('Could not find the Minecraft 1.21.1 official-to-obfuscated mappings required for the Mixin refmap.')
+        }
+
+        def classMappings = [:]
+        def members = []
+        String obfuscatedClass = null
+        String namedClass = null
+
+        inputMappings.eachLine('UTF-8') { line ->
+            if (line == 'tsrg2 left right' || line.trim().isEmpty()) return
+
+            def indented = Character.isWhitespace(line.charAt(0))
+            def parts = line.trim().split(/\s+/)
+            if (!indented) {
+                obfuscatedClass = parts[0]
+                namedClass = parts.length > 1 ? parts[1] : parts[0]
+                classMappings[obfuscatedClass] = namedClass
+                members << [kind: 'CL', namedOwner: namedClass, obfuscatedOwner: obfuscatedClass]
+            } else if (parts.length == 2) {
+                members << [kind: 'FD', namedOwner: namedClass, namedName: parts[1],
+                            obfuscatedOwner: obfuscatedClass, obfuscatedName: parts[0]]
+            } else if (parts.length >= 3 && parts[1].startsWith('(')) {
+                members << [kind: 'MD', namedOwner: namedClass, namedName: parts[2],
+                            obfuscatedOwner: obfuscatedClass, obfuscatedName: parts[0],
+                            obfuscatedDescriptor: parts[1]]
+            }
+        }
+
+        def remapDescriptor = { String descriptor ->
+            descriptor.replaceAll(/L([^;]+);/) { fullMatch, obfuscatedName ->
+                "L${classMappings.getOrDefault(obfuscatedName, obfuscatedName)};"
+            }
+        }
+
+        def output = new File(mixinMappingsFile.get().asFile.absolutePath)
+        output.parentFile.mkdirs()
+        output.withWriter('UTF-8') { writer ->
+            members.each { member ->
+                if (member.kind == 'CL') {
+                    writer.write("CL: ${member.namedOwner} ${member.obfuscatedOwner}${System.lineSeparator()}")
+                } else if (member.kind == 'FD') {
+                    writer.write("FD: ${member.namedOwner}/${member.namedName} ${member.obfuscatedOwner}/${member.obfuscatedName}${System.lineSeparator()}")
+                } else {
+                    def namedDescriptor = remapDescriptor(member.obfuscatedDescriptor)
+                    writer.write("MD: ${member.namedOwner}/${member.namedName} ${namedDescriptor} ${member.obfuscatedOwner}/${member.obfuscatedName} ${member.obfuscatedDescriptor}${System.lineSeparator()}")
+                }
+            }
+        }
+    }
+}
+
+tasks.named('compileJava') {
+    dependsOn(tasks.named('generateMixinMappings'))
+}
+
+tasks.named('processResources') {
+    dependsOn(tasks.named('compileJava'))
+}
+
+def replaceProperties = [
+        minecraft_version      : minecraft_version,
+        minecraft_version_range: minecraft_version_range,
+        neo_version            : neo_version,
+        neo_version_range      : neo_version_range,
+        loader_version_range   : loader_version_range,
+        mod_id                 : mod_id,
+        mod_name               : mod_name,
+        mod_license            : mod_license,
+        mod_version            : mod_version,
+        mod_authors            : mod_authors,
+        mod_description        : mod_description,
+        geckolib_version       : geckolib_version,
+        curios_version         : curios_version,
+        curios_version_range   : curios_version_range,
+        jei_version            : jei_version
+]
+
+tasks.withType(ProcessResources).configureEach {
     inputs.properties replaceProperties
-
-    filesMatching(['META-INF/mods.toml', 'pack.mcmeta']) {
+    filesMatching(['META-INF/neoforge.mods.toml', 'pack.mcmeta']) {
         expand replaceProperties + [project: project]
     }
 }
 
-tasks.named('jar', Jar).configure {
-    manifest {
-        attributes(["Specification-Title"     : mod_id,
-                    "Specification-Vendor"    : mod_authors,
-                    "Specification-Version"   : "1", // We are version 1 of ourselves
-                    "Implementation-Title"    : project.name,
-                    "Implementation-Version"  : project.jar.archiveVersion,
-                    "Implementation-Vendor"   : mod_authors,
-                    "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")])
-    }
-
-    finalizedBy 'reobfJar'
-}
-
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
+    options.compilerArgs.addAll([
+            "-AreobfSrgFile=${mixinMappingsFile.get().asFile.absolutePath}",
+            "-AoutRefMapFile=${mixinRefmapFile.get().asFile.absolutePath}",
+            '-AdefaultObfuscationEnv=notch'
+    ])
 }

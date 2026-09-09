@@ -1,7 +1,7 @@
 package net.pm_equips.energy;
 
 import net.minecraft.nbt.CompoundTag;
-import net.minecraftforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 
 public class ItemEnergyStorage implements IEnergyStorage
 {

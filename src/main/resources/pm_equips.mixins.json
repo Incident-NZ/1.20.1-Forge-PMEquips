@@ -2,17 +2,11 @@
   "required": true,
   "minVersion": "0.8",
   "package": "net.pm_equips.mixin",
-  "compatibilityLevel": "JAVA_17",
+  "compatibilityLevel": "JAVA_21",
   "refmap": "pm_equips.refmap.json",
-  "mixins": [
-    "PMEquipsMixin"
-  ],
+  "mixins": [],
   "client": [
-    "HumanoidModelMixin",
-    "PMEquipsClientMixin"
-  ],
-  "server": [
-    "PMEquipsServerMixin"
+    "HumanoidModelMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -1,19 +1,19 @@
 package net.pm_equips.config;
 
-import net.minecraftforge.common.ForgeConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class CommonConfig {
 
-    public static final ForgeConfigSpec COMMON_CONFIG;
+    public static final ModConfigSpec COMMON_CONFIG;
 
-    public static final ForgeConfigSpec.BooleanValue ALLOW_TERRAIN_DAMAGE;
+    public static final ModConfigSpec.BooleanValue ALLOW_TERRAIN_DAMAGE;
 
-    public static final ForgeConfigSpec.BooleanValue ALLOW_FRIENDLY_FIRE;
+    public static final ModConfigSpec.BooleanValue ALLOW_FRIENDLY_FIRE;
 
     static {
 
-        ForgeConfigSpec.Builder builder =
-                new ForgeConfigSpec.Builder();
+        ModConfigSpec.Builder builder =
+                new ModConfigSpec.Builder();
 
         builder.comment("PM Equips Config")
                 .push("weapons");

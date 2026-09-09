@@ -1,19 +1,15 @@
 package net.pm_equips.effects;
 
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.neoforge.event.tick.PlayerTickEvent;
+import net.neoforged.bus.api.SubscribeEvent;
 
-@Mod.EventBusSubscriber(modid = "pm_equips", value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
+@net.neoforged.fml.common.EventBusSubscriber(modid = "pm_equips", bus = net.neoforged.fml.common.EventBusSubscriber.Bus.GAME)
 public class BlueScarEffectHandler {
 
     @SubscribeEvent
-    public static void onEntityTick(TickEvent.PlayerTickEvent event) {
-        if (event.phase != TickEvent.Phase.END) return;
-
-        LivingEntity entity = event.player;
+    public static void onEntityTick(PlayerTickEvent.Post event) {
+        LivingEntity entity = event.getEntity();
         if (entity.level().isClientSide) return;
 
         var tag = entity.getPersistentData();
@@ -27,4 +23,3 @@ public class BlueScarEffectHandler {
         }
     }
 }
-

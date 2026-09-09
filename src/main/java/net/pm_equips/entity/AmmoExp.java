@@ -1,5 +1,9 @@
 package net.pm_equips.entity;
 
+import net.minecraft.server.level.ServerEntity;
+
+import net.minecraft.network.syncher.SynchedEntityData;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.protocol.Packet;
@@ -23,14 +27,14 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.network.NetworkHooks;
-import net.pm_equips.EntityInit;
+import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
+import net.pm_equips.PMERegistryEntity;
 import net.pm_equips.config.CommonConfig;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.*;
-import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animatable.instance.SingletonAnimatableInstanceCache;
+import software.bernie.geckolib.animation.*;
+import software.bernie.geckolib.animation.PlayState;
 
 import java.util.List;
 
@@ -65,7 +69,7 @@ public class AmmoExp extends Projectile implements GeoEntity {
     ) {
 
         this(
-                EntityInit.BULLET_EX.get(),
+                PMERegistryEntity.BULLET_EX.get(),
                 level
         );
 
@@ -92,7 +96,7 @@ public class AmmoExp extends Projectile implements GeoEntity {
     }
 
     @Override
-    protected void defineSynchedData() {}
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {}
 
     @Override
     public void tick() {
@@ -418,9 +422,9 @@ public class AmmoExp extends Projectile implements GeoEntity {
 
     @Override
     public Packet<ClientGamePacketListener>
-    getAddEntityPacket()
+    getAddEntityPacket(ServerEntity serverEntity)
     {
-        return NetworkHooks.getEntitySpawningPacket(this);
+        return new ClientboundAddEntityPacket(this, serverEntity);
     }
 
     @Override

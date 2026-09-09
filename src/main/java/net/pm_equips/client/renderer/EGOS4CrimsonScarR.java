@@ -2,10 +2,10 @@ package net.pm_equips.client.renderer;
 
 import net.minecraft.world.entity.EquipmentSlot;
 import net.pm_equips.client.models.EGOS4CrimsonScarM;
-import net.pm_equips.items.EGOP4CrimsonScar;
+import net.pm_equips.items.LCorpEGOL4CrimsonScar;
 import software.bernie.geckolib.renderer.GeoArmorRenderer;
 
-public class EGOS4CrimsonScarR extends GeoArmorRenderer<EGOP4CrimsonScar> {
+public class EGOS4CrimsonScarR extends GeoArmorRenderer<LCorpEGOL4CrimsonScar> {
     public EGOS4CrimsonScarR() {
         super(new EGOS4CrimsonScarM());
     }

@@ -13,7 +13,7 @@ import net.pm_equips.menu.LobotomyEGOExtractionMenu;
 import net.pm_equips.network.ModPackets;
 
 public class LobotomyEGOExtractionScreen extends AbstractContainerScreen<LobotomyEGOExtractionMenu> {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(PMEquipsMain.MOD_ID, "textures/gui/block_lobotomy_ego_extraction_table.png");
+    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(PMEquipsMain.MOD_ID, "textures/gui/block_lobotomy_ego_extraction_table.png");
 
     public LobotomyEGOExtractionScreen(LobotomyEGOExtractionMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title);
@@ -25,7 +25,7 @@ public class LobotomyEGOExtractionScreen extends AbstractContainerScreen<Lobotom
     protected void init() {
         super.init();
         addRenderableWidget(Button.builder(Component.translatable("gui.pm_equips.lobotomy_ego_extraction_table.craft"),
-                        button -> ModPackets.INSTANCE.sendToServer(new ModPackets.LobotomyEGOExtractPacket()))
+                        button -> net.neoforged.neoforge.network.PacketDistributor.sendToServer(new ModPackets.LobotomyEGOExtractPacket()))
                 .bounds(leftPos + (imageWidth - 46), topPos + 8, 44, 20)
                 .build());
     }
@@ -40,7 +40,7 @@ public class LobotomyEGOExtractionScreen extends AbstractContainerScreen<Lobotom
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
-        renderBackground(guiGraphics);
+        renderBackground(guiGraphics, mouseX, mouseY, partialTick);
         super.render(guiGraphics, mouseX, mouseY, partialTick);
         renderTooltip(guiGraphics, mouseX, mouseY);
     }

@@ -7,13 +7,13 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.pm_equips.client.renderer.HeadClawR;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.animatable.SingletonGeoAnimatable;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.*;
-import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.*;
+import software.bernie.geckolib.animation.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.function.Consumer;
@@ -21,7 +21,7 @@ import java.util.function.Consumer;
 public class HeadClaw extends SwordItem implements GeoItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     public HeadClaw() {
-        super(new CustomTier(), 30, -2.0f, new Properties().rarity(Rarity.EPIC));
+        super(new CustomTier(), new Properties().rarity(Rarity.EPIC).attributes(SwordItem.createAttributes(new CustomTier(), 30, -2.0f)));
 
         SingletonGeoAnimatable.registerSyncedAnimatable(this);
     }
@@ -86,13 +86,10 @@ public class HeadClaw extends SwordItem implements GeoItem {
             return 0;
         }
 
-        @Override
-        public int getLevel() {
-            return 0;
-        }
 
-        @Override
-        public int getEnchantmentValue() {
+
+        @Override public net.minecraft.tags.TagKey<net.minecraft.world.level.block.Block> getIncorrectBlocksForDrops() { return net.minecraft.tags.BlockTags.INCORRECT_FOR_WOODEN_TOOL; }
+        @Override public int getEnchantmentValue() {
             return 0;
         }
 

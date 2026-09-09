@@ -1,5 +1,9 @@
 package net.pm_equips.items;
 
+import net.pm_equips.util.ItemStackData;
+
+
+import net.pm_equips.energy.EnergyUtils;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
@@ -9,8 +13,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 
 import java.util.List;
 
@@ -33,15 +37,14 @@ public class ItemEnkephalin extends Item {
         ItemStack battery =
                 player.getItemInHand(hand);
 
-        CompoundTag tag =
-                battery.getOrCreateTag();
-
+        CompoundTag tag = ItemStackData.copy(battery);
         if (!tag.contains("Energy"))
         {
             tag.putInt(
                     "Energy",
                     MAX_ENERGY
             );
+            ItemStackData.set(battery, tag);
         }
 
         if(level.isClientSide)
@@ -70,17 +73,13 @@ public class ItemEnkephalin extends Item {
             if (storedEnergy <= 0)
                 break;
 
-            if (!stack.getCapability(
-                    ForgeCapabilities.ENERGY
-            ).isPresent())
+            if (!EnergyUtils.get(stack).isPresent())
             {
                 continue;
             }
 
             IEnergyStorage storage =
-                    stack.getCapability(
-                            ForgeCapabilities.ENERGY
-                    ).orElse(null);
+                    EnergyUtils.get(stack).orElse(null);
 
             if (storage == null)
                 continue;
@@ -101,6 +100,7 @@ public class ItemEnkephalin extends Item {
                 "Energy",
                 storedEnergy
         );
+        ItemStackData.set(battery, tag);
 
         if (storedEnergy <= 0)
         {
@@ -115,20 +115,19 @@ public class ItemEnkephalin extends Item {
     @Override
     public void appendHoverText(
             ItemStack stack,
-            Level level,
+            Item.TooltipContext context,
             List<Component> tooltip,
             TooltipFlag flag
     )
     {
-        CompoundTag tag =
-                stack.getOrCreateTag();
-
+        CompoundTag tag = ItemStackData.copy(stack);
         if (!tag.contains("Energy"))
         {
             tag.putInt(
                     "Energy",
                     MAX_ENERGY
             );
+            ItemStackData.set(stack, tag);
         }
 
         tooltip.add(
@@ -142,7 +141,7 @@ public class ItemEnkephalin extends Item {
 
         super.appendHoverText(
                 stack,
-                level,
+                context,
                 tooltip,
                 flag
         );

@@ -4,31 +4,31 @@ import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.registries.RegistryObject;
-import net.pm_equips.ItemInit;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.pm_equips.PMERegistryItem;
 
 import java.util.List;
 
 public class ADSPoseHandler
 {
-    private static final List<RegistryObject<Item>> ADS_ITEMS =
+    private static final List<DeferredHolder<Item, ? extends Item>> ADS_ITEMS =
             List.of(
-                    ItemInit.W5_PINK,
-                    ItemInit.W4_HORNET,
-                    ItemInit.W4_AROMA,
-                    ItemInit.W4_MAGIC_BULLET,
-                    ItemInit.W4_SOLEMN_LAMENT_R,
-                    ItemInit.W4_CRIMSON_SCAR_L,
-                    ItemInit.W3_LAETITIA,
-                    ItemInit.W3_HARMONY,
-                    ItemInit.W2_BEAK,
-                    ItemInit.W2_FOURTH_MATCH_FIRE,
-                    ItemInit.W2_SOLITUDE,
-                    ItemInit.W2_TODAY,
-                    ItemInit.W1_SODA,
-                    ItemInit.WEAPON_ROLAND_REVOLVER,
-                    ItemInit.WEAPON_ROLAND_SHOTGUN,
-                    ItemInit.RCORP_RABBIT_RIFLE
+                    PMERegistryItem.W5_PINK,
+                    PMERegistryItem.W4_HORNET,
+                    PMERegistryItem.W4_AROMA,
+                    PMERegistryItem.W4_MAGIC_BULLET,
+                    PMERegistryItem.W4_SOLEMN_LAMENT_R,
+                    PMERegistryItem.W4_CRIMSON_SCAR_L,
+                    PMERegistryItem.W3_LAETITIA,
+                    PMERegistryItem.W3_HARMONY,
+                    PMERegistryItem.W2_BEAK,
+                    PMERegistryItem.W2_FOURTH_MATCH_FIRE,
+                    PMERegistryItem.W2_SOLITUDE,
+                    PMERegistryItem.W2_TODAY,
+                    PMERegistryItem.W1_SODA,
+                    PMERegistryItem.WEAPON_ROLAND_REVOLVER,
+                    PMERegistryItem.WEAPON_ROLAND_SHOTGUN,
+                    PMERegistryItem.RCORP_RABBIT_RIFLE
             );
 
     public static boolean isADSWeapon(

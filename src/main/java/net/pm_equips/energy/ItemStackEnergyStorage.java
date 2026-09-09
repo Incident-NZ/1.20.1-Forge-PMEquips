@@ -2,7 +2,8 @@ package net.pm_equips.energy;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.energy.IEnergyStorage;
+import net.pm_equips.util.ItemStackData;
 
 public class ItemStackEnergyStorage implements IEnergyStorage {
 
@@ -18,7 +19,7 @@ public class ItemStackEnergyStorage implements IEnergyStorage {
     }
 
     private CompoundTag tag() {
-        return stack.getOrCreateTag();
+        return ItemStackData.copy(stack);
     }
 
     private int getStored() {
@@ -27,13 +28,7 @@ public class ItemStackEnergyStorage implements IEnergyStorage {
 
     private void setStored(int amount) {
 
-        tag().putInt(
-                "Energy",
-                Math.max(
-                        0,
-                        Math.min(capacity, amount)
-                )
-        );
+        ItemStackData.putInt(stack, "Energy", Math.max(0, Math.min(capacity, amount)));
     }
 
     @Override

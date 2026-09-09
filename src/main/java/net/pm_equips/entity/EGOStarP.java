@@ -1,7 +1,7 @@
 package net.pm_equips.entity;
 
-import net.pm_equips.EntityInit;
-import net.pm_equips.ItemInit;
+import net.pm_equips.PMERegistryEntity;
+import net.pm_equips.PMERegistryItem;
 import net.pm_equips.config.CommonConfig;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -20,12 +20,12 @@ public class EGOStarP extends ThrowableItemProjectile {
     }
 
     public EGOStarP(Level level, LivingEntity thrower) {
-        super(EntityInit.W5_SOUND_OF_A_STAR_PROJECTILE.get(), thrower, level);
+        super(PMERegistryEntity.W5_SOUND_OF_A_STAR_PROJECTILE.get(), thrower, level);
     }
 
     @Override
     protected Item getDefaultItem() {
-        return ItemInit.W5_SOUND_OF_A_STAR.get();
+        return PMERegistryItem.W5_SOUND_OF_A_STAR.get();
     }
 
     @Override

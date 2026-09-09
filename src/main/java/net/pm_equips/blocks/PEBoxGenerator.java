@@ -1,7 +1,7 @@
 package net.pm_equips.blocks;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.InteractionHand;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -11,22 +11,25 @@ import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.pm_equips.BlockEntityInit;
+import net.pm_equips.PMERegistryBlockEntity;
 import net.pm_equips.blockentity.PEBoxGeneratorBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
 public class PEBoxGenerator extends BaseEntityBlock {
-    public PEBoxGenerator() {
-        super(Properties.of()
-                .requiresCorrectToolForDrops()
-                .strength(5.0F, 5.0F)
-                .sound(SoundType.METAL));
+    public PEBoxGenerator(BlockBehaviour.Properties properties) {
+        super(properties);
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return simpleCodec(PEBoxGenerator::new);
+    }
+
+    @Override
+    public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
         if (level.isClientSide) {
             return InteractionResult.SUCCESS;
         }
@@ -62,6 +65,6 @@ public class PEBoxGenerator extends BaseEntityBlock {
         if (level.isClientSide) {
             return null;
         }
-        return createTickerHelper(blockEntityType, BlockEntityInit.EBOX_GEN.get(), PEBoxGeneratorBlockEntity::serverTick);
+        return createTickerHelper(blockEntityType, PMERegistryBlockEntity.EBOX_GEN.get(), PEBoxGeneratorBlockEntity::serverTick);
     }
 }

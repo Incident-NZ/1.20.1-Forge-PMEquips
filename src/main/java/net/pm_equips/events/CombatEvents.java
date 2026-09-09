@@ -1,17 +1,18 @@
 package net.pm_equips.events;
 
+import net.pm_equips.util.ItemStackData;
+
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.event.entity.living.LivingDamageEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.neoforge.common.util.FakePlayer;
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.bus.api.SubscribeEvent;
 import net.pm_equips.PMEquipsMain;
-import net.pm_equips.items.RCorpRabbitCombatKnife;
+import net.pm_equips.items.WingsRCorp4thRabbitWeapon2;
 
-@Mod.EventBusSubscriber(
+@net.neoforged.fml.common.EventBusSubscriber(
         modid = PMEquipsMain.MOD_ID
 )
 public class CombatEvents {
@@ -23,7 +24,7 @@ public class CombatEvents {
             priority = EventPriority.LOWEST
     )
     public static void onLivingDamage(
-            LivingDamageEvent event)
+            LivingIncomingDamageEvent event)
     {
         if (!(event.getSource().getEntity()
                 instanceof Player player))
@@ -40,20 +41,18 @@ public class CombatEvents {
                 player.getMainHandItem();
 
         if (!(weapon.getItem()
-                instanceof RCorpRabbitCombatKnife))
+                instanceof WingsRCorp4thRabbitWeapon2))
         {
             return;
         }
 
-        if (!RCorpRabbitCombatKnife
+        if (!WingsRCorp4thRabbitWeapon2
                 .hasEnoughEnergy(weapon))
         {
             return;
         }
 
-        CompoundTag tag =
-                weapon.getOrCreateTag();
-
+        CompoundTag tag = ItemStackData.copy(weapon);
         long currentTick =
                 player.level().getGameTime();
 
@@ -69,11 +68,12 @@ public class CombatEvents {
         tag.putLong(
                 "LastEnergyAttackTick",
                 currentTick);
+        ItemStackData.set(weapon, tag);
 
         event.setAmount(
                 event.getAmount() * 2.0F);
 
-        RCorpRabbitCombatKnife
+        WingsRCorp4thRabbitWeapon2
                 .consumeEnergy(weapon);
     }
 }

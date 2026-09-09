@@ -9,7 +9,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.pm_equips.MenuInit;
+import net.pm_equips.PMERegistryMenu;
 import net.pm_equips.blockentity.LobotomyEGOExtractionTableBlockEntity;
 
 public class LobotomyEGOExtractionMenu extends AbstractContainerMenu {
@@ -28,14 +28,14 @@ public class LobotomyEGOExtractionMenu extends AbstractContainerMenu {
     }
 
     public LobotomyEGOExtractionMenu(int containerId, Inventory inventory, LobotomyEGOExtractionTableBlockEntity blockEntity) {
-        super(MenuInit.LOBOTOMY_EGO_EXTRACTION_TABLE.get(), containerId);
+        super(PMERegistryMenu.LOBOTOMY_EGO_EXTRACTION_TABLE.get(), containerId);
         this.container = blockEntity;
         addExtractionSlots(blockEntity);
         addPlayerInventory(inventory);
     }
 
     private LobotomyEGOExtractionMenu(int containerId, Inventory inventory, Container container) {
-        super(MenuInit.LOBOTOMY_EGO_EXTRACTION_TABLE.get(), containerId);
+        super(PMERegistryMenu.LOBOTOMY_EGO_EXTRACTION_TABLE.get(), containerId);
         this.container = container;
         addExtractionSlots(container);
         addPlayerInventory(inventory);

@@ -1,28 +1,41 @@
 package net.pm_equips.effects;
 
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.pm_equips.MobEffectInit;
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
+import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.pm_equips.PMERegistryMobEffect;
 
-@Mod.EventBusSubscriber(modid = "pm_equips", bus = Mod.EventBusSubscriber.Bus.FORGE)
+@net.neoforged.fml.common.EventBusSubscriber(modid = "pm_equips", bus = net.neoforged.fml.common.EventBusSubscriber.Bus.GAME)
 public class EffectsEventHandler {
 
     @SubscribeEvent
-    public static void onLivingAttack(LivingAttackEvent event) {
+    public static void onLivingAttack(LivingIncomingDamageEvent event) {
         if (event.getEntity().level().isClientSide) return;
         LivingEntity target = event.getEntity();
 
         // W.Corp singularity evade handling
-        if (target.hasEffect(MobEffectInit.WCORP_SIN.get())) {
+        if (target.hasEffect(PMERegistryMobEffect.WCORP_SIN)) {
             var tag = target.getPersistentData();
             int charges = tag.getInt("wcorp_evade_charges");
             if (charges > 0) {
                 tag.putInt("wcorp_evade_charges", charges - 1);
                 event.setCanceled(true);
-                return;
             }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onMobEffectRemoved(MobEffectEvent.Remove event) {
+        if (event.getEffect().value() == PMERegistryMobEffect.WCORP_SIN.get()) {
+            event.getEntity().getPersistentData().remove("wcorp_evade_charges");
+        }
+    }
+
+    @SubscribeEvent
+    public static void onMobEffectExpired(MobEffectEvent.Expired event) {
+        if (event.getEffectInstance().getEffect().value() == PMERegistryMobEffect.WCORP_SIN.get()) {
+            event.getEntity().getPersistentData().remove("wcorp_evade_charges");
         }
     }
 }

@@ -2,6 +2,7 @@ package net.pm_equips.blockentity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
@@ -23,8 +24,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.pm_equips.BlockEntityInit;
-import net.pm_equips.TagInit;
+import net.pm_equips.PMERegistryBlockEntity;
+import net.pm_equips.PMERegistryTag;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +36,7 @@ public class PEBoxGeneratorBlockEntity extends BlockEntity {
     private final NonNullList<ItemStack> storedItems = NonNullList.create();
 
     public PEBoxGeneratorBlockEntity(BlockPos pos, BlockState state) {
-        super(BlockEntityInit.EBOX_GEN.get(), pos, state);
+        super(PMERegistryBlockEntity.EBOX_GEN.get(), pos, state);
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, PEBoxGeneratorBlockEntity blockEntity) {
@@ -109,7 +110,7 @@ public class PEBoxGeneratorBlockEntity extends BlockEntity {
     }
 
     private void generateRandomEBoxes(Level level, int rolls) {
-        List<Item> candidates = getTaggedItems(level, TagInit.Items.E_BOX);
+        List<Item> candidates = getTaggedItems(level, PMERegistryTag.Items.E_BOX);
         if (candidates.isEmpty()) {
             return;
         }
@@ -140,7 +141,7 @@ public class PEBoxGeneratorBlockEntity extends BlockEntity {
             if (generated.isEmpty()) {
                 return;
             }
-            if (ItemStack.isSameItemSameTags(stored, generated) && stored.getCount() < stored.getMaxStackSize()) {
+            if (ItemStack.isSameItemSameComponents(stored, generated) && stored.getCount() < stored.getMaxStackSize()) {
                 int moved = Math.min(generated.getCount(), stored.getMaxStackSize() - stored.getCount());
                 stored.grow(moved);
                 generated.shrink(moved);
@@ -154,26 +155,24 @@ public class PEBoxGeneratorBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.saveAdditional(tag, registries);
         ListTag items = new ListTag();
         for (ItemStack stack : storedItems) {
             if (!stack.isEmpty()) {
-                CompoundTag stackTag = new CompoundTag();
-                stack.save(stackTag);
-                items.add(stackTag);
+                items.add((CompoundTag) stack.save(registries));
             }
         }
         tag.put(STORED_ITEMS_TAG, items);
     }
 
     @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
+    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.loadAdditional(tag, registries);
         storedItems.clear();
         ListTag items = tag.getList(STORED_ITEMS_TAG, Tag.TAG_COMPOUND);
         for (int i = 0; i < items.size(); i++) {
-            ItemStack stack = ItemStack.of(items.getCompound(i));
+            ItemStack stack = ItemStack.parseOptional(registries, items.getCompound(i));
             if (!stack.isEmpty()) {
                 storedItems.add(stack);
             }
@@ -181,13 +180,13 @@ public class PEBoxGeneratorBlockEntity extends BlockEntity {
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
-        return saveWithoutMetadata();
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        return saveWithoutMetadata(registries);
     }
 
     @Override
-    public void handleUpdateTag(CompoundTag tag) {
-        load(tag);
+    public void handleUpdateTag(CompoundTag tag, HolderLookup.Provider registries) {
+        loadAdditional(tag, registries);
     }
 
     @Override
@@ -196,10 +195,10 @@ public class PEBoxGeneratorBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket packet) {
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket packet, HolderLookup.Provider registries) {
         CompoundTag tag = packet.getTag();
         if (tag != null) {
-            load(tag);
+            loadAdditional(tag, registries);
         }
     }
 

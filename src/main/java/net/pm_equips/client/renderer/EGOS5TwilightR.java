@@ -2,10 +2,10 @@ package net.pm_equips.client.renderer;
 
 import net.minecraft.world.entity.EquipmentSlot;
 import net.pm_equips.client.models.EGOS5TwilightM;
-import net.pm_equips.items.EGOP5Twilight;
+import net.pm_equips.items.LCorpEGOL5Twilight;
 import software.bernie.geckolib.renderer.GeoArmorRenderer;
 
-public class EGOS5TwilightR extends GeoArmorRenderer<EGOP5Twilight> {
+public class EGOS5TwilightR extends GeoArmorRenderer<LCorpEGOL5Twilight> {
     public EGOS5TwilightR() {
         super(new EGOS5TwilightM());
     }

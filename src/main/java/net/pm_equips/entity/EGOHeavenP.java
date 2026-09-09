@@ -1,5 +1,7 @@
 package net.pm_equips.entity;
 
+import net.minecraft.server.level.ServerEntity;
+
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.world.entity.Entity;
@@ -14,9 +16,9 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.network.NetworkHooks;
-import net.pm_equips.EntityInit;
-import net.pm_equips.ItemInit;
+import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
+import net.pm_equips.PMERegistryEntity;
+import net.pm_equips.PMERegistryItem;
 import net.pm_equips.config.CommonConfig;
 
 import java.util.HashSet;
@@ -37,7 +39,7 @@ public class EGOHeavenP extends ThrowableItemProjectile {
     }
 
     public EGOHeavenP(Level level, LivingEntity owner, Vec3 direction) {
-        this(EntityInit.HEAVEN_PROJECTILE.get(), level);
+        this(PMERegistryEntity.HEAVEN_PROJECTILE.get(), level);
         setOwner(owner);
 
         Vec3 normalizedDirection = direction.normalize();
@@ -49,7 +51,7 @@ public class EGOHeavenP extends ThrowableItemProjectile {
 
     @Override
     protected Item getDefaultItem() {
-        return ItemInit.W4_HEAVEN.get();
+        return PMERegistryItem.W4_HEAVEN.get();
     }
 
     @Override
@@ -126,7 +128,7 @@ public class EGOHeavenP extends ThrowableItemProjectile {
     }
 
     @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
+    public Packet<ClientGamePacketListener> getAddEntityPacket(ServerEntity serverEntity) {
+        return new ClientboundAddEntityPacket(this, serverEntity);
     }
 }

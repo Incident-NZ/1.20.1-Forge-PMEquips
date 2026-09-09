@@ -1,67 +1,61 @@
 package net.pm_equips.client;
 
-import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
-import net.pm_equips.BlockEntityInit;
-import net.pm_equips.EntityInit;
-import net.pm_equips.KeyBindInit;
-import net.pm_equips.MenuInit;
+import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
+import net.pm_equips.PMERegistryBlockEntity;
+import net.pm_equips.PMERegistryEntity;
+import net.pm_equips.PMERegistryKeyBind;
+import net.pm_equips.PMERegistryMenu;
 import net.pm_equips.client.renderer.*;
 import net.pm_equips.client.screen.LobotomyEGOExtractionScreen;
-import net.pm_equips.items.CorePageItem;
 import net.pm_equips.PMEquipsMain;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
-import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.registries.ForgeRegistries;
-import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 
-@Mod.EventBusSubscriber(
+@net.neoforged.fml.common.EventBusSubscriber(
         modid = PMEquipsMain.MOD_ID,
-        bus = Mod.EventBusSubscriber.Bus.MOD,
+        bus = net.neoforged.fml.common.EventBusSubscriber.Bus.MOD,
         value = Dist.CLIENT)
 public class ClientEvents {
 
     @SubscribeEvent
-    public static void clientSetup(FMLClientSetupEvent event) {
-        event.enqueueWork(() -> ForgeRegistries.ITEMS.getValues().stream()
-                .filter(CorePageItem.class::isInstance)
-                .forEach(item -> CuriosRendererRegistry.register(item, CorePageCurioRenderer::new)));
-        event.enqueueWork(() -> MenuScreens.register(MenuInit.LOBOTOMY_EGO_EXTRACTION_TABLE.get(), LobotomyEGOExtractionScreen::new));
+    public static void registerMenuScreens(RegisterMenuScreensEvent event) {
+        event.register(PMERegistryMenu.LOBOTOMY_EGO_EXTRACTION_TABLE.get(), LobotomyEGOExtractionScreen::new);
     }
 
     //EntityRenderer
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerEntityRenderer(EntityInit.W5_SOUND_OF_A_STAR_PROJECTILE.get(),
+        event.registerEntityRenderer(PMERegistryEntity.W5_SOUND_OF_A_STAR_PROJECTILE.get(),
                 ctx -> new ThrownItemRenderer<>(ctx, 1.0f, true));
-        event.registerEntityRenderer(EntityInit.MAGIC_BULLET.get(),
+        event.registerEntityRenderer(PMERegistryEntity.MAGIC_BULLET.get(),
                 AmmoMagicR::new);
-        event.registerEntityRenderer(EntityInit.BULLET_LARV.get(),
+        event.registerEntityRenderer(PMERegistryEntity.BULLET_LARV.get(),
                 AmmoLARVR::new);
-        event.registerEntityRenderer(EntityInit.BULLET_LASG.get(),
+        event.registerEntityRenderer(PMERegistryEntity.BULLET_LASG.get(),
                 AmmoLASGR::new);
-        event.registerEntityRenderer(EntityInit.BULLET.get(),
+        event.registerEntityRenderer(PMERegistryEntity.BULLET.get(),
                 AmmoGunR::new);
-        event.registerEntityRenderer(EntityInit.HEAVEN_PROJECTILE.get(),
+        event.registerEntityRenderer(PMERegistryEntity.HEAVEN_PROJECTILE.get(),
                 ctx -> new ThrownItemRenderer<>(ctx, 1.0F, true));
-        event.registerEntityRenderer(EntityInit.HATRED_MAGIC_PROJECTILE.get(),
+        event.registerEntityRenderer(PMERegistryEntity.HATRED_MAGIC_PROJECTILE.get(),
                 AmmoHatredR::new);
-        event.registerEntityRenderer(EntityInit.BULLET_EX.get(),
+        event.registerEntityRenderer(PMERegistryEntity.BULLET_EX.get(),
                 AmmoExpR::new);
-        event.registerEntityRenderer(EntityInit.WHITENIGHT_PROJECTILE.get(),
+        event.registerEntityRenderer(PMERegistryEntity.WHITENIGHT_PROJECTILE.get(),
                 PWhiteNightR::new);
-        event.registerBlockEntityRenderer(BlockEntityInit.EBOX_GEN.get(), EBoxGenR::new);
+        event.registerBlockEntityRenderer(PMERegistryBlockEntity.EBOX_GEN.get(), EBoxGenR::new);
     }
 
     @SubscribeEvent
     public static void registerKeys(RegisterKeyMappingsEvent event) {
-        event.register(KeyBindInit.RELOAD_KEY);
-        event.register(KeyBindInit.SCOPE_KEY);
-        event.register(KeyBindInit.CORE_PAGE_ABILITY_KEY);
+        event.register(PMERegistryKeyBind.RELOAD_KEY);
+        event.register(PMERegistryKeyBind.SCOPE_KEY);
+        event.register(PMERegistryKeyBind.CORE_PAGE_ABILITY_KEY);
     }
 }
 
