@@ -1,0 +1,29 @@
+{
+	"format_version": "1.9.0",
+	"parent": "item/handheld",
+	"textures": {
+		"layer0": "pm_equips:item/library_sword"
+	},
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [-45, -90, 0],
+			"translation": [0, 4.5, 1]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [-45, 90, 0],
+			"translation": [0, 4.5, 1]
+		},
+		"firstperson_righthand": {
+			"rotation": [45, 90, 0],
+			"translation": [0, 3, 0]
+		},
+		"firstperson_lefthand": {
+			"rotation": [45, -90, 0],
+			"translation": [0, 3, 0]
+		},
+		"on_shelf": {
+			"rotation": [0, 0, 45],
+			"scale": [1, 1, 0.75]
+		}
+	}
+}

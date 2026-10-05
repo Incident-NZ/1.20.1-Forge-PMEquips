@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XYY"
+  ],
+  "key": {
+    "X": {
+      "item": "minecraft:stick"
+    },
+    "Y": {
+      "tag": "minecraft:planks"
+    }
+  },
+  "result": {
+    "item": "pm_equips:library_sword_1"
+  }
+}

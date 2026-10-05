@@ -1,5 +1,6 @@
 package net.pm_equips;
 
+import net.minecraft.world.item.Rarity;
 import net.pm_equips.items.*;
 import net.pm_equips.items.materials.ArmorEquips;
 import net.minecraft.world.item.ArmorItem;
@@ -84,7 +85,8 @@ public class ItemInit {
             () -> new EGOW5Pink(new Item.Properties().durability(4000)));
     public static final RegistryObject<Item> W4_AROMA = ITEMS.register("w4_aroma",
             () -> new EGOW4Aroma(new Item.Properties().durability(3000)));
-    public static final RegistryObject<Item> W4_SOLEMN_LAMENT_L = ITEMS.register("w4_lament_l", EGOW4LamentL::new);
+    public static final RegistryObject<Item> W4_SOLEMN_LAMENT_L = ITEMS.register("w4_lament_l",
+            () -> new EGOW4LamentL(new Item.Properties().durability(3000)));
     public static final RegistryObject<Item> W4_SOLEMN_LAMENT_R = ITEMS.register("w4_lament_r",
             () -> new EGOW4LamentR(new Item.Properties().durability(3000)));
     public static final RegistryObject<Item> W4_MAGIC_BULLET = ITEMS.register("w4_magic_bullet",
@@ -111,11 +113,11 @@ public class ItemInit {
     //L社EGO防具(EGOページ)
     public static final RegistryObject<Item> S5_TWILIGHT = ITEMS.register("s5_twilight",
             () -> new EGOP5Twilight(ArmorEquips.A5_TWILIGHT, ArmorItem.Type.LEGGINGS,
-                    new Item.Properties().stacksTo(1)));
+                    new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
 
     public static final RegistryObject<Item> S5_PARADISE_LOST = ITEMS.register("s5_whitenight",
             () -> new EGOP5WhiteNight(ArmorEquips.A5_PARADISE_LOST, ArmorItem.Type.LEGGINGS,
-                    new Item.Properties().stacksTo(1)));
+                    new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
 
     public static final RegistryObject<Item> S5_MIMICRY = ITEMS.register("s5_mimicry",
             () -> new EGOP5Mimicry(ArmorEquips.A5_MIMICRY, ArmorItem.Type.LEGGINGS,
@@ -269,6 +271,12 @@ public class ItemInit {
             () -> new EGOP1Penitence(ArmorEquips.A1_PENITENCE, ArmorItem.Type.LEGGINGS,
                     new Item.Properties().stacksTo(1)));
 
+    //L社装備
+    public static final RegistryObject<Item> LCORP_BATON = ITEMS.register("lcorp_baton", WingLCorpBaton::new);
+    public static final RegistryObject<Item> LCORP_PISTOL = ITEMS.register("lcorp_pistol",
+            () -> new WingLCorpPistol(new Item.Properties()));
+    public static final RegistryObject<Item> LIBRARY_SWORD_1 = ITEMS.register("library_sword_1", LibrarySword::new);
+
     //フィクサー武器 近距離
     public static final RegistryObject<Item> G_MIMICRY = ITEMS.register("fixer_kali_mimicry", WeaponKaliMimicry::new);
     public static final RegistryObject<Item> EX_DURANDAL = ITEMS.register("fixer_roland_durandal", WeaponRolandDurandal::new);
@@ -287,22 +295,22 @@ public class ItemInit {
     public static final RegistryObject<Item> ASC2_WALTER = ITEMS.register("asc2_south_walter", Asc2Walter::new);
     public static final RegistryObject<Item> ASC2_WEST_WEAPON = ITEMS.register("asc2_west_weapon", Asc2WestWeapon::new);
     public static final RegistryObject<Item> ASC2_SOUTH_ARMOR_S6 = ITEMS.register("asc2_south_armor_s6",
-            () -> new ASC2SouthArmor(ArmorEquips.ASC2_ARMOR_SEC6, ArmorItem.Type.LEGGINGS,
+            () -> new Asc2SouthArmor(ArmorEquips.ASC2_ARMOR_SEC6, ArmorItem.Type.LEGGINGS,
                     new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> ASC2_SOUTH_ARMOR_S5 = ITEMS.register("asc2_south_armor_s5",
-            () -> new ASC2SouthArmor(ArmorEquips.ASC2_ARMOR_SEC5, ArmorItem.Type.LEGGINGS,
+            () -> new Asc2SouthArmor(ArmorEquips.ASC2_ARMOR_SEC5, ArmorItem.Type.LEGGINGS,
                     new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> ASC2_SOUTH_ARMOR_S4 = ITEMS.register("asc2_south_armor_s4",
-            () -> new ASC2SouthArmor(ArmorEquips.ASC2_ARMOR_SEC4, ArmorItem.Type.LEGGINGS,
+            () -> new Asc2SouthArmor(ArmorEquips.ASC2_ARMOR_SEC4, ArmorItem.Type.LEGGINGS,
                     new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> ASC2_SOUTH_ARMOR_S3 = ITEMS.register("asc2_south_armor_s3",
-            () -> new ASC2SouthArmor(ArmorEquips.ASC2_ARMOR_SEC3, ArmorItem.Type.LEGGINGS,
+            () -> new Asc2SouthArmor(ArmorEquips.ASC2_ARMOR_SEC3, ArmorItem.Type.LEGGINGS,
                     new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> ASC2_SOUTH_ARMOR_S2 = ITEMS.register("asc2_south_armor_s2",
-            () -> new ASC2SouthArmor(ArmorEquips.ASC2_ARMOR_SEC2, ArmorItem.Type.LEGGINGS,
+            () -> new Asc2SouthArmor(ArmorEquips.ASC2_ARMOR_SEC2, ArmorItem.Type.LEGGINGS,
                     new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> ASC2_SOUTH_ARMOR_S1 = ITEMS.register("asc2_south_armor_s1",
-            () -> new ASC2SouthArmor(ArmorEquips.ASC2_ARMOR_SEC1, ArmorItem.Type.LEGGINGS,
+            () -> new Asc2SouthArmor(ArmorEquips.ASC2_ARMOR_SEC1, ArmorItem.Type.LEGGINGS,
                     new Item.Properties().stacksTo(1)));
 
 

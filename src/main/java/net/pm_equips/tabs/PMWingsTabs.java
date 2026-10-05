@@ -5,6 +5,9 @@ import net.pm_equips.ItemInit;
 
 public class PMWingsTabs {
     public static final Item[] items = {
+            ItemInit.LIBRARY_SWORD_1.get(),
+            ItemInit.LCORP_BATON.get(),
+            ItemInit.LCORP_PISTOL.get(),
             ItemInit.WCORP_WEAPON_1.get(),
             ItemInit.WCORP_WEAPON_2.get(),
             ItemInit.WCORP_WEAPON_3.get(),

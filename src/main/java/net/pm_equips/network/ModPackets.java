@@ -95,44 +95,8 @@ public class ModPackets {
             } else if (stack.getItem() instanceof WeaponRolandLogicSG) {
                 ((WeaponRolandLogicSG) stack.getItem()).startReload(stack, player);
 
-            } else if (stack.getItem() instanceof net.pm_equips.items.EGOW1Soda) {
-                ((net.pm_equips.items.EGOW1Soda) stack.getItem()).startReload(stack, player);
-
-            } else if (stack.getItem() instanceof net.pm_equips.items.EGOW2Solitude) {
-                ((net.pm_equips.items.EGOW2Solitude) stack.getItem()).startReload(stack, player);
-
-            } else if (stack.getItem() instanceof net.pm_equips.items.EGOW2Today) {
-                ((net.pm_equips.items.EGOW2Today) stack.getItem()).startReload(stack, player);
-
-            } else if (stack.getItem() instanceof net.pm_equips.items.EGOW2Beak) {
-                ((net.pm_equips.items.EGOW2Beak) stack.getItem()).startReload(stack, player);
-
-            } else if (stack.getItem() instanceof net.pm_equips.items.EGOW2Match) {
-                ((net.pm_equips.items.EGOW2Match) stack.getItem()).startReload(stack, player);
-
-            } else if (stack.getItem() instanceof net.pm_equips.items.EGOW3Laetitia) {
-                ((net.pm_equips.items.EGOW3Laetitia) stack.getItem()).startReload(stack, player);
-
-            } else if (stack.getItem() instanceof net.pm_equips.items.EGOW3Harmony) {
-                ((net.pm_equips.items.EGOW3Harmony) stack.getItem()).startReload(stack, player);
-
-            } else if (stack.getItem() instanceof net.pm_equips.items.EGOW4LamentR) {
-                ((net.pm_equips.items.EGOW4LamentR) stack.getItem()).startReload(stack, player);
-
-            } else if (stack.getItem() instanceof net.pm_equips.items.EGOW4Hornet) {
-                ((net.pm_equips.items.EGOW4Hornet) stack.getItem()).startReload(stack, player);
-
-            } else if (stack.getItem() instanceof net.pm_equips.items.EGOW4CrimsonScarL) {
-                ((net.pm_equips.items.EGOW4CrimsonScarL) stack.getItem()).startReload(stack, player);
-
-            } else if (stack.getItem() instanceof net.pm_equips.items.EGOW4MagicBullet) {
-                ((net.pm_equips.items.EGOW4MagicBullet) stack.getItem()).startReload(stack, player);
-
             } else if (stack.getItem() instanceof net.pm_equips.items.EGOW4Aroma) {
                 ((net.pm_equips.items.EGOW4Aroma) stack.getItem()).startReload(stack, player);
-
-            } else if (stack.getItem() instanceof net.pm_equips.items.EGOW5Pink) {
-                ((net.pm_equips.items.EGOW5Pink) stack.getItem()).startReload(stack, player);
 
             } else if (stack.getItem() instanceof net.pm_equips.items.RCorpRabbitRifle) {
                 ((net.pm_equips.items.RCorpRabbitRifle) stack.getItem()).startReload(stack, player);

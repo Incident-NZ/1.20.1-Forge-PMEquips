@@ -9,6 +9,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.pm_equips.BlockInit;
+import net.pm_equips.MobEffectInit;
 import net.pm_equips.SoundInit;
 import net.pm_equips.config.CommonConfig;
 import net.minecraft.sounds.SoundSource;
@@ -34,10 +35,8 @@ public class EGOW5WhiteNight extends SwordItem {
     private static final AttributeModifier REACH_MODIFIER =
             new AttributeModifier(REACH_UUID, "white_night_reach", 3.0, AttributeModifier.Operation.ADDITION);
 
-    // Cooldown tracking per player
-    private static final java.util.Map<UUID, Long> LAST_RANGED_ATTACK = new java.util.WeakHashMap<>();
     public EGOW5WhiteNight() {
-        super(new CustomTier(), 50, -3.8f, new Properties().durability(4000).rarity(Rarity.EPIC));
+        super(new CustomTier(), 50, -3.5f, new Properties().durability(4000).rarity(Rarity.EPIC));
     }
 
     @Override
@@ -95,12 +94,12 @@ public class EGOW5WhiteNight extends SwordItem {
                     e -> e instanceof LivingEntity
                             && e.isAlive()
                             && e != player
-                            && (CommonConfig.ALLOW_FRIENDLY_FIRE.get() || !(e instanceof Player) && !player.isAlliedTo((LivingEntity) e))
+                            && (CommonConfig.ALLOW_FRIENDLY_FIRE.get() || !(e instanceof Player) && !player.isAlliedTo(e))
             );
 
             if (entityHit != null && entityHit.getEntity() instanceof LivingEntity target) {
-                // apply a small cooldown (10 ticks = 0.5s)
-                player.getCooldowns().addCooldown(this, 10);
+                // apply a small cooldown (40 ticks = 2s)
+                player.getCooldowns().addCooldown(this, 40);
 
                 // perform ranged attack
                 fireRangedAttack(level, player, target, itemStack);
@@ -151,7 +150,7 @@ public class EGOW5WhiteNight extends SwordItem {
         }
 
         // Apply effects to target
-        target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 2, false, false)); // 5 sec, level III (value 2)
+        target.addEffect(new MobEffectInstance(MobEffectInit.BIND.get(), 100, 5, false, false)); // 5 sec, level 6 / 60% speed down (value 2)
         target.hurt(level.damageSources().playerAttack(player), (float) damage);
 
         // Play sound

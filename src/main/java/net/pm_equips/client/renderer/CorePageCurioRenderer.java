@@ -76,7 +76,7 @@ public class CorePageCurioRenderer implements ICurioRenderer {
             return;
         }
 
-        if (stack.getItem() instanceof ASC2SouthArmor) {
+        if (stack.getItem() instanceof Asc2SouthArmor) {
             asc2SouthRenderer.prepForRender(slotContext.entity(), stack, EquipmentSlot.CHEST, humanoidModel);
             renderArmor(asc2SouthRenderer, stack, poseStack, buffers, light, partialTicks);
             asc2SouthRenderer.prepForRender(slotContext.entity(), stack, EquipmentSlot.LEGS, humanoidModel);

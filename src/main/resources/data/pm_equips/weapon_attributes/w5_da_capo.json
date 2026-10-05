@@ -1,6 +1,6 @@
 {
-  "parent": "bettercombat:scythe",
+  "parent": "bettercombat:glaive",
   "attributes": {
-    "two_handed": true
+    "two_handed": false
   }
 }

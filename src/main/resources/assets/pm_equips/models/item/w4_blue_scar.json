@@ -2,7 +2,7 @@
 	"format_version": "1.9.0",
 	"parent": "item/handheld",
 	"textures": {
-		"layer0": "pm_equips:item/ego_w4_blue_scar_v2"
+		"layer0": "pm_equips:item/ego_w4_blue_scar"
 	},
 	"display": {
 		"thirdperson_righthand": {

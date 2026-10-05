@@ -26,6 +26,7 @@ public class ADSPoseHandler
                     ItemInit.W2_SOLITUDE,
                     ItemInit.W2_TODAY,
                     ItemInit.W1_SODA,
+                    ItemInit.LCORP_PISTOL,
                     ItemInit.WEAPON_ROLAND_REVOLVER,
                     ItemInit.WEAPON_ROLAND_SHOTGUN,
                     ItemInit.RCORP_RABBIT_RIFLE

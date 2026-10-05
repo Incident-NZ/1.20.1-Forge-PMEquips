@@ -26,7 +26,6 @@ public class PWhiteNight extends Projectile implements IEntityAdditionalSpawnDat
     private int ticksExisted = 0;
     private final Set<Integer> hitEntities = new HashSet<>();
     private float damage = 25.0f;
-    private int weaponType = 0; // 0, 1, or 2 for different weapon models
 
     private static final EntityDataAccessor<Integer> TEXTURE_ID = SynchedEntityData.defineId(PWhiteNight.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> WEAPON_TYPE = SynchedEntityData.defineId(PWhiteNight.class, EntityDataSerializers.INT);
@@ -36,11 +35,6 @@ public class PWhiteNight extends Projectile implements IEntityAdditionalSpawnDat
 
     public PWhiteNight(EntityType<? extends PWhiteNight> type, Level level) {
         super(type, level);
-    }
-
-    public PWhiteNight(EntityType<? extends PWhiteNight> type, Level level,
-                       LivingEntity shooter, Vec3 pos, float damage, int weaponType) {
-        this(type, level, shooter, pos, damage, weaponType, 0.0F, DEFAULT_RENDER_SCALE);
     }
 
     public PWhiteNight(EntityType<? extends PWhiteNight> type, Level level,
@@ -55,7 +49,7 @@ public class PWhiteNight extends Projectile implements IEntityAdditionalSpawnDat
         this.noPhysics = true;
         this.setDeltaMovement(Vec3.ZERO);
         this.damage = damage;
-        this.weaponType = weaponType;
+        // 0, 1, or 2 for different weapon models
         this.entityData.set(RENDER_SCALE, renderScale);
 
         if (!level.isClientSide) {
@@ -96,9 +90,7 @@ public class PWhiteNight extends Projectile implements IEntityAdditionalSpawnDat
         }
 
         // Client-side: minimal visual (actual rendering is in renderer)
-        if (this.level().isClientSide) {
-            // Particle effects handled by client renderer
-        }
+        // Particle effects handled by client renderer
     }
 
     @Override
@@ -112,24 +104,8 @@ public class PWhiteNight extends Projectile implements IEntityAdditionalSpawnDat
         return this.entityData.get(TEXTURE_ID);
     }
 
-    public void setTextureId(int id) {
-        this.entityData.set(TEXTURE_ID, id);
-    }
-
-    public int getWeaponType() {
-        return this.entityData.get(WEAPON_TYPE);
-    }
-
-    public void setWeaponType(int t) {
-        this.entityData.set(WEAPON_TYPE, t);
-    }
-
     public float getRenderScale() {
         return this.entityData.get(RENDER_SCALE);
-    }
-
-    public void setRenderScale(float scale) {
-        this.entityData.set(RENDER_SCALE, scale);
     }
 
     @Override

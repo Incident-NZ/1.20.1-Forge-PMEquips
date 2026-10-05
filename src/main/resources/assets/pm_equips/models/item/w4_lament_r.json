@@ -2,18 +2,18 @@
 	"format_version": "1.9.0",
 	"parent": "item/generated",
 	"textures": {
-		"layer0": "pm_equips:item/ego_w4_lament_r"
+		"layer0": "pm_equips:item/ego_w4_lament_black"
 	},
 	"display": {
 		"thirdperson_righthand": {
 			"rotation": [-180, 90, 145],
-			"translation": [0, -3, -1],
-			"scale": [1, 1, 0.75]
+			"translation": [0, 0, -0.5],
+			"scale": [0.5, 0.5, 0.5]
 		},
 		"thirdperson_lefthand": {
 			"rotation": [-180, -90, -145],
-			"translation": [0, -3, -1],
-			"scale": [1, 1, 0.75]
+			"translation": [0, 0, -0.5],
+			"scale": [0.5, 0.5, 0.5]
 		},
 		"firstperson_righthand": {
 			"rotation": [-180, 90, 147.5],

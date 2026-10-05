@@ -15,10 +15,10 @@ import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.function.Consumer;
 
-public class ASC2SouthArmor extends CorePageItem {
+public class Asc2SouthArmor extends CorePageItem {
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
-    public ASC2SouthArmor(ArmorMaterial material, Type type, Properties props) {
+    public Asc2SouthArmor(ArmorMaterial material, Type type, Properties props) {
         super(material, type, props);
     }
 

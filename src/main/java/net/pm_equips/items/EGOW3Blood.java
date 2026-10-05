@@ -5,17 +5,17 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeMod;
 import net.pm_equips.BlockInit;
-import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;
 
 import java.util.UUID;
 
-public class EGOW3Blood extends SwordItem {
+public class EGOW3Blood extends AxeItem {
 
     private static final UUID REACH_UUID = UUID.randomUUID();
     private static final AttributeModifier REACH_MODIFIER =

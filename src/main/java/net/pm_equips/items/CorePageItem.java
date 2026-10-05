@@ -57,7 +57,7 @@ public class CorePageItem extends ArmorItem implements GeoItem, ICurioItem {
             case KCorpAgentArmor kCorpAgentArmor -> resource("geo/kcorp_agent_armor.geo.json");
             case KCorpOfficerArmor kCorpOfficerArmor -> resource("geo/kcorp_officer_armor.geo.json");
             case RCorp4thRabbitArmor rCorp4thRabbitArmor -> resource("geo/rcorp_4th_rabbit_armor.geo.json");
-            case ASC2SouthArmor asc2SouthArmor -> resource("geo/asc2_south_armor.geo.json");
+            case Asc2SouthArmor asc2SouthArmor -> resource("geo/asc2_south_armor.geo.json");
             case HCorpMaoArmor hCorpMaoArmor -> resource("geo/hcorp_mao_armor.geo.json");
             case HCorpSiArmor hCorpSiArmor -> resource("geo/hcorp_si_armor.geo.json");
             case HCorpYouArmor hCorpYouArmor -> resource("geo/hcorp_you_armor.geo.json");
@@ -72,7 +72,7 @@ public class CorePageItem extends ArmorItem implements GeoItem, ICurioItem {
             case KCorpAgentArmor kCorpAgentArmor -> resource("textures/armor/kcorp_agent_armor.png");
             case KCorpOfficerArmor kCorpOfficerArmor -> resource("textures/armor/kcorp_officer_armor.png");
             case RCorp4thRabbitArmor rCorp4thRabbitArmor -> resource("textures/armor/rcorp_4th_rabbit_armor.png");
-            case ASC2SouthArmor asc2SouthArmor -> resource("textures/armor/asc2_south_armor.png");
+            case Asc2SouthArmor asc2SouthArmor -> resource("textures/armor/asc2_south_armor.png");
             case HCorpMaoArmor hCorpMaoArmor -> resource("textures/armor/hcorp_mao.png");
             case HCorpSiArmor hCorpSiArmor -> resource("textures/armor/hcorp_si.png");
             case HCorpYouArmor hCorpYouArmor -> resource("textures/armor/hcorp_you.png");
@@ -103,7 +103,7 @@ public class CorePageItem extends ArmorItem implements GeoItem, ICurioItem {
                 || this instanceof KCorpAgentArmor
                 || this instanceof KCorpOfficerArmor
                 || this instanceof RCorp4thRabbitArmor
-                || this instanceof ASC2SouthArmor
+                || this instanceof Asc2SouthArmor
                 || this instanceof HCorpMaoArmor
                 || this instanceof HCorpSiArmor
                 || this instanceof HCorpYouArmor;

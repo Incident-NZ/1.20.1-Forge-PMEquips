@@ -1,16 +1,18 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "AAA",
-    "A A",
-    "AAA"
+    "XX",
+    "XY"
   ],
   "key": {
-    "A": {
+    "X": {
       "item": "minecraft:iron_ingot"
+    },
+    "Y": {
+      "item": "minecraft:gunpowder"
     }
   },
   "result": {
-    "item": "pm_equips:item_blade_gear"
+    "item": "pm_equips:lcorp_pistol"
   }
 }

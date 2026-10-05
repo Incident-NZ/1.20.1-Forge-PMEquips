@@ -13,29 +13,29 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.pm_equips.BlockInit;
 import net.pm_equips.ItemInit;
 import net.pm_equips.SoundInit;
 
 import java.util.function.Predicate;
 
-public class EGOW5Pink extends ProjectileWeaponItem {
-    private static final float DAMAGE = 24.0f;
-    private static final int COOLDOWN_TICKS = 30;
-    private static final double RANGE = 128.0;
+public class WingLCorpPistol extends ProjectileWeaponItem {
+    private static final float DAMAGE = 2.0f;
+    private static final int COOLDOWN_TICKS = 40;
+    private static final double RANGE = 32.0;
 
-    public EGOW5Pink(Properties properties) {
-        super(properties.durability(4000));
+    public WingLCorpPistol(Properties properties) {
+        super(properties.durability(800));
     }
 
     @Override
     public Predicate<ItemStack> getAllSupportedProjectiles() {
-        return stack -> stack.getItem() == ItemInit.RIFLE_BULLET_AMMO.get();
+        return stack -> stack.getItem() == ItemInit.PISTOL_BULLET_AMMO.get();
     }
 
     @Override
@@ -166,13 +166,13 @@ public class EGOW5Pink extends ProjectileWeaponItem {
     }
 
     private boolean hasAmmo(Player player) {
-        return player.getInventory().contains(new ItemStack(ItemInit.RIFLE_BULLET_AMMO.get()));
+        return player.getInventory().contains(new ItemStack(ItemInit.PISTOL_BULLET_AMMO.get()));
     }
 
     private void consumeAmmo(Player player) {
         if (!player.getAbilities().instabuild) {
             player.getInventory().clearOrCountMatchingItems(
-                    stack -> stack.is(ItemInit.RIFLE_BULLET_AMMO.get()),
+                    stack -> stack.is(ItemInit.PISTOL_BULLET_AMMO.get()),
                     1,
                     player.inventoryMenu.getCraftSlots()
             );
@@ -188,6 +188,6 @@ public class EGOW5Pink extends ProjectileWeaponItem {
 
     @Override
     public boolean isValidRepairItem(ItemStack stack, ItemStack repair) {
-        return repair.is(BlockInit.BlockItems.ZAYIN_PE_BOX.get());
+        return repair.is(Items.IRON_INGOT);
     }
 }

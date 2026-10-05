@@ -2,7 +2,6 @@ package net.pm_equips.items;
 
 import net.pm_equips.BlockInit;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -10,6 +9,7 @@ import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.phys.AABB;
+import net.pm_equips.MobEffectInit;
 
 import java.util.List;
 
@@ -32,7 +32,7 @@ public class EGOW5Smile extends SwordItem {
 
         if (!attacker.level().isClientSide && attacker instanceof Player player) {
 
-            target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 30 * 20, 2)); // 30秒, Lv3
+            target.addEffect(new MobEffectInstance(MobEffectInit.BIND.get(), 100, 6)); // 30秒, Lv3
             var tag = stack.getOrCreateTag();
             int count = tag.getInt(ATTACK_COUNT_TAG) + 1;
             if (count >= 5) {
@@ -48,10 +48,10 @@ public class EGOW5Smile extends SwordItem {
                         e -> e != player && e.isAlive());
 
                 for (LivingEntity entity : entities) {
-                    entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 120 * 20, 2)); // 2分, Lv3
+                    entity.addEffect(new MobEffectInstance(MobEffectInit.BIND.get(), 100, 6));
                 }
 
-                target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 120 * 20, 2));
+                target.addEffect(new MobEffectInstance(MobEffectInit.BIND.get(), 60, 4));
             }
 
             tag.putInt(ATTACK_COUNT_TAG, count);

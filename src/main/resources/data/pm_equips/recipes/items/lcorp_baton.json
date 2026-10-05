@@ -1,18 +1,17 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "AA",
-    "BB"
+    "XYY"
   ],
   "key": {
-    "A": {
-      "item": "minecraft:gold_ingot"
+    "X": {
+      "item": "minecraft:stick"
     },
-    "B": {
+    "Y": {
       "item": "minecraft:cobblestone"
     }
   },
   "result": {
-    "item": "pm_equips:ego_extraction_table"
+    "item": "pm_equips:lcorp_baton"
   }
 }
