@@ -1,0 +1,10 @@
+{
+  "id": "pm_equips:w4_lamp",
+  "result": {
+    "item": "pm_equips:w4_lamp",
+    "count": 1
+  },
+  "ingredients": [
+    { "item": "pm_equips:e_box_4", "count": 70 }
+  ]
+}

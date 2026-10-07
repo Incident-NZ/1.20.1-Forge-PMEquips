@@ -1,24 +1,29 @@
 package net.pm_equips.items;
 
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 import net.pm_equips.client.renderer.EGOS4HeavenR;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import net.pm_equips.client.screen.TooltipLines;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 
+import java.util.List;
 import java.util.function.Consumer;
 
 public class EGOP4Heaven extends CorePageItem {
-    private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+    private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
     public EGOP4Heaven(ArmorMaterial material, ArmorItem.Type type, Properties props) {
         super(material, type, props);
@@ -56,9 +61,10 @@ public class EGOP4Heaven extends CorePageItem {
         return cache;
     }
 
-    public static boolean hasFullSet(Player player) {
-        return player.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof EGOP4Heaven &&
-                player.getItemBySlot(EquipmentSlot.LEGS).getItem() instanceof EGOP4Heaven;
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
+        TooltipLines.addShiftExpanded(tooltip, TooltipLines.HEAVEN_ARMOR);
+        super.appendHoverText(stack, level, tooltip, flag);
     }
 }
 

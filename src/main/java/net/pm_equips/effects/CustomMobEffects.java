@@ -117,4 +117,14 @@ public class CustomMobEffects {
             entity.hurt(src, dmg);
         }
     }
+
+    public static class BarrierEffect extends MobEffect {
+        public BarrierEffect() {
+            super(MobEffectCategory.BENEFICIAL, 0x55C6FF);
+        }
+
+        public static float getNegateThreshold(int amplifier) {
+            return 10.0F * (amplifier + 1);
+        }
+    }
 }

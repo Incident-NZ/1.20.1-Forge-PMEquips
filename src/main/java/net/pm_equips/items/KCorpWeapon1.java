@@ -134,17 +134,14 @@ public class KCorpWeapon1 extends SwordItem {
 
         stack.getCapability(
                 ForgeCapabilities.ENERGY
-        ).ifPresent(storage -> {
-
-            tooltip.add(
-                    Component.literal(
-                            "FE: "
-                                    + storage.getEnergyStored()
-                                    + " / "
-                                    + storage.getMaxEnergyStored()
-                    )
-            );
-        });
+        ).ifPresent(storage -> tooltip.add(
+                Component.literal(
+                        "FE: "
+                                + storage.getEnergyStored()
+                                + " / "
+                                + storage.getMaxEnergyStored()
+                )
+        ));
 
         super.appendHoverText(
                 stack,

@@ -1,5 +1,8 @@
 package net.pm_equips.items;
 
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 import net.pm_equips.client.renderer.EGOS5StarR;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.sounds.SoundEvents;
@@ -15,7 +18,9 @@ import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.pm_equips.client.screen.TooltipLines;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
@@ -28,7 +33,7 @@ import java.util.UUID;
 import java.util.function.Consumer;
 
 public class EGOP5Star extends CorePageItem {
-    private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+    private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
     public EGOP5Star(ArmorMaterial material, ArmorItem.Type type, Properties props) {
         super(material, type, props);
@@ -72,7 +77,7 @@ public class EGOP5Star extends CorePageItem {
         private static final Map<UUID, Integer> cooldowns = new HashMap<>();
 
         public static boolean BlueStarFullSet(Player player) {
-            return player.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof EGOP5Star &&
+            return player.getItemBySlot(EquipmentSlot.MAINHAND).getItem() instanceof EGOW5Star &&
                     player.getItemBySlot(EquipmentSlot.LEGS).getItem() instanceof EGOP5Star;
         }
 
@@ -96,9 +101,9 @@ public class EGOP5Star extends CorePageItem {
                         .toList();
 
                 for (Player target : playersInChunk) {
-                    target.heal(6.0f);
+                    target.heal(5.0f);
                 }
-                player.heal(6.0f);
+                player.heal(5.0f);
 
                 // サウンドエフェクトとかもここで鳴らせる
                 player.level().playSound(null, player.blockPosition(),
@@ -110,6 +115,12 @@ public class EGOP5Star extends CorePageItem {
                 cooldowns.put(uuid, ticks - 1);
             }
         }
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
+        TooltipLines.addShiftExpanded(tooltip, TooltipLines.STAR_ARMOR);
+        super.appendHoverText(stack, level, tooltip, flag);
     }
 }
 

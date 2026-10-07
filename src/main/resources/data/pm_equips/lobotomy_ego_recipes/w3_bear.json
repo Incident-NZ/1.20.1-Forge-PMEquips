@@ -1,0 +1,10 @@
+{
+  "id": "pm_equips:w3_bear",
+  "result": {
+    "item": "pm_equips:w3_bear",
+    "count": 1
+  },
+  "ingredients": [
+    { "item": "pm_equips:e_box_3", "count": 40 }
+  ]
+}

@@ -3,8 +3,6 @@ package net.pm_equips.items;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.item.UseAnim;
-import net.pm_equips.SoundInit;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.damagesource.DamageSource;
@@ -14,10 +12,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.pm_equips.SoundInit;
 import net.pm_equips.events.RolandMookDropHandler;
 
 import java.util.List;
@@ -29,6 +29,8 @@ public class WeaponRolandMook extends SwordItem {
     private static final String TAG_COOLDOWN = "roland_mook_cooldown";
     private static final int USE_DURATION = 60;
     private static final int COOLDOWN_TICKS = 20 * 15;
+    /** これ未満で離したら「抜刀」、以上（最後まで）で必殺 */
+    private static final int DRAW_THRESHOLD = USE_DURATION; // 満チャージ必須
 
     public WeaponRolandMook() {
         super(new CustomTier(), 14, -2.8f, new Properties().durability(1000));
@@ -37,18 +39,23 @@ public class WeaponRolandMook extends SwordItem {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
+
+        // 抜刀中の右クリック → 納刀
         if (isDrawn(stack)) {
             setDrawn(stack, false);
             return InteractionResultHolder.consume(stack);
         }
 
-        if (isCoolingDown(stack)) {
+        if (isCoolingDown(stack, level)) {
             return InteractionResultHolder.fail(stack);
         }
 
         player.startUsingItem(hand);
-        level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundInit.ROLAND_MOOK_CHARGE.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
-        return InteractionResultHolder.success(stack);
+        if (!level.isClientSide) {
+            level.playSound(null, player.getX(), player.getY(), player.getZ(),
+                    SoundInit.ROLAND_MOOK_CHARGE.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
+        }
+        return InteractionResultHolder.consume(stack);
     }
 
     @Override
@@ -61,22 +68,50 @@ public class WeaponRolandMook extends SwordItem {
         return UseAnim.BLOCK;
     }
 
+    /**
+     * 途中で離したとき。
+     * timeLeft = 残り時間（満チャージほど 0 に近い）
+     * 使用時間 = getUseDuration - timeLeft
+     */
     @Override
-    public void releaseUsing(ItemStack stack, Level level, LivingEntity entity, int timeCharged) {
+    public void releaseUsing(ItemStack stack, Level level, LivingEntity entity, int timeLeft) {
         if (!(entity instanceof Player player) || isDrawn(stack)) {
             return;
         }
+        if (level.isClientSide) {
+            return;
+        }
 
-        if (timeCharged < USE_DURATION) {
+        int usedTicks = getUseDuration(stack) - timeLeft;
+
+        // 途中解除 → 抜刀のみ
+        if (usedTicks < DRAW_THRESHOLD) {
             setDrawn(stack, true);
             return;
         }
 
-        if (isCoolingDown(stack)) {
+        // ここには通常来ない（満了は finishUsingItem）が保険
+        tryPerformSpecial(stack, level, player);
+    }
+
+    /**
+     * 右クリックを最後まで押し切ったとき（必殺発動）
+     */
+    @Override
+    public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
+        if (entity instanceof Player player && !isDrawn(stack) && !level.isClientSide) {
+            tryPerformSpecial(stack, level, player);
+        }
+        return stack;
+    }
+
+    private void tryPerformSpecial(ItemStack stack, Level level, Player player) {
+        if (isCoolingDown(stack, level)) {
             return;
         }
 
-        level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundInit.ROLAND_MOOK_ATTACK.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
+        level.playSound(null, player.getX(), player.getY(), player.getZ(),
+                SoundInit.ROLAND_MOOK_ATTACK.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
         performSpecialSlash(level, player);
         setCooldown(stack, level);
     }
@@ -100,12 +135,13 @@ public class WeaponRolandMook extends SwordItem {
         return stack.getOrCreateTag().getBoolean(TAG_DRAWN);
     }
 
-    private boolean isCoolingDown(ItemStack stack) {
+    private boolean isCoolingDown(ItemStack stack, Level level) {
         CompoundTag tag = stack.getOrCreateTag();
         if (!tag.contains(TAG_COOLDOWN)) {
             return false;
         }
-        return tag.getLong(TAG_COOLDOWN) > tag.getLong("_last_tick");
+        // ゲーム時間と比較する（修正点）
+        return tag.getLong(TAG_COOLDOWN) > level.getGameTime();
     }
 
     private void setDrawn(ItemStack stack, boolean drawn) {
@@ -114,9 +150,7 @@ public class WeaponRolandMook extends SwordItem {
 
     private void setCooldown(ItemStack stack, Level level) {
         CompoundTag tag = stack.getOrCreateTag();
-        long now = level.getGameTime();
-        tag.putLong(TAG_COOLDOWN, now + COOLDOWN_TICKS);
-        tag.putLong("_last_tick", now);
+        tag.putLong(TAG_COOLDOWN, level.getGameTime() + COOLDOWN_TICKS);
     }
 
     private int getDamageValue(ItemStack stack) {
@@ -156,39 +190,16 @@ public class WeaponRolandMook extends SwordItem {
             }
         }
 
-        level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.PLAYER_ATTACK_SWEEP,
-                SoundSource.PLAYERS, 1.0F, 1.0F);
+        level.playSound(null, player.getX(), player.getY(), player.getZ(),
+                SoundEvents.PLAYER_ATTACK_SWEEP, SoundSource.PLAYERS, 1.0F, 1.0F);
     }
 
     private static class CustomTier implements Tier {
-        @Override
-        public int getUses() {
-            return 1000;
-        }
-
-        @Override
-        public float getSpeed() {
-            return 4.0f;
-        }
-
-        @Override
-        public float getAttackDamageBonus() {
-            return 0.0f;
-        }
-
-        @Override
-        public int getLevel() {
-            return 0;
-        }
-
-        @Override
-        public int getEnchantmentValue() {
-            return 0;
-        }
-
-        @Override
-        public Ingredient getRepairIngredient() {
-            return null;
-        }
+        @Override public int getUses() { return 1000; }
+        @Override public float getSpeed() { return 4.0f; }
+        @Override public float getAttackDamageBonus() { return 0.0f; }
+        @Override public int getLevel() { return 0; }
+        @Override public int getEnchantmentValue() { return 0; }
+        @Override public Ingredient getRepairIngredient() { return Ingredient.EMPTY; }
     }
 }

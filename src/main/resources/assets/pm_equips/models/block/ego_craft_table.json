@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "pm_equips:block/ego_table_front",
+    "side": "pm_equips:block/ego_table_side",
+    "top": "pm_equips:block/ego_table_top",
+    "bottom": "pm_equips:block/ego_table_bottom"
+  }
+}

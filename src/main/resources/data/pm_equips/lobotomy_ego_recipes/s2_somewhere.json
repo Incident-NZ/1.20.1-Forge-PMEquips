@@ -1,0 +1,10 @@
+{
+  "id": "pm_equips:s2_somewhere",
+  "result": {
+    "item": "pm_equips:s2_somewhere",
+    "count": 1
+  },
+  "ingredients": [
+    { "item": "pm_equips:e_box_2", "count": 30 }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "id": "pm_equips:s3_lament",
+  "result": {
+    "item": "pm_equips:s3_lament",
+    "count": 1
+  },
+  "ingredients": [
+    { "item": "pm_equips:e_box_3", "count": 45 }
+  ]
+}

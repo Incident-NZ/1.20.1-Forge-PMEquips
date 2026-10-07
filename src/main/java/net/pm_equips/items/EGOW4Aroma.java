@@ -18,6 +18,7 @@ import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.item.TippedArrowItem;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.pm_equips.client.screen.TooltipLines;
 
 import java.util.List;
 import java.util.function.Predicate;
@@ -179,19 +180,6 @@ public class EGOW4Aroma extends ProjectileWeaponItem {
         super.inventoryTick(stack, level, entity, slot, selected);
     }
 
-    @Override
-    public void appendHoverText(
-            ItemStack stack,
-            Level level,
-            List<Component> tooltip,
-            TooltipFlag flag
-    ) {
-        tooltip.add(Component.literal(
-                "Ammo: " + (getLoadedArrow(stack).isEmpty() ? 0 : 1) + " / 1"
-        ));
-        super.appendHoverText(stack, level, tooltip, flag);
-    }
-
     private static ItemStack findSupportedArrow(Player player) {
         for (ItemStack inventoryStack : player.getInventory().items) {
             if (isSupportedArrow(inventoryStack)) {
@@ -215,4 +203,12 @@ public class EGOW4Aroma extends ProjectileWeaponItem {
         return stack.getItem() instanceof ArrowItem
                 && !(stack.getItem() instanceof TippedArrowItem);
     }
+
+    @Override
+    public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
+        tooltip.add(Component.literal("Ammo: " + (getLoadedArrow(stack).isEmpty() ? 0 : 1) + " / 1"));
+        TooltipLines.addShiftExpanded(tooltip, TooltipLines.AROMA_WEAPON);
+        super.appendHoverText(stack, level, tooltip, flag);
+    }
+
 }

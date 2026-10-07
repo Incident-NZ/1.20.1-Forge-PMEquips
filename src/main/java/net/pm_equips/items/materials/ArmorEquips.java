@@ -152,94 +152,94 @@ public enum ArmorEquips implements ArmorMaterial {
             SoundEvents.ARMOR_EQUIP_GENERIC, 2.5f, 0.0f, () -> Ingredient.of(Items.LEATHER)),
 
     WCORP_ARMOR_L1("wcorp_armor_class1", 300, new int[]{0, 0, 12, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 4.0f, 0.01f, () -> Ingredient.of(ItemInit.WCORP_BATTERY.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 4.0f, 0.1f, () -> Ingredient.of(ItemInit.WCORP_BATTERY.get())),
 
     WCORP_ARMOR_L2("wcorp_armor_class2", 500, new int[]{0, 0, 14, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 8.0f, 0.02f, () -> Ingredient.of(ItemInit.WCORP_BATTERY.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 8.0f, 0.2f, () -> Ingredient.of(ItemInit.WCORP_BATTERY.get())),
 
     WCORP_ARMOR_L3("wcorp_armor_class3", 700, new int[]{0, 0, 16, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 10.0f, 0.03f, () -> Ingredient.of(ItemInit.WCORP_BATTERY.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 10.0f, 0.3f, () -> Ingredient.of(ItemInit.WCORP_BATTERY.get())),
 
     WCORP_ARMOR_L4("wcorp_armor_class4", 850, new int[]{0, 0, 18, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 12.0f, 0.04f, () -> Ingredient.of(ItemInit.WCORP_BATTERY.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 12.0f, 0.4f, () -> Ingredient.of(ItemInit.WCORP_BATTERY.get())),
 
     WCORP_ARMOR_L5("wcorp_armor_class5", 1000, new int[]{0, 0, 20, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 15.0f, 0.05f, () -> Ingredient.of(ItemInit.WCORP_BATTERY.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 15.0f, 0.5f, () -> Ingredient.of(ItemInit.WCORP_BATTERY.get())),
 
     KCORP_ARMOR_L1("kcorp_armor_class1", 300, new int[]{0, 0, 12, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 4.0f, 0.01f, () -> Ingredient.of(ItemInit.KCORP_AMPOULE.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 4.0f, 0.1f, () -> Ingredient.of(ItemInit.KCORP_AMPOULE.get())),
 
     KCORP_ARMOR_L2("kcorp_armor_class2", 500, new int[]{0, 0, 14, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 8.0f, 0.02f, () -> Ingredient.of(ItemInit.KCORP_AMPOULE.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 8.0f, 0.2f, () -> Ingredient.of(ItemInit.KCORP_AMPOULE.get())),
 
     KCORP_ARMOR_L3("kcorp_armor_class3", 700, new int[]{0, 0, 16, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 10.0f, 0.03f, () -> Ingredient.of(ItemInit.KCORP_AMPOULE.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 10.0f, 0.3f, () -> Ingredient.of(ItemInit.KCORP_AMPOULE.get())),
 
     KCORP_ARMOR_L4("kcorp_armor_class4", 850, new int[]{0, 0, 18, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 12.0f, 0.04f, () -> Ingredient.of(ItemInit.KCORP_AMPOULE.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 12.0f, 0.4f, () -> Ingredient.of(ItemInit.KCORP_AMPOULE.get())),
 
     KCORP_ARMOR_L5("kcorp_armor_class5", 1000, new int[]{0, 0, 20, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 15.0f, 0.05f, () -> Ingredient.of(ItemInit.KCORP_AMPOULE.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 15.0f, 0.5f, () -> Ingredient.of(ItemInit.KCORP_AMPOULE.get())),
 
     RCORP_4TH_RABBIT_ARMOR_L1("rcorp_4th_rabbit_armor_class1", 300, new int[]{0, 0, 12, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 4.0f, 0.01f, () -> Ingredient.of(ItemInit.RCORP_BATTERY.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 4.0f, 0.1f, () -> Ingredient.of(ItemInit.RCORP_BATTERY.get())),
 
     RCORP_4TH_RABBIT_ARMOR_L2("rcorp_4th_rabbit_armor_class2", 500, new int[]{0, 0, 14, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 8.0f, 0.02f, () -> Ingredient.of(ItemInit.RCORP_BATTERY.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 8.0f, 0.2f, () -> Ingredient.of(ItemInit.RCORP_BATTERY.get())),
 
     RCORP_4TH_RABBIT_ARMOR_L3("rcorp_4th_rabbit_armor_class3", 700, new int[]{0, 0, 16, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 10.0f, 0.03f, () -> Ingredient.of(ItemInit.RCORP_BATTERY.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 10.0f, 0.3f, () -> Ingredient.of(ItemInit.RCORP_BATTERY.get())),
 
     RCORP_4TH_RABBIT_ARMOR_L4("rcorp_4th_rabbit_armor_class4", 850, new int[]{0, 0, 18, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 12.0f, 0.04f, () -> Ingredient.of(ItemInit.RCORP_BATTERY.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 12.0f, 0.4f, () -> Ingredient.of(ItemInit.RCORP_BATTERY.get())),
 
     RCORP_4TH_RABBIT_ARMOR_L5("rcorp_4th_rabbit_armor_class5", 1000, new int[]{0, 0, 20, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 15.0f, 0.05f, () -> Ingredient.of(ItemInit.RCORP_BATTERY.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 15.0f, 0.5f, () -> Ingredient.of(ItemInit.RCORP_BATTERY.get())),
 
     HCORP_MAO_ARMOR_L1("hcorp_mao_armor_class1", 300, new int[]{0, 0, 12, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 4.0f, 0.01f, () -> Ingredient.of(ItemInit.HCORP_BOLUS_MAO.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 4.0f, 0.1f, () -> Ingredient.of(ItemInit.HCORP_BOLUS_MAO.get())),
 
     HCORP_MAO_ARMOR_L2("hcorp_mao_armor_class2", 500, new int[]{0, 0, 14, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 8.0f, 0.02f, () -> Ingredient.of(ItemInit.HCORP_BOLUS_MAO.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 8.0f, 0.2f, () -> Ingredient.of(ItemInit.HCORP_BOLUS_MAO.get())),
 
     HCORP_MAO_ARMOR_L3("hcorp_mao_armor_class3", 700, new int[]{0, 0, 16, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 10.0f, 0.03f, () -> Ingredient.of(ItemInit.HCORP_BOLUS_MAO.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 10.0f, 0.3f, () -> Ingredient.of(ItemInit.HCORP_BOLUS_MAO.get())),
 
     HCORP_MAO_ARMOR_L4("hcorp_mao_armor_class4", 850, new int[]{0, 0, 18, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 12.0f, 0.04f, () -> Ingredient.of(ItemInit.HCORP_BOLUS_MAO.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 12.0f, 0.4f, () -> Ingredient.of(ItemInit.HCORP_BOLUS_MAO.get())),
 
     HCORP_MAO_ARMOR_L5("hcorp_mao_armor_class5", 1000, new int[]{0, 0, 20, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 15.0f, 0.05f, () -> Ingredient.of(ItemInit.HCORP_BOLUS_MAO.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 15.0f, 0.5f, () -> Ingredient.of(ItemInit.HCORP_BOLUS_MAO.get())),
 
     HCORP_SI_ARMOR_L1("hcorp_si_armor_class1", 300, new int[]{0, 0, 12, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 4.0f, 0.01f, () -> Ingredient.of(ItemInit.HCORP_BOLUS_SI.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 4.0f, 0.1f, () -> Ingredient.of(ItemInit.HCORP_BOLUS_SI.get())),
 
     HCORP_SI_ARMOR_L2("hcorp_si_armor_class2", 500, new int[]{0, 0, 14, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 8.0f, 0.02f, () -> Ingredient.of(ItemInit.HCORP_BOLUS_SI.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 8.0f, 0.2f, () -> Ingredient.of(ItemInit.HCORP_BOLUS_SI.get())),
 
     HCORP_SI_ARMOR_L3("hcorp_si_armor_class3", 700, new int[]{0, 0, 16, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 10.0f, 0.03f, () -> Ingredient.of(ItemInit.HCORP_BOLUS_SI.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 10.0f, 0.3f, () -> Ingredient.of(ItemInit.HCORP_BOLUS_SI.get())),
 
     HCORP_SI_ARMOR_L4("hcorp_si_armor_class4", 850, new int[]{0, 0, 18, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 12.0f, 0.04f, () -> Ingredient.of(ItemInit.HCORP_BOLUS_SI.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 12.0f, 0.4f, () -> Ingredient.of(ItemInit.HCORP_BOLUS_SI.get())),
 
     HCORP_SI_ARMOR_L5("hcorp_si_armor_class5", 1000, new int[]{0, 0, 20, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 15.0f, 0.05f, () -> Ingredient.of(ItemInit.HCORP_BOLUS_SI.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 15.0f, 0.5f, () -> Ingredient.of(ItemInit.HCORP_BOLUS_SI.get())),
 
     HCORP_YOU_ARMOR_L1("hcorp_you_armor_class1", 300, new int[]{0, 0, 12, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 4.0f, 0.01f, () -> Ingredient.of(ItemInit.HCORP_BOLUS_YOU.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 4.0f, 0.1f, () -> Ingredient.of(ItemInit.HCORP_BOLUS_YOU.get())),
 
     HCORP_YOU_ARMOR_L2("hcorp_you_armor_class2", 500, new int[]{0, 0, 14, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 8.0f, 0.02f, () -> Ingredient.of(ItemInit.HCORP_BOLUS_YOU.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 8.0f, 0.2f, () -> Ingredient.of(ItemInit.HCORP_BOLUS_YOU.get())),
 
     HCORP_YOU_ARMOR_L3("hcorp_you_armor_class3", 700, new int[]{0, 0, 16, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 10.0f, 0.03f, () -> Ingredient.of(ItemInit.HCORP_BOLUS_YOU.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 10.0f, 0.3f, () -> Ingredient.of(ItemInit.HCORP_BOLUS_YOU.get())),
 
     HCORP_YOU_ARMOR_L4("hcorp_you_armor_class4", 850, new int[]{0, 0, 18, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 12.0f, 0.04f, () -> Ingredient.of(ItemInit.HCORP_BOLUS_YOU.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 12.0f, 0.4f, () -> Ingredient.of(ItemInit.HCORP_BOLUS_YOU.get())),
 
     HCORP_YOU_ARMOR_L5("hcorp_you_armor_class5", 1000, new int[]{0, 0, 20, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 15.0f, 0.05f, () -> Ingredient.of(ItemInit.HCORP_BOLUS_YOU.get())),;
+            SoundEvents.ARMOR_EQUIP_GENERIC, 15.0f, 0.5f, () -> Ingredient.of(ItemInit.HCORP_BOLUS_YOU.get())),;
 
     private final String name;
     private final int durabilityMultiplier;

@@ -15,6 +15,7 @@ import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ProjectileWeaponItem;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -22,6 +23,7 @@ import net.minecraft.world.phys.Vec3;
 import net.pm_equips.ItemInit;
 import net.pm_equips.SoundInit;
 
+import java.util.List;
 import java.util.function.Predicate;
 
 public class WingLCorpPistol extends ProjectileWeaponItem {
@@ -189,5 +191,11 @@ public class WingLCorpPistol extends ProjectileWeaponItem {
     @Override
     public boolean isValidRepairItem(ItemStack stack, ItemStack repair) {
         return repair.is(Items.IRON_INGOT);
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
+        tooltip.add(Component.literal("攻撃力2 | 並 | 近"));
+        super.appendHoverText(stack, level, tooltip, flag);
     }
 }

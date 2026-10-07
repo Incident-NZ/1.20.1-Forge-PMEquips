@@ -14,6 +14,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ProjectileWeaponItem;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -21,12 +22,15 @@ import net.minecraft.world.phys.Vec3;
 import net.pm_equips.BlockInit;
 import net.pm_equips.ItemInit;
 import net.pm_equips.SoundInit;
+import net.pm_equips.client.screen.TooltipLines;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.function.Predicate;
 
 public class EGOW5Pink extends ProjectileWeaponItem {
     private static final float DAMAGE = 24.0f;
-    private static final int COOLDOWN_TICKS = 30;
+    private static final int COOLDOWN_TICKS = 50;
     private static final double RANGE = 128.0;
 
     public EGOW5Pink(Properties properties) {
@@ -189,5 +193,11 @@ public class EGOW5Pink extends ProjectileWeaponItem {
     @Override
     public boolean isValidRepairItem(ItemStack stack, ItemStack repair) {
         return repair.is(BlockInit.BlockItems.ZAYIN_PE_BOX.get());
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
+        TooltipLines.addShiftExpanded(tooltip, TooltipLines.PINK_WEAPON);
+        super.appendHoverText(stack, level, tooltip, flag);
     }
 }

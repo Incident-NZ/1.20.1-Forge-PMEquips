@@ -14,6 +14,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ProjectileWeaponItem;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
@@ -21,7 +22,10 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.pm_equips.ItemInit;
 import net.pm_equips.SoundInit;
+import net.pm_equips.client.screen.TooltipLines;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.function.Predicate;
 
 /**
@@ -233,5 +237,11 @@ public class EGOW4LamentR extends ProjectileWeaponItem {
         target.hurt(attacker.level().damageSources().generic(), DAMAGE);
         stack.hurtAndBreak(1, attacker, p -> p.broadcastBreakEvent(EquipmentSlot.MAINHAND));
         return true;
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
+        TooltipLines.addShiftExpanded(tooltip, TooltipLines.LAMENT_WEAPON);
+        super.appendHoverText(stack, level, tooltip, flag);
     }
 }

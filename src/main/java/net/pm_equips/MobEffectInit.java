@@ -19,6 +19,7 @@ public class MobEffectInit {
     public static final RegistryObject<MobEffect> BLEED = MOB_EFFECTS.register("effect_bleed", CustomMobEffects.BleedEffect::new);
     public static final RegistryObject<MobEffect> PARALYSIS = MOB_EFFECTS.register("effect_paralysis", CustomMobEffects.ParalysisEffect::new);
     public static final RegistryObject<MobEffect> FAIRY = MOB_EFFECTS.register("effect_fairy", CustomMobEffects.FairyEffect::new);
+    public static final RegistryObject<MobEffect> BARRIER = MOB_EFFECTS.register("effect_barrier", CustomMobEffects.BarrierEffect::new);
 
     public static final RegistryObject<MobEffect> KCORP_SIN = MOB_EFFECTS.register("effect_sin_kcorp", SingularityEffects.KCorpSingularityEffect::new);
     public static final RegistryObject<MobEffect> RCORP_SIN = MOB_EFFECTS.register("effect_sin_rcorp", SingularityEffects.RCorpSingularityEffect::new);

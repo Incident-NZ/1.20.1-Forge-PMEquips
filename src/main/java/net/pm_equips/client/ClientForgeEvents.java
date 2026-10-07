@@ -1,6 +1,7 @@
 package net.pm_equips.client;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.pm_equips.ItemInit;
 import net.minecraft.world.item.Item;
@@ -16,7 +17,9 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.RegistryObject;
 import net.pm_equips.KeyBindInit;
-import net.pm_equips.network.ModPackets;
+import net.pm_equips.items.RCorpRabbitRifle;
+import net.pm_equips.network.NetworkPacketInit;
+import net.pm_equips.network.RCorpRabbitRiflePacket;
 
 import java.util.List;
 
@@ -101,10 +104,10 @@ public class ClientForgeEvents {
         if (event.phase == TickEvent.Phase.END) {
             isScopeActive = KeyBindInit.SCOPE_KEY.isDown();
             if (KeyBindInit.RELOAD_KEY.consumeClick()) {
-                ModPackets.INSTANCE.sendToServer(new ModPackets.ReloadPacket());
+                NetworkPacketInit.INSTANCE.sendToServer(new NetworkPacketInit.ReloadPacket());
             }
             if (KeyBindInit.CORE_PAGE_ABILITY_KEY.consumeClick()) {
-                ModPackets.INSTANCE.sendToServer(new ModPackets.CorePageActivatePacket());
+                NetworkPacketInit.INSTANCE.sendToServer(new NetworkPacketInit.CorePageActivatePacket());
             }
         }
     }
@@ -120,6 +123,26 @@ public class ClientForgeEvents {
 
         if (ClientForgeEvents.isScopeItem(stack.getItem()) && isScopeActive) {
             event.setFOV(event.getFOV() * 0.5F);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onKeyInput(InputEvent.Key event) {
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.player == null || mc.screen != null) {
+            return;
+        }
+
+        if (KeyBindInit.WEAPON_ABILITY_KEY.consumeClick()) {
+            Player player = mc.player;
+            ItemStack main = player.getMainHandItem();
+            ItemStack off = player.getOffhandItem();
+
+            // ライフルを持っているときだけ送信（無駄パケット防止）
+            if (main.getItem() instanceof RCorpRabbitRifle
+                    || off.getItem() instanceof RCorpRabbitRifle) {
+                NetworkPacketInit.INSTANCE.sendToServer(new RCorpRabbitRiflePacket());
+            }
         }
     }
 }

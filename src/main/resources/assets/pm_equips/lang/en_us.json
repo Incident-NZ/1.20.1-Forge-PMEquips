@@ -11,6 +11,7 @@
   "key.categories.pm_equips.scope": "Gun SCOPE",
   "key.categories.pm_equips.reload": "Gun Reload",
   "key.categories.pm_equips.core_page_ability": "Core Page Ability Activate",
+  "key.categories.pm_equips.weapon_ability": "Weapon Ability Activate",
 
   "item.pm_equips.item_blade_gear": "Blade Gear",
   "item.pm_equips.item_wcorp_battery": "W.Corp Battery",
@@ -33,6 +34,7 @@
 
   "block.pm_equips.pe_box_generator": "PE-Box Generator",
   "block.pm_equips.ego_extraction_table": "Lobotomy E.G.O Extraction Table",
+  "block.pm_equips.ego_craft_table": "Lobotomy E.G.O Craft Table",
   "container.pm_equips.lobotomy_ego_extraction_table": "Lobotomy E.G.O Extraction Table",
   "gui.pm_equips.lobotomy_ego_extraction_table.craft": "Extract",
   "block.pm_equips.e_gen": "Enkephalin Generator",
@@ -218,6 +220,7 @@
   "effect.pm_equips.effect_bleed": "Bleed",
   "effect.pm_equips.effect_paralysis": "Paralysis",
   "effect.pm_equips.effect_fairy": "Fairy",
+  "effect.pm_equips.barrier": "Barrier",
   "effect.pm_equips.effect_sin_kcorp": "K.Corp Singularity",
   "effect.pm_equips.effect_sin_rcorp": "R.Corp Singularity",
   "effect.pm_equips.effect_sin_wcorp": "W.Corp Singularity"

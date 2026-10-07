@@ -8,9 +8,10 @@
   "itemGroup.pm_wcorp": "プロムンMod 翼支給装備品",
 
   "key.categories.pm_equips": "プロムンMod キー配置",
-  "key.categories.pm_equips.scope": "(銃専用)スコープ",
-  "key.categories.pm_equips.reload": "(銃専用)リロード",
+  "key.categories.pm_equips.scope": "スコープ",
+  "key.categories.pm_equips.reload": "リロード",
   "key.categories.pm_equips.core_page_ability": "コアページ能力発動",
+  "key.categories.pm_equips.weapon_ability": "武器アビリティ発動",
 
   "item.pm_equips.item_blade_gear": "ブレードギア",
   "item.pm_equips.item_wcorp_battery": "W社製バッテリー",
@@ -33,6 +34,7 @@
 
   "block.pm_equips.pe_box_generator": "PE-Box生成器",
   "block.pm_equips.ego_extraction_table": "ロボトミーE.G.O抽出台",
+  "block.pm_equips.ego_craft_table": "ロボトミーE.G.O製造台",
   "container.pm_equips.lobotomy_ego_extraction_table": "ロボトミーE.G.O抽出台",
   "gui.pm_equips.lobotomy_ego_extraction_table.craft": "抽出",
   "block.pm_equips.e_gen": "エンケファリン生成器",
@@ -219,6 +221,7 @@
   "effect.pm_equips.effect_bleed": "出血",
   "effect.pm_equips.effect_paralysis": "麻痺",
   "effect.pm_equips.effect_fairy": "妖精",
+  "effect.pm_equips.barrier": "バリア",
   "effect.pm_equips.effect_sin_kcorp": "K社の特異点",
   "effect.pm_equips.effect_sin_rcorp": "R社の特異点",
   "effect.pm_equips.effect_sin_wcorp": "W社の特異点"

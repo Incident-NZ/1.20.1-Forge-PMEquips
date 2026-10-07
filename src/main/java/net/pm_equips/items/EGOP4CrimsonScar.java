@@ -1,6 +1,7 @@
 package net.pm_equips.items;
 
 import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -11,20 +12,25 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.pm_equips.client.renderer.EGOS4CrimsonScarR;
+import net.pm_equips.client.screen.TooltipLines;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import top.theillusivec4.curios.api.SlotContext;
 
+import java.util.List;
 import java.util.UUID;
 import java.util.function.Consumer;
 
 public class EGOP4CrimsonScar extends CorePageItem {
-    private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+    private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     private static final UUID SPEED_MODIFIER_UUID = UUID.fromString("9dff473f-e3f0-43df-9bde-87ccb2829d4a");
     private static final AttributeModifier SPEED_MODIFIER = new AttributeModifier(
             SPEED_MODIFIER_UUID,
@@ -116,5 +122,11 @@ public class EGOP4CrimsonScar extends CorePageItem {
                 player.getBoundingBox().inflate(DETECTION_RADIUS),
                 entity -> entity != player && entity.isAlive() && entity instanceof Enemy
         ).isEmpty();
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
+        TooltipLines.addShiftExpanded(tooltip, TooltipLines.CRIMSON_SCAR_ARMOR);
+        super.appendHoverText(stack, level, tooltip, flag);
     }
 }

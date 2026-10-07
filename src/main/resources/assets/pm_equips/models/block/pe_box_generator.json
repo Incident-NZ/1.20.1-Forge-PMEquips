@@ -1,11 +1,9 @@
 {
-  "parent": "minecraft:block/cube",
+  "parent": "minecraft:block/orientable",
   "textures": {
-    "down": "pm_equips:block/e_gen_side",
-    "east": "pm_equips:block/e_gen_side",
-    "north": "pm_equips:block/e_gen_north",
-    "south": "pm_equips:block/e_gen_side",
-    "up": "pm_equips:block/e_gen_top",
-    "west": "pm_equips:block/e_gen_side"
+    "front": "pm_equips:block/e_gen_front",
+    "side": "pm_equips:block/e_gen_side",
+    "top": "pm_equips:block/e_gen_top",
+    "bottom": "pm_equips:block/e_gen_side"
   }
 }

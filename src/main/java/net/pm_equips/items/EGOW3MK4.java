@@ -1,20 +1,20 @@
 package net.pm_equips.items;
 
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.pm_equips.BlockInit;
-import net.minecraft.world.item.SwordItem;
-import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.pm_equips.client.screen.TooltipLines;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -86,5 +86,11 @@ public class EGOW3MK4 extends SwordItem {
         @Override public int getLevel() { return 1; }
         @Override public int getEnchantmentValue() { return 0; }
         @Override public Ingredient getRepairIngredient() { return Ingredient.of(BlockInit.BlockItems.HE_PE_BOX.get()); }
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
+        TooltipLines.addShiftExpanded(tooltip, TooltipLines.MK4_WEAPON);
+        super.appendHoverText(stack, level, tooltip, flag);
     }
 }

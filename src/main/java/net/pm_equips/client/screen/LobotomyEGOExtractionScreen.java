@@ -10,7 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.pm_equips.PMEquipsMain;
 import net.pm_equips.menu.LobotomyEGOExtractionMenu;
-import net.pm_equips.network.ModPackets;
+import net.pm_equips.network.NetworkPacketInit;
 
 public class LobotomyEGOExtractionScreen extends AbstractContainerScreen<LobotomyEGOExtractionMenu> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(PMEquipsMain.MOD_ID, "textures/gui/block_lobotomy_ego_extraction_table.png");
@@ -25,7 +25,7 @@ public class LobotomyEGOExtractionScreen extends AbstractContainerScreen<Lobotom
     protected void init() {
         super.init();
         addRenderableWidget(Button.builder(Component.translatable("gui.pm_equips.lobotomy_ego_extraction_table.craft"),
-                        button -> ModPackets.INSTANCE.sendToServer(new ModPackets.LobotomyEGOExtractPacket()))
+                        button -> NetworkPacketInit.INSTANCE.sendToServer(new NetworkPacketInit.LobotomyEGOExtractPacket()))
                 .bounds(leftPos + (imageWidth - 46), topPos + 8, 44, 20)
                 .build());
     }

@@ -1,0 +1,10 @@
+{
+  "id": "pm_equips:s5_da_capo",
+  "result": {
+    "item": "pm_equips:s5_da_capo",
+    "count": 1
+  },
+  "ingredients": [
+    { "item": "pm_equips:e_box_5", "count": 120 }
+  ]
+}

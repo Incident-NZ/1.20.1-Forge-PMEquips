@@ -1,0 +1,10 @@
+{
+  "id": "pm_equips:s4_blue_scar",
+  "result": {
+    "item": "pm_equips:s4_blue_scar",
+    "count": 1
+  },
+  "ingredients": [
+    { "item": "pm_equips:e_box_4", "count": 60 }
+  ]
+}

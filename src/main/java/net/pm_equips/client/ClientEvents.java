@@ -6,6 +6,7 @@ import net.pm_equips.EntityInit;
 import net.pm_equips.KeyBindInit;
 import net.pm_equips.MenuInit;
 import net.pm_equips.client.renderer.*;
+import net.pm_equips.client.screen.LobotomyEGOCraftScreen;
 import net.pm_equips.client.screen.LobotomyEGOExtractionScreen;
 import net.pm_equips.items.CorePageItem;
 import net.pm_equips.PMEquipsMain;
@@ -25,12 +26,18 @@ import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
         value = Dist.CLIENT)
 public class ClientEvents {
 
+
+    //Menu Registry
     @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(() -> ForgeRegistries.ITEMS.getValues().stream()
                 .filter(CorePageItem.class::isInstance)
                 .forEach(item -> CuriosRendererRegistry.register(item, CorePageCurioRenderer::new)));
         event.enqueueWork(() -> MenuScreens.register(MenuInit.LOBOTOMY_EGO_EXTRACTION_TABLE.get(), LobotomyEGOExtractionScreen::new));
+
+        event.enqueueWork(() ->
+                MenuScreens.register(MenuInit.GUN_WORKBENCH.get(), LobotomyEGOCraftScreen::new)
+        );
     }
 
     //EntityRenderer
@@ -38,30 +45,20 @@ public class ClientEvents {
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(EntityInit.W5_SOUND_OF_A_STAR_PROJECTILE.get(),
                 ctx -> new ThrownItemRenderer<>(ctx, 1.0f, true));
-        event.registerEntityRenderer(EntityInit.MAGIC_BULLET.get(),
-                AmmoMagicR::new);
-        event.registerEntityRenderer(EntityInit.BULLET_LARV.get(),
-                AmmoLARVR::new);
-        event.registerEntityRenderer(EntityInit.BULLET_LASG.get(),
-                AmmoLASGR::new);
-        event.registerEntityRenderer(EntityInit.BULLET.get(),
-                AmmoGunR::new);
         event.registerEntityRenderer(EntityInit.HEAVEN_PROJECTILE.get(),
                 ctx -> new ThrownItemRenderer<>(ctx, 1.0F, true));
-        event.registerEntityRenderer(EntityInit.HATRED_MAGIC_PROJECTILE.get(),
-                AmmoHatredR::new);
-        event.registerEntityRenderer(EntityInit.BULLET_EX.get(),
-                AmmoExpR::new);
         event.registerEntityRenderer(EntityInit.WHITENIGHT_PROJECTILE.get(),
                 PWhiteNightR::new);
         event.registerBlockEntityRenderer(BlockEntityInit.EBOX_GEN.get(), EBoxGenR::new);
     }
 
+    //KeyBind
     @SubscribeEvent
     public static void registerKeys(RegisterKeyMappingsEvent event) {
         event.register(KeyBindInit.RELOAD_KEY);
         event.register(KeyBindInit.SCOPE_KEY);
         event.register(KeyBindInit.CORE_PAGE_ABILITY_KEY);
+        event.register(KeyBindInit.WEAPON_ABILITY_KEY);
     }
 }
 

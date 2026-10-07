@@ -1,5 +1,6 @@
 package net.pm_equips;
 
+import net.pm_equips.menu.LobotomyEGOCraftMenu;
 import net.pm_equips.menu.LobotomyEGOExtractionMenu;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
@@ -18,4 +19,7 @@ public class MenuInit {
     private static <T extends AbstractContainerMenu> RegistryObject<MenuType<T>> registerMenuType(IContainerFactory<T> supplier) {
         return MENUS.register("lobotomy_ego_extraction_table", () -> IForgeMenuType.create(supplier));
     }
+
+    public static final RegistryObject<MenuType<LobotomyEGOCraftMenu>> GUN_WORKBENCH =
+            MENUS.register("gun_workbench", () -> IForgeMenuType.create(LobotomyEGOCraftMenu::new));
 }

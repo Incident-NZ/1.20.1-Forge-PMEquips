@@ -1,39 +1,50 @@
 package net.pm_equips.items;
 
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.item.*;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.util.Mth;
-import net.pm_equips.BlockInit;
-import net.pm_equips.MobEffectInit;
-import net.pm_equips.SoundInit;
-import net.pm_equips.config.CommonConfig;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.SwordItem;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
-import net.pm_equips.entity.PWhiteNight;
+import net.pm_equips.BlockInit;
 import net.pm_equips.EntityInit;
+import net.pm_equips.MobEffectInit;
+import net.pm_equips.SoundInit;
+import net.pm_equips.client.screen.TooltipLines;
+import net.pm_equips.config.CommonConfig;
+import net.pm_equips.entity.PWhiteNight;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.UUID;
 
 public class EGOW5WhiteNight extends SwordItem {
 
-    private static final UUID REACH_UUID = UUID.randomUUID();
+    private static final UUID REACH_UUID = UUID.fromString("b3e8f1a2-4c5d-6e7f-8091-a2b3c4d5e6f7");
     private static final AttributeModifier REACH_MODIFIER =
             new AttributeModifier(REACH_UUID, "white_night_reach", 3.0, AttributeModifier.Operation.ADDITION);
+
+    /** 左クリック時バリア Amp3 の持続（10秒） */
+    private static final int BARRIER_DURATION = 200;
+    private static final int BARRIER_AMPLIFIER = 3; // 40以下のダメージ無効
 
     public EGOW5WhiteNight() {
         super(new CustomTier(), 50, -3.5f, new Properties().durability(4000).rarity(Rarity.EPIC));
@@ -58,16 +69,22 @@ public class EGOW5WhiteNight extends SwordItem {
     @Override
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         boolean result = super.hurtEnemy(stack, target, attacker);
-        if (result && !attacker.level().isClientSide()) {
-            if (attacker instanceof Player player) {
-                player.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 200, 0, false, false));
-            }
-        }
 
         if (result && !attacker.level().isClientSide()) {
-            // Iフレーム無視
-            target.hurtTime = 0;           // クライアント側の赤フラッシュ時間
-            target.invulnerableTime = 0;   // または noDamageTicks (バージョンにより名称確認)
+            // 左クリック: 衝撃吸収 → バリア Amp3
+            if (attacker instanceof Player player) {
+                player.addEffect(new MobEffectInstance(
+                        MobEffectInit.BARRIER.get(),
+                        BARRIER_DURATION,
+                        BARRIER_AMPLIFIER,
+                        false,
+                        true,
+                        true
+                ));
+            }
+
+            target.hurtTime = 0;
+            target.invulnerableTime = 0;
         }
 
         return result;
@@ -78,7 +95,6 @@ public class EGOW5WhiteNight extends SwordItem {
         ItemStack itemStack = player.getItemInHand(hand);
 
         if (!level.isClientSide) {
-            // Use ProjectileUtil to pick an entity in the look direction
             Vec3 eyePos = player.getEyePosition();
             Vec3 lookDir = player.getLookAngle();
             Vec3 end = eyePos.add(lookDir.scale(64.0D));
@@ -98,15 +114,9 @@ public class EGOW5WhiteNight extends SwordItem {
             );
 
             if (entityHit != null && entityHit.getEntity() instanceof LivingEntity target) {
-                // apply a small cooldown (40 ticks = 2s)
                 player.getCooldowns().addCooldown(this, 40);
-
-                // perform ranged attack
                 fireRangedAttack(level, player, target, itemStack);
-
-                // award stat
                 player.awardStat(net.minecraft.stats.Stats.ITEM_USED.get(this));
-
                 return InteractionResultHolder.success(itemStack);
             }
         }
@@ -115,11 +125,9 @@ public class EGOW5WhiteNight extends SwordItem {
     }
 
     private void fireRangedAttack(Level level, Player player, LivingEntity target, ItemStack itemStack) {
-        // Calculate random ranged damage (22-28)
-        int damage = 22 + level.random.nextInt(7);
+        int damage = 22 + level.random.nextInt(7); // 22-28
 
-        // Generate 12 stationary weapons around the target, similar to Cataclysm's phantom halberd.
-        int projectilesPerWeapon = 4; // 3 weapon types x 4 = 12 total
+        int projectilesPerWeapon = 4;
         int totalProjectiles = 3 * projectilesPerWeapon;
         int projectileIndex = 0;
 
@@ -149,15 +157,17 @@ public class EGOW5WhiteNight extends SwordItem {
             }
         }
 
-        // Apply effects to target
-        target.addEffect(new MobEffectInstance(MobEffectInit.BIND.get(), 100, 5, false, false)); // 5 sec, level 6 / 60% speed down (value 2)
+        target.addEffect(new MobEffectInstance(MobEffectInit.BIND.get(), 100, 5, false, false));
         target.hurt(level.damageSources().playerAttack(player), (float) damage);
 
-        // Play sound
+        // 右クリック命中: 与えたダメージ分だけ自己回復
+        // setHealth を使い、食料/ポーション封鎖用の LivingHealEvent を避ける
+        float newHealth = Math.min(player.getMaxHealth(), player.getHealth() + damage);
+        player.setHealth(newHealth);
+
         level.playSound(null, target.getX(), target.getY(), target.getZ(),
                 SoundInit.EGO_WHITENIGHT_ATK_1.get(), SoundSource.PLAYERS, 1.0F, 1.2F);
 
-        // Damage weapon
         itemStack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(InteractionHand.MAIN_HAND));
     }
 
@@ -176,36 +186,31 @@ public class EGOW5WhiteNight extends SwordItem {
         return startY;
     }
 
+    /** インベントリ（メイン・オフ・アーマー以外のアイテム欄）にこの武器があるか */
+    public static boolean hasInInventory(Player player) {
+        for (ItemStack stack : player.getInventory().items) {
+            if (stack.getItem() instanceof EGOW5WhiteNight) {
+                return true;
+            }
+        }
+        return player.getOffhandItem().getItem() instanceof EGOW5WhiteNight;
+    }
+
     private static class CustomTier implements Tier {
-        @Override
-        public int getUses() {
-            return 4000;
-        }
-
-        @Override
-        public float getSpeed() {
-            return 0.2f;
-        }
-
-        @Override
-        public float getAttackDamageBonus() {
-            return 10.0f; // 50-60 damage = 10 base + 50 sword damage
-        }
-
-        @Override
-        public int getLevel() {
-            return 0;
-        }
-
-        @Override
-        public int getEnchantmentValue() {
-            return 0;
-        }
-
-        @Override
-        public Ingredient getRepairIngredient() {
+        @Override public int getUses() { return 4000; }
+        @Override public float getSpeed() { return 0.2f; }
+        @Override public float getAttackDamageBonus() { return 10.0f; }
+        @Override public int getLevel() { return 0; }
+        @Override public int getEnchantmentValue() { return 0; }
+        @Override public Ingredient getRepairIngredient() {
             return Ingredient.of(BlockInit.BlockItems.ALEPH_PE_BOX.get());
         }
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
+        TooltipLines.addShiftExpanded(tooltip, TooltipLines.WHITENIGHT_WEAPON);
+        super.appendHoverText(stack, level, tooltip, flag);
     }
 }
 

@@ -1,36 +1,50 @@
 package net.pm_equips.items;
 
-import net.pm_equips.client.renderer.EGOS5SmileR;
-import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
+import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.pm_equips.client.renderer.EGOS5SmileR;
+import net.pm_equips.client.screen.TooltipLines;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.List;
 import java.util.function.Consumer;
 
+/**
+ * 装備中にモブを倒し、そのドロップを拾うと体力全回復
+ */
 public class EGOP5Smile extends CorePageItem {
-    private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+
+    private static final String TAG_SMILE_DROP = "EGOP5SmileDrop";
+    private static boolean EVENT_REGISTERED = false;
+
+    private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+
     public EGOP5Smile(ArmorMaterial material, ArmorItem.Type type, Properties props) {
         super(material, type, props);
+        if (!EVENT_REGISTERED) {
+            MinecraftForge.EVENT_BUS.register(SmileEvents.class);
+            EVENT_REGISTERED = true;
+        }
     }
 
     @Override
@@ -39,11 +53,15 @@ public class EGOP5Smile extends CorePageItem {
             private EGOS5SmileR renderer;
 
             @Override
-            public @NotNull HumanoidModel<?> getHumanoidArmorModel(LivingEntity livingEntity, ItemStack itemStack, EquipmentSlot equipmentSlot, HumanoidModel<?> original) {
-
-                if (this.renderer == null)
+            public @NotNull HumanoidModel<?> getHumanoidArmorModel(
+                    LivingEntity livingEntity,
+                    ItemStack itemStack,
+                    EquipmentSlot equipmentSlot,
+                    HumanoidModel<?> original
+            ) {
+                if (this.renderer == null) {
                     this.renderer = new EGOS5SmileR();
-
+                }
                 this.renderer.prepForRender(livingEntity, itemStack, equipmentSlot, original);
                 return this.renderer;
             }
@@ -51,13 +69,15 @@ public class EGOP5Smile extends CorePageItem {
     }
 
     private PlayState predicate(AnimationState animationState) {
-        animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
+        animationState.getController().setAnimation(
+                RawAnimation.begin().then("idle", Animation.LoopType.LOOP)
+        );
         return PlayState.CONTINUE;
     }
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
-        controllerRegistrar.add(new AnimationController(this,"controller", 0, this::predicate));
+        controllerRegistrar.add(new AnimationController(this, "controller", 0, this::predicate));
     }
 
     @Override
@@ -65,84 +85,58 @@ public class EGOP5Smile extends CorePageItem {
         return cache;
     }
 
-    private static final Map<UUID, Integer> bonusHealth = new HashMap<>();
-    private static final Map<UUID, Integer> bonusAttack = new HashMap<>();
+    /** この防具を1部位でも装備しているか */
+    public static boolean isWearing(Player player) {
+        for (ItemStack armor : player.getArmorSlots()) {
+            if (armor.getItem() instanceof EGOP5Smile) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-    @Mod.EventBusSubscriber(modid = "pm_equips")
     public static class SmileEvents {
+
+        /**
+         * 装備者が倒したモブのドロップに印を付ける
+         */
         @SubscribeEvent
-        public static void onMobKill(LivingDeathEvent event) {
-            if (!(event.getSource().getEntity() instanceof Player player)) return;
-            if (!SmileFullSet(player)) return;
+        public static void onLivingDrops(LivingDropsEvent event) {
+            if (event.getEntity().level().isClientSide) return;
 
-            UUID id = player.getUUID();
+            Entity source = event.getSource().getEntity();
+            if (!(source instanceof Player player)) return;
+            if (!isWearing(player)) return;
 
-            int hpBonus = bonusHealth.getOrDefault(id, 0) + 2;
-            bonusHealth.put(id, hpBonus);
-
-            if (hpBonus % 20 == 0) {
-                player.setHealth(player.getMaxHealth());
+            for (ItemEntity drop : event.getDrops()) {
+                drop.getPersistentData().putBoolean(TAG_SMILE_DROP, true);
             }
-
-            int atkBonus = (hpBonus / 40) * 5;
-            bonusAttack.put(id, atkBonus);
-
-            applyModifiers(player, hpBonus, atkBonus);
         }
 
+        /**
+         * 印付きドロップを拾ったら体力全回復
+         */
         @SubscribeEvent
-        public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
-            if (event.phase != TickEvent.Phase.END) return;
-            Player player = event.player;
-            UUID id = player.getUUID();
+        public static void onItemPickup(EntityItemPickupEvent event) {
+            Player player = event.getEntity();
+            if (player.level().isClientSide) return;
+            if (!isWearing(player)) return;
 
-            if (!SmileFullSet(player)) {
-                if (bonusHealth.containsKey(id) || bonusAttack.containsKey(id)) {
-                    bonusHealth.remove(id);
-                    bonusAttack.remove(id);
-                    clearModifiers(player);
-                }
-                return;
-            }
+            ItemEntity itemEntity = event.getItem();
+            if (itemEntity == null) return;
+            if (!itemEntity.getPersistentData().getBoolean(TAG_SMILE_DROP)) return;
 
-            int hpBonus = bonusHealth.getOrDefault(id, 0);
-            int atkBonus = bonusAttack.getOrDefault(id, 0);
-            applyModifiers(player, hpBonus, atkBonus);
+            // 全回復
+            player.setHealth(player.getMaxHealth());
+
+            // 同じドロップを重ね拾いしても何度も処理しないよう印を消す
+            itemEntity.getPersistentData().remove(TAG_SMILE_DROP);
         }
+    }
 
-        private static boolean SmileFullSet(Player player) {
-            return (player.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof EGOP5Smile) &&
-                    (player.getItemBySlot(EquipmentSlot.LEGS).getItem() instanceof EGOP5Smile);
-        }
-
-        private static final UUID HEALTH_MODIFIER_UUID = UUID.fromString("11111111-1111-1111-1111-111111111111");
-        private static final UUID ATTACK_MODIFIER_UUID = UUID.fromString("22222222-2222-2222-2222-222222222222");
-
-        private static void applyModifiers(Player player, int hpBonus, int atkBonus) {
-            AttributeInstance maxHealth = player.getAttribute(Attributes.MAX_HEALTH);
-            AttributeInstance attack = player.getAttribute(Attributes.ATTACK_DAMAGE);
-
-            if (maxHealth != null) {
-                maxHealth.removeModifier(HEALTH_MODIFIER_UUID);
-                maxHealth.addPermanentModifier(new AttributeModifier(HEALTH_MODIFIER_UUID, "Smile armor bonus HP", hpBonus, AttributeModifier.Operation.ADDITION));
-            }
-
-            if (attack != null) {
-                attack.removeModifier(ATTACK_MODIFIER_UUID);
-                attack.addPermanentModifier(new AttributeModifier(ATTACK_MODIFIER_UUID, "Smile armor bonus ATK", atkBonus, AttributeModifier.Operation.ADDITION));
-            }
-        }
-
-        private static void clearModifiers(Player player) {
-            AttributeInstance maxHealth = player.getAttribute(Attributes.MAX_HEALTH);
-            AttributeInstance attack = player.getAttribute(Attributes.ATTACK_DAMAGE);
-
-            if (maxHealth != null) {
-                maxHealth.removeModifier(HEALTH_MODIFIER_UUID);
-            }
-            if (attack != null) {
-                attack.removeModifier(ATTACK_MODIFIER_UUID);
-            }
-        }
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
+        TooltipLines.addShiftExpanded(tooltip, TooltipLines.SMILE_ARMOR);
+        super.appendHoverText(stack, level, tooltip, flag);
     }
 }

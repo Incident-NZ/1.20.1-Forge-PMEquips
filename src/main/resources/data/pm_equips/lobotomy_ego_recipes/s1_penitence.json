@@ -1,0 +1,10 @@
+{
+  "id": "pm_equips:s1_penitence",
+  "result": {
+    "item": "pm_equips:s1_penitence",
+    "count": 1
+  },
+  "ingredients": [
+    { "item": "pm_equips:e_box_1", "count": 15 }
+  ]
+}

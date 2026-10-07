@@ -30,7 +30,7 @@ public class WeaponKaliMimicry extends SwordItem {
         boolean has = main.getItem() instanceof WeaponKaliMimicry;
 
         if (has) {
-            // 攻撃力上昇 III -> amplifier 2
+            // パワー3 -> 攻撃力30%増加
             MobEffectInstance atk = new MobEffectInstance(MobEffectInit.POWER.get(), 12, 2, false, false, true);
             player.addEffect(atk);
         } else {

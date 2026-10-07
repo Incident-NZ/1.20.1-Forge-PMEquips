@@ -1,11 +1,9 @@
 {
-  "parent": "minecraft:block/cube",
+  "parent": "minecraft:block/orientable",
   "textures": {
-    "down": "pm_equips:block/ego_table_under",
-    "east": "pm_equips:block/ego_table_side",
-    "north": "pm_equips:block/ego_table_north",
-    "south": "pm_equips:block/ego_table_side",
-    "up": "pm_equips:block/ego_table_top",
-    "west": "pm_equips:block/ego_table_side"
+    "front": "pm_equips:block/ego_table_front",
+    "side": "pm_equips:block/ego_table_side",
+    "top": "pm_equips:block/ego_table_top_extract",
+    "bottom": "pm_equips:block/ego_table_bottom"
   }
 }

@@ -1,9 +1,11 @@
 package net.pm_equips.items;
 
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.TooltipFlag;
+import net.pm_equips.MobEffectInit;
 import net.pm_equips.client.renderer.EGOS5TwilightR;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -12,7 +14,9 @@ import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import net.pm_equips.client.screen.TooltipLines;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
@@ -73,8 +77,8 @@ public class EGOP5Twilight extends CorePageItem {
             if (hasTwilightWeapon) {
                 float missingHp = player.getMaxHealth() - player.getHealth();
                 if (missingHp > 0) {
-                    int amplifier = (int) Math.floor(missingHp / 4); // 4HP減少ごとに+1段階
-                    player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 40, amplifier, true, false, true));
+                    int amplifier = (int) Math.floor(missingHp); // 1HP減少ごとに+1段階
+                    player.addEffect(new MobEffectInstance(MobEffectInit.POWER.get(), 40, amplifier, true, false, true));
                 }
                 if (player.tickCount % 100 == 0) { // 100tick = 5秒
                     List<LivingEntity> nearby = level.getEntitiesOfClass(
@@ -91,4 +95,9 @@ public class EGOP5Twilight extends CorePageItem {
         }
     }
 
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
+        TooltipLines.addShiftExpanded(tooltip, TooltipLines.TWILIGHT_ARMOR);
+        super.appendHoverText(stack, level, tooltip, flag);
+    }
 }

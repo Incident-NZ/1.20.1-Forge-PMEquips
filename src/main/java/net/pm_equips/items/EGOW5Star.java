@@ -1,6 +1,9 @@
 package net.pm_equips.items;
 
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.TooltipFlag;
+import net.pm_equips.client.screen.TooltipLines;
 import net.pm_equips.entity.EGOStarP;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -8,6 +11,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class EGOW5Star extends Item {
     public EGOW5Star() {
@@ -48,5 +54,11 @@ public class EGOW5Star extends Item {
         projectile.setDeltaMovement(projectile.getDeltaMovement().scale(2.0));
 
         level.addFreshEntity(projectile);
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
+        TooltipLines.addShiftExpanded(tooltip, TooltipLines.STAR_WEAPON);
+        super.appendHoverText(stack, level, tooltip, flag);
     }
 }
