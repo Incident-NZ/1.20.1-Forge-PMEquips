@@ -37,6 +37,7 @@
   "block.pm_equips.ego_craft_table": "ロボトミーE.G.O製造台",
   "container.pm_equips.lobotomy_ego_extraction_table": "ロボトミーE.G.O抽出台",
   "gui.pm_equips.lobotomy_ego_extraction_table.craft": "抽出",
+  "gui.pm_equips.lobotomy_ego_craft_table.craft": "ロボトミーE.G.O製造",
   "block.pm_equips.e_gen": "エンケファリン生成器",
 
   "block.pm_equips.e_box_1": "エンケファリン - ZAYIN",

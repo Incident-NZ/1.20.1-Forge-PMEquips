@@ -80,32 +80,30 @@ mixin {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
-
     maven { url "https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/" }
     mavenCentral()
-
     maven { url = "https://maven.theillusivec4.top/" }
-
-    maven {
-        url = "https://maven.blamejared.com/"
-    }
+    maven { url = "https://maven.blamejared.com/" }
 }
 
 dependencies {
     minecraft "net.minecraftforge:forge:1.20.1-47.4.10"
 
-    // GeckoLib 4.4.9
     implementation fg.deobf("software.bernie.geckolib:geckolib-forge-1.20.1:4.7.4")
 
-    // Curios API 5.14.1
     implementation fg.deobf('top.theillusivec4.curios:curios-forge:5.14.1+1.20.1')
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:5.14.1+1.20.1:api")
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:5.14.1+1.20.1")
 
-    // JEI API
-    compileOnly fg.deobf("mezz.jei:jei-1.20.1-forge-api:15.20.0.106")
-    // 開発環境用
-    runtimeOnly fg.deobf("mezz.jei:jei-1.20.1-forge:15.20.0.106")
+    // ===== JEI（ここを修正）=====
+    def jei_version = "15.20.0.106"
+
+    // コンパイル用 API（両方必要）
+    compileOnly fg.deobf("mezz.jei:jei-1.20.1-common-api:${jei_version}")
+    compileOnly fg.deobf("mezz.jei:jei-1.20.1-forge-api:${jei_version}")
+
+    // 開発実行用本体
+    runtimeOnly fg.deobf("mezz.jei:jei-1.20.1-forge:${jei_version}")
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }

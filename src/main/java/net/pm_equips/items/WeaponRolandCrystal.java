@@ -3,7 +3,6 @@ package net.pm_equips.items;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -15,11 +14,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.pm_equips.ItemInit;
+import net.pm_equips.MobEffectInit;
 
 public class WeaponRolandCrystal extends SwordItem {
     private static final int DURABILITY = 1000;
     private static final int SPEED_EFFECT_DURATION = 12;
-    private static final int SPEED_EFFECT_AMPLIFIER = 4;
+    private static final int SPEED_EFFECT_AMPLIFIER = 7;
     private static final int DASH_COOLDOWN_TICKS = 60;
     private static final double DASH_DISTANCE = 15.0D;
 
@@ -51,7 +51,7 @@ public class WeaponRolandCrystal extends SwordItem {
     public void inventoryTick(ItemStack stack, Level level, Entity entity, int slot, boolean selected) {
         if (!level.isClientSide && entity instanceof Player player && isDualWielding(player)) {
             player.addEffect(new MobEffectInstance(
-                    MobEffects.MOVEMENT_SPEED,
+                    MobEffectInit.QUICK.get(),
                     SPEED_EFFECT_DURATION,
                     SPEED_EFFECT_AMPLIFIER,
                     false,

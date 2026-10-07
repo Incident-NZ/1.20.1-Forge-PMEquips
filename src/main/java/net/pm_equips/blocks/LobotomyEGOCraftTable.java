@@ -34,7 +34,7 @@ public class LobotomyEGOCraftTable extends Block {
             NetworkHooks.openScreen(serverPlayer, new MenuProvider() {
                 @Override
                 public Component getDisplayName() {
-                    return Component.literal("Gun Workbench");
+                    return Component.literal("ロボトミーE.G.O製造台");
                 }
 
                 @Nullable

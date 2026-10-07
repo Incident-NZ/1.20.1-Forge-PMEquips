@@ -4,7 +4,7 @@ license = "${mod_license}"
 
 [[mods]]
 modId = "pm_equips"
-version = "5.3"
+version = "5.4"
 displayName = "ProjectMoon Equipment Mod"
 authors = "Rei"
 description = "Face the fear, Make the future."
@@ -38,12 +38,12 @@ ordering="AFTER"
 side="BOTH"
 requiredMods = ["curios"]
 
-[[mixins]]
-config="pm_equips.mixins.json"
-
 [[dependencies."pm_equips"]]
 modId="jei"
 mandatory=false
 versionRange="[15,)"
 ordering="NONE"
 side="BOTH"
+
+[[mixins]]
+config="pm_equips.mixins.json"

@@ -37,6 +37,7 @@
   "block.pm_equips.ego_craft_table": "Lobotomy E.G.O Craft Table",
   "container.pm_equips.lobotomy_ego_extraction_table": "Lobotomy E.G.O Extraction Table",
   "gui.pm_equips.lobotomy_ego_extraction_table.craft": "Extract",
+  "gui.pm_equips.lobotomy_ego_craft_table.craft": "Lobotomy E.G.O Crafting",
   "block.pm_equips.e_gen": "Enkephalin Generator",
 
   "block.pm_equips.e_box_1": "E-Box ZAYIN",

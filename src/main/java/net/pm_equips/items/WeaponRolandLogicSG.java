@@ -55,14 +55,9 @@ public class WeaponRolandLogicSG extends ProjectileWeaponItem {
 		if (!hasAmmo(player)) {
 			if (!level.isClientSide) {
 				player.displayClientMessage(Component.literal("弾薬切れ / No Ammo"), true);
-				level.playSound(null, player.blockPosition(), SoundEvents.DISPENSER_FAIL, SoundSource.PLAYERS, 1.0F, 1.2F);
+				level.playSound(null, player.blockPosition(), SoundEvents.DISPENSER_FAIL, SoundSource.PLAYERS, 1.0F, 1.0F);
 			}
 			return InteractionResultHolder.fail(gun);
-		}
-
-		if (level.isClientSide) {
-			level.playSound(player, player.blockPosition(), SoundInit.GUN_ROLAND_SHOTGUN.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
-			return InteractionResultHolder.success(gun);
 		}
 
 		shootShotgun(level, player);

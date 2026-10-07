@@ -66,11 +66,6 @@ public class WeaponRolandLogicHG extends ProjectileWeaponItem {
 			return InteractionResultHolder.fail(gun);
 		}
 
-		if (level.isClientSide) {
-			level.playSound(player, player.blockPosition(), SoundInit.GUN_ROLAND_REVOLVER.get(), SoundSource.PLAYERS, 1.0F, dual ? 0.9F : 1.0F);
-			return InteractionResultHolder.success(gun);
-		}
-
 		if (dual) {
 			shootDual(level, player);
 			// 両手の耐久を減らす
@@ -83,9 +78,9 @@ public class WeaponRolandLogicHG extends ProjectileWeaponItem {
 		}
 
 		consumeAmmo(player, ammoCost);
-		level.playSound(null, player.blockPosition(), SoundInit.GUN_ROLAND_REVOLVER.get(), SoundSource.PLAYERS, 1.0F, dual ? 0.9F : 1.0F);
+		level.playSound(null, player.blockPosition(), SoundInit.GUN_ROLAND_REVOLVER.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
 		if (dual) {
-			level.playSound(null, player.blockPosition(), SoundInit.GUN_ROLAND_REVOLVER.get(), SoundSource.PLAYERS, 0.85F, 1.15F);
+			level.playSound(null, player.blockPosition(), SoundInit.GUN_ROLAND_REVOLVER.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
 		}
 		player.awardStat(Stats.ITEM_USED.get(this));
 
