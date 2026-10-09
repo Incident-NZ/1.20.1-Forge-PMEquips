@@ -82,4 +82,11 @@ public class LobotomyEGORecipeManager extends SimplePreparableReloadListener<Map
     public static void onAddReloadListeners(AddReloadListenerEvent event) {
         event.addListener(new LobotomyEGORecipeManager());
     }
+
+    public static void replaceAll(Collection<LobotomyEGORecipe> recipes) {
+        RECIPES.clear();
+        for (LobotomyEGORecipe r : recipes) {
+            RECIPES.put(r.getId(), r);
+        }
+    }
 }

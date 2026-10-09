@@ -1,7 +1,6 @@
 package net.pm_equips.items;
 
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -184,14 +183,14 @@ public class WeaponRolandMook extends SwordItem {
 
         DamageSource damageSource = player.damageSources().playerAttack(player);
         for (LivingEntity target : targets) {
-            target.hurt(damageSource, Float.MAX_VALUE);
+            target.hurt(damageSource, 1000000.0F);
             if (!target.isAlive()) {
                 RolandMookDropHandler.markForExtraDrops(target);
             }
         }
 
         level.playSound(null, player.getX(), player.getY(), player.getZ(),
-                SoundEvents.PLAYER_ATTACK_SWEEP, SoundSource.PLAYERS, 1.0F, 1.0F);
+                SoundInit.ROLAND_MOOK_ATTACK.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
     }
 
     private static class CustomTier implements Tier {

@@ -2,8 +2,6 @@ package net.pm_equips.items;
 
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -13,46 +11,26 @@ import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.pm_equips.MobEffectInit;
+import net.minecraft.world.effect.MobEffectInstance;
 
 public class WeaponRolandWheels extends SwordItem {
-    private static final String TAG_GUARD_ACTIVE = "wheels_guard_active";
-    private static final float GUARD_DAMAGE = 8.0F;
 
+    public static final float COUNTER_DAMAGE = 8.0F;
     public WeaponRolandWheels() {
         super(new CustomTier(), 23, -3.2f, new Properties().durability(1000));
     }
 
     @Override
-    public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (!(attacker instanceof Player player)) {
-            return super.hurtEnemy(stack, target, attacker);
-        }
-
-        if (isGuarding(stack)) {
-            performGuard(stack, target, player);
-            return true;
-        }
-
-        boolean result = target.hurt(player.damageSources().playerAttack(player), GUARD_DAMAGE);
-        if (result) {
-            stack.hurtAndBreak(1, player, ignored -> {});
-        }
-        return result;
-    }
-
-    @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
-
-        setGuarding(stack, true);
-        player.startUsingItem(hand);
-
+        player.startUsingItem(hand); // 長押しガード開始
         return InteractionResultHolder.consume(stack);
     }
 
     @Override
     public int getUseDuration(ItemStack stack) {
-        return 72000;
+        return 72000; // 離すまで継続
     }
 
     @Override
@@ -60,71 +38,56 @@ public class WeaponRolandWheels extends SwordItem {
         return UseAnim.BLOCK;
     }
 
-    @Override
-    public void releaseUsing(ItemStack stack, Level level, LivingEntity entity, int timeLeft) {
-        setGuarding(stack, false);
+    /** このスタックでガード中か（サーバー判定用） */
+    public static boolean isPlayerGuarding(Player player) {
+        if (!player.isUsingItem()) return false;
+        ItemStack using = player.getUseItem();
+        return using.getItem() instanceof WeaponRolandWheels;
     }
 
-    @Override
-    public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
-        setGuarding(stack, false);
-        return stack;
+    /**
+     * 被弾ガード成功時の処理
+     * @return ダメージを無効化してよいか
+     */
+    public static boolean tryGuard(Player player, LivingEntity attacker) {
+        if (!isPlayerGuarding(player)) return false;
+
+        ItemStack stack = player.getUseItem();
+        if (!(stack.getItem() instanceof WeaponRolandWheels)) return false;
+
+        // 正面チェック（背面攻撃はガード不可）
+        if (!isFrontalAttack(player, attacker)) return false;
+
+        // カウンター
+        attacker.invulnerableTime = 0;
+        attacker.hurtTime = 0;
+        attacker.hurt(player.damageSources().playerAttack(player), COUNTER_DAMAGE);
+
+        Vec3 dir = attacker.position().subtract(player.position()).normalize();
+        attacker.knockback(1.5D, -dir.x, -dir.z);
+
+        attacker.addEffect(new MobEffectInstance(
+                MobEffectInit.BIND.get(), 60, 9, false, false, false
+        ));
+
+        stack.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(player.getUsedItemHand()));
+
+        return true;
     }
 
-    private void performGuard(ItemStack stack, LivingEntity target, Player player) {
-        if (!isGuarding(stack)) {
-            return;
-        }
-
-        target.hurt(player.damageSources().playerAttack(player), GUARD_DAMAGE);
-
-        Vec3 knockbackDir = target.getEyePosition().subtract(player.getEyePosition()).normalize();
-        target.knockback(5.0D, knockbackDir.x, knockbackDir.z);
-
-        MobEffectInstance slowness = new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 9, false, false, true);
-        target.addEffect(slowness);
-
-        stack.hurtAndBreak(1, player, ignored -> {});
-        setGuarding(stack, false);
-    }
-
-    public boolean isGuarding(ItemStack stack) {
-        return stack.getOrCreateTag().getBoolean(TAG_GUARD_ACTIVE);
-    }
-
-    private void setGuarding(ItemStack stack, boolean guarding) {
-        stack.getOrCreateTag().putBoolean(TAG_GUARD_ACTIVE, guarding);
+    private static boolean isFrontalAttack(Player player, LivingEntity attacker) {
+        Vec3 look = player.getLookAngle().normalize();
+        Vec3 toAttacker = attacker.position().subtract(player.position()).normalize();
+        // おおよそ前方 120° 以内（dot > 0 で前方半球）
+        return look.dot(toAttacker) > 0.0D;
     }
 
     private static class CustomTier implements Tier {
-        @Override
-        public int getUses() {
-            return 1000;
-        }
-
-        @Override
-        public float getSpeed() {
-            return 4.0f;
-        }
-
-        @Override
-        public float getAttackDamageBonus() {
-            return 0.0f;
-        }
-
-        @Override
-        public int getLevel() {
-            return 0;
-        }
-
-        @Override
-        public int getEnchantmentValue() {
-            return 0;
-        }
-
-        @Override
-        public Ingredient getRepairIngredient() {
-            return null;
-        }
+        @Override public int getUses() { return 1000; }
+        @Override public float getSpeed() { return 4.0f; }
+        @Override public float getAttackDamageBonus() { return 0.0f; }
+        @Override public int getLevel() { return 0; }
+        @Override public int getEnchantmentValue() { return 0; }
+        @Override public Ingredient getRepairIngredient() { return Ingredient.EMPTY; }
     }
 }

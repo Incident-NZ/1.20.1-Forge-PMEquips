@@ -17,16 +17,6 @@ public final class TooltipLines {
         }
     }
 
-    /** 基本行を足してから Shift 詳細 */
-    public static void addWithShift(
-            List<Component> tooltip,
-            List<Component> basic,
-            List<Component> detail
-    ) {
-        tooltip.addAll(basic);
-        addShiftExpanded(tooltip, detail);
-    }
-
     // ===== アイテムごとの詳細をここにまとめて定義 =====
 
     public static final List<Component> PENITENCE_ARMOR = List.of(
@@ -656,7 +646,8 @@ public final class TooltipLines {
     );
 
     public static final List<Component> TWILIGHT_WEAPON = List.of(
-            Component.literal("特殊能力なし"),
+            Component.literal("特殊能力：攻撃的中時、麻痺4,出血4,束縛4,妖精4を付与する。"),
+            Component.literal("特殊能力：4種のダメージタイプで攻撃する。"),
             Component.literal("永遠に閉じることのない目、"),
             Component.literal("すべての罪を測る天秤、"),
             Component.literal("どんなものも一口で飲み込むクチバシが黒い森の平和を守るように、"),

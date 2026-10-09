@@ -53,18 +53,22 @@ public class NetworkPacketInit {
                 .consumerMainThread(CorePageActivatePacket::handle)
                 .add();
 
-        // ★ これが欠けていた
         INSTANCE.messageBuilder(LobotomyEGOCraftRecipePacket.class, id++, NetworkDirection.PLAY_TO_SERVER)
                 .decoder(LobotomyEGOCraftRecipePacket::decode)
                 .encoder(LobotomyEGOCraftRecipePacket::encode)
                 .consumerMainThread(LobotomyEGOCraftRecipePacket::handle)
                 .add();
 
-        // RCorp もここにまとめた方が安全
         INSTANCE.messageBuilder(RCorpRabbitRiflePacket.class, id++, NetworkDirection.PLAY_TO_SERVER)
                 .decoder(RCorpRabbitRiflePacket::decode)
                 .encoder(RCorpRabbitRiflePacket::encode)
                 .consumerMainThread(RCorpRabbitRiflePacket::handle)
+                .add();
+
+        INSTANCE.messageBuilder(SyncEGORecipesPacket.class, id++, NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(SyncEGORecipesPacket::decode)
+                .encoder(SyncEGORecipesPacket::encode)
+                .consumerMainThread(SyncEGORecipesPacket::handle)
                 .add();
     }
 

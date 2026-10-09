@@ -5,11 +5,14 @@ import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
+import mezz.jei.api.runtime.IJeiRuntime;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.pm_equips.BlockInit;
 import net.pm_equips.PMEquipsMain;
 import net.pm_equips.recipe.LobotomyEGORecipeManager;
+
+import java.util.List;
 
 @JeiPlugin
 public class JEIPMEPlugin implements IModPlugin {
@@ -30,7 +33,7 @@ public class JEIPMEPlugin implements IModPlugin {
     public void registerRecipes(IRecipeRegistration registration) {
         registration.addRecipes(
                 JEILCorpEGORecipeCategory.TYPE,
-                LobotomyEGORecipeManager.getAll().stream().toList()
+                List.copyOf(LobotomyEGORecipeManager.getAll())
         );
     }
 
@@ -41,5 +44,11 @@ public class JEIPMEPlugin implements IModPlugin {
                 new ItemStack(BlockInit.BlockItems.EGO_CRAFT_TABLE.get()),
                 JEILCorpEGORecipeCategory.TYPE
         );
+    }
+
+    @Override
+    public void onRuntimeAvailable(IJeiRuntime jeiRuntime) {
+        JEIEGORecipeSync.setRuntime(jeiRuntime);
+        JEIEGORecipeSync.syncToJei();
     }
 }

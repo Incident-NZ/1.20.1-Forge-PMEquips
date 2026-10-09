@@ -1,5 +1,5 @@
 {
-  "parent": "bettercombat:axe",
+  "parent": "bettercombat:mace",
   "attributes": {
     "two_handed": false
   }
