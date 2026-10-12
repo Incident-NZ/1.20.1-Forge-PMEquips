@@ -5,13 +5,13 @@
   ],
   "key": {
     "X": {
-      "item": "pm_equips:w5_mimicry"
+      "item": "pm_equips:lobego5_weapon_mimicry"
     },
     "Y": {
-      "item": "pm_equips:item_metal"
+      "item": "minecraft:iron_ingot"
     }
   },
   "result": {
-    "item": "pm_equips:fixer_kali_mimicry"
+    "item": "pm_equips:fixer_color_kali"
   }
 }

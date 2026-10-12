@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "pm_equips:item/asc2_south_armor"
+  }
+}

@@ -5,7 +5,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.NetworkEvent;
-import net.pm_equips.items.RCorpRabbitRifle;
+import net.pm_equips.items.WingRCorp4thRabbitWeapon1;
 
 import java.util.function.Supplier;
 
@@ -37,12 +37,12 @@ public class RCorpRabbitRiflePacket {
             ItemStack stack = player.getMainHandItem();
             InteractionHand hand = InteractionHand.MAIN_HAND;
 
-            if (!(stack.getItem() instanceof RCorpRabbitRifle)) {
+            if (!(stack.getItem() instanceof WingRCorp4thRabbitWeapon1)) {
                 stack = player.getOffhandItem();
                 hand = InteractionHand.OFF_HAND;
             }
 
-            if (stack.getItem() instanceof RCorpRabbitRifle rifle) {
+            if (stack.getItem() instanceof WingRCorp4thRabbitWeapon1 rifle) {
                 rifle.tryActivateSpecial(stack, player);
             }
         });

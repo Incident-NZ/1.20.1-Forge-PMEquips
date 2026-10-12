@@ -9,7 +9,7 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.pm_equips.PMEquipsMain;
-import net.pm_equips.items.RCorpRabbitCombatKnife;
+import net.pm_equips.items.WingRCorp4thRabbitWeapon2;
 
 @Mod.EventBusSubscriber(
         modid = PMEquipsMain.MOD_ID
@@ -40,12 +40,12 @@ public class CombatEvents {
                 player.getMainHandItem();
 
         if (!(weapon.getItem()
-                instanceof RCorpRabbitCombatKnife))
+                instanceof WingRCorp4thRabbitWeapon2))
         {
             return;
         }
 
-        if (!RCorpRabbitCombatKnife
+        if (!WingRCorp4thRabbitWeapon2
                 .hasEnoughEnergy(weapon))
         {
             return;
@@ -73,7 +73,7 @@ public class CombatEvents {
         event.setAmount(
                 event.getAmount() * 2.0F);
 
-        RCorpRabbitCombatKnife
+        WingRCorp4thRabbitWeapon2
                 .consumeEnergy(weapon);
     }
 }

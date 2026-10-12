@@ -17,7 +17,7 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.RegistryObject;
 import net.pm_equips.KeyBindInit;
-import net.pm_equips.items.RCorpRabbitRifle;
+import net.pm_equips.items.WingRCorp4thRabbitWeapon1;
 import net.pm_equips.network.NetworkPacketInit;
 import net.pm_equips.network.RCorpRabbitRiflePacket;
 
@@ -47,13 +47,18 @@ public class ClientForgeEvents {
             ItemInit.W4_AROMA,
             ItemInit.W4_SOLEMN_LAMENT_R,
             ItemInit.W4_HORNET,
+            ItemInit.W4_HORNET_ALTER,
             ItemInit.W4_CRIMSON_SCAR_L,
             ItemInit.W5_PARADISE_LOST,
             ItemInit.W5_PINK,
             ItemInit.WEAPON_ROLAND_REVOLVER,
             ItemInit.WEAPON_ROLAND_SHOTGUN,
             ItemInit.RCORP_RABBIT_RIFLE,
-            ItemInit.LCORP_PISTOL
+            ItemInit.LCORP_PISTOL,
+            ItemInit.LAMENT_YISANG,
+            ItemInit.LCA_AUTO_RIFLE,
+            ItemInit.LCCB_PISTOL,
+            ItemInit.LCCB_SHOTGUN
     );
 
     @SubscribeEvent
@@ -106,8 +111,8 @@ public class ClientForgeEvents {
             if (KeyBindInit.RELOAD_KEY.consumeClick()) {
                 NetworkPacketInit.INSTANCE.sendToServer(new NetworkPacketInit.ReloadPacket());
             }
-            if (KeyBindInit.CORE_PAGE_ABILITY_KEY.consumeClick()) {
-                NetworkPacketInit.INSTANCE.sendToServer(new NetworkPacketInit.CorePageActivatePacket());
+            if (KeyBindInit.LEG_ARMOR_ABILITY_KEY.consumeClick()) {
+                NetworkPacketInit.INSTANCE.sendToServer(new NetworkPacketInit.LegArmorAbilityActivatePacket());
             }
         }
     }
@@ -139,8 +144,8 @@ public class ClientForgeEvents {
             ItemStack off = player.getOffhandItem();
 
             // ライフルを持っているときだけ送信（無駄パケット防止）
-            if (main.getItem() instanceof RCorpRabbitRifle
-                    || off.getItem() instanceof RCorpRabbitRifle) {
+            if (main.getItem() instanceof WingRCorp4thRabbitWeapon1
+                    || off.getItem() instanceof WingRCorp4thRabbitWeapon1) {
                 NetworkPacketInit.INSTANCE.sendToServer(new RCorpRabbitRiflePacket());
             }
         }

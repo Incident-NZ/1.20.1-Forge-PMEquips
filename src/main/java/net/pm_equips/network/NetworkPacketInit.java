@@ -47,10 +47,10 @@ public class NetworkPacketInit {
                 .consumerMainThread(LobotomyEGOExtractPacket::handle)
                 .add();
 
-        INSTANCE.messageBuilder(CorePageActivatePacket.class, id++, NetworkDirection.PLAY_TO_SERVER)
-                .decoder(CorePageActivatePacket::decode)
-                .encoder(CorePageActivatePacket::encode)
-                .consumerMainThread(CorePageActivatePacket::handle)
+        INSTANCE.messageBuilder(LegArmorAbilityActivatePacket.class, id++, NetworkDirection.PLAY_TO_SERVER)
+                .decoder(LegArmorAbilityActivatePacket::decode)
+                .encoder(LegArmorAbilityActivatePacket::encode)
+                .consumerMainThread(LegArmorAbilityActivatePacket::handle)
                 .add();
 
         INSTANCE.messageBuilder(LobotomyEGOCraftRecipePacket.class, id++, NetworkDirection.PLAY_TO_SERVER)
@@ -92,7 +92,7 @@ public class NetworkPacketInit {
                 net.minecraft.server.level.ServerPlayer player = ctx.get().getSender();
                 if (player != null) {
                     net.minecraft.world.item.ItemStack gun = player.getMainHandItem();
-                    if (gun.getItem() instanceof EGOW4MagicBullet && gun.getOrCreateTag().getInt("abilityCharges") > 0) {
+                    if (gun.getItem() instanceof LobEGOWeapon4MagicBullet && gun.getOrCreateTag().getInt("abilityCharges") > 0) {
                         gun.getOrCreateTag().putBoolean("abilityActive", true);
                         gun.getOrCreateTag().putUUID("targetUUID", msg.targetUUID);
                     }
@@ -125,43 +125,45 @@ public class NetworkPacketInit {
                 return;
             }
 
-            if (stack.getItem() instanceof EGOW4Aroma) {
-                ((EGOW4Aroma) stack.getItem()).startReload(stack, player);
+            if (stack.getItem() instanceof LobEGOWeapon4Aroma) {
+                ((LobEGOWeapon4Aroma) stack.getItem()).startReload(stack, player);
 
-            } else if (stack.getItem() instanceof RCorpRabbitRifle) {
-                ((RCorpRabbitRifle) stack.getItem()).startReload(stack, player);
+            } else if (stack.getItem() instanceof WingRCorp4thRabbitWeapon1) {
+                ((WingRCorp4thRabbitWeapon1) stack.getItem()).startReload(stack, player);
             }
         }
     }
 
-    public static class CorePageActivatePacket {
-        public CorePageActivatePacket() {}
+    public static class LegArmorAbilityActivatePacket {
+        public LegArmorAbilityActivatePacket() {}
 
-        public static void encode(CorePageActivatePacket msg, FriendlyByteBuf buf) {}
+        public static void encode(LegArmorAbilityActivatePacket msg, FriendlyByteBuf buf) {}
 
-        public static CorePageActivatePacket decode(FriendlyByteBuf buf) {
-            return new CorePageActivatePacket();
+        public static LegArmorAbilityActivatePacket decode(FriendlyByteBuf buf) {
+            return new LegArmorAbilityActivatePacket();
         }
 
-        public static void handle(CorePageActivatePacket msg, Supplier<NetworkEvent.Context> ctx) {
+        public static void handle(LegArmorAbilityActivatePacket msg, Supplier<NetworkEvent.Context> ctx) {
             ctx.get().enqueueWork(() -> {
                 net.minecraft.server.level.ServerPlayer player = ctx.get().getSender();
                 if (player == null) {
                     return;
                 }
 
-                ItemStack stack = net.pm_equips.items.CorePageItem.findEquippedAbilityItem(player)
-                        .orElse(ItemStack.EMPTY);
-                if (stack.isEmpty()) {
+                ItemStack stack = player.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.LEGS);
+                if (!(stack.getItem() instanceof WingWCorpArmor
+                        || stack.getItem() instanceof WingRCorp4thRabbitArmor
+                        || stack.getItem() instanceof WingKCorpAgentArmor
+                        || stack.getItem() instanceof WingKCorpOfficerArmor)) {
                     return;
                 }
 
-                if (stack.getItem() instanceof net.pm_equips.items.WCorpArmor) {
+                if (stack.getItem() instanceof WingWCorpArmor) {
                     activateEffect(player, stack, 1000, net.pm_equips.MobEffectInit.WCORP_SIN.get());
-                } else if (stack.getItem() instanceof net.pm_equips.items.RCorp4thRabbitArmor) {
+                } else if (stack.getItem() instanceof WingRCorp4thRabbitArmor) {
                     activateEffect(player, stack, 2000, net.pm_equips.MobEffectInit.RCORP_SIN.get());
-                } else if (stack.getItem() instanceof net.pm_equips.items.KCorpAgentArmor
-                        || stack.getItem() instanceof net.pm_equips.items.KCorpOfficerArmor) {
+                } else if (stack.getItem() instanceof WingKCorpAgentArmor
+                        || stack.getItem() instanceof WingKCorpOfficerArmor) {
                     activateEffect(player, stack, 1500, net.pm_equips.MobEffectInit.KCORP_SIN.get());
                 }
             });

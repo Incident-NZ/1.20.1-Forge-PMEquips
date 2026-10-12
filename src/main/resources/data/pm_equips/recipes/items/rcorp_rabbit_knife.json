@@ -5,7 +5,7 @@
   ],
   "key": {
     "X": {
-      "item": "pm_equips:item_metal"
+      "item": "minecraft:iron_ingot"
     },
     "Y": {
       "item": "pm_equips:item_rcorp_battery"
@@ -15,6 +15,6 @@
     }
   },
   "result": {
-    "item": "pm_equips:rcorp_rabbit_knife"
+    "item": "pm_equips:wing_rcorp04_rabbit_w2"
   }
 }

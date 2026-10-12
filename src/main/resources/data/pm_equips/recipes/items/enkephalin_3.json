@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "pm_equips:e_box_3"
+      "item": "pm_equips:item_lcorp_pebox"
     }
   ],
   "result": {

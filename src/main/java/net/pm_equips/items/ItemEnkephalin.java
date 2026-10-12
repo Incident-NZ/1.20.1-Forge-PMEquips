@@ -82,9 +82,6 @@ public class ItemEnkephalin extends Item {
                             ForgeCapabilities.ENERGY
                     ).orElse(null);
 
-            if (storage == null)
-                continue;
-
             int accepted =
                     storage.receiveEnergy(
                             Math.min(

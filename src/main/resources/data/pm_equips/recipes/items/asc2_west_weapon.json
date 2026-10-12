@@ -7,7 +7,7 @@
   ],
   "key": {
     "X": {
-      "item": "pm_equips:item_platinum"
+      "item": "minecraft:diamond"
     },
     "Y": {
       "tag": "minecraft:swords"

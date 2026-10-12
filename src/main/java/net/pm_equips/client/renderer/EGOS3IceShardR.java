@@ -2,10 +2,10 @@ package net.pm_equips.client.renderer;
 
 import net.minecraft.world.entity.EquipmentSlot;
 import net.pm_equips.client.models.EGOS3IceShardM;
-import net.pm_equips.items.EGOP3IceShard;
+import net.pm_equips.items.LobEGOSuit3IceShard;
 import software.bernie.geckolib.renderer.GeoArmorRenderer;
 
-public class EGOS3IceShardR extends GeoArmorRenderer<EGOP3IceShard> {
+public class EGOS3IceShardR extends GeoArmorRenderer<LobEGOSuit3IceShard> {
     public EGOS3IceShardR() {
         super(new EGOS3IceShardM());
     }

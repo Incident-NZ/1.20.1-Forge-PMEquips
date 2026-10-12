@@ -6,13 +6,13 @@
   ],
   "key": {
     "A": {
-      "item": "pm_equips:item_metal"
+      "item": "minecraft:iron_ingot"
     },
     "B": {
-      "item": "pm_equips:item_platinum"
+      "item": "minecraft:diamond"
     }
   },
   "result": {
-    "item": "pm_equips:fixer_roland_lasg"
+    "item": "pm_equips:fixer_color_roland_8"
   }
 }

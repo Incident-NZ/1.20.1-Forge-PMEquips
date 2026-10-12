@@ -2,10 +2,10 @@ package net.pm_equips.client.renderer;
 
 import net.minecraft.world.entity.EquipmentSlot;
 import net.pm_equips.client.models.EGOS2TodayM;
-import net.pm_equips.items.EGOP2Today;
+import net.pm_equips.items.LobEGOSuit2Today;
 import software.bernie.geckolib.renderer.GeoArmorRenderer;
 
-public class EGOS2TodayR extends GeoArmorRenderer<EGOP2Today> {
+public class EGOS2TodayR extends GeoArmorRenderer<LobEGOSuit2Today> {
     public EGOS2TodayR() {
         super(new EGOS2TodayM());
     }

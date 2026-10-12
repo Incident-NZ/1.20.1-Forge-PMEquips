@@ -57,7 +57,7 @@ public class PMEquipsMain {
 
     private void registerCurioSlot(final InterModEnqueueEvent event) {
         InterModComms.sendTo(CuriosApi.MODID, SlotTypeMessage.REGISTER_TYPE,
-                () -> new SlotTypeMessage.Builder(Curios.CORE_PAGE_SLOT)
+                () -> new SlotTypeMessage.Builder(Curios.BADGE)
                         .size(1)
                         .build());
     }

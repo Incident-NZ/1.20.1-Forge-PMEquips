@@ -1,16 +1,16 @@
 {
   "values": [
-    "pm_equips:w5_smile",
-    "pm_equips:s5_smile",
-    "pm_equips:w5_star",
-    "pm_equips:s5_star",
-    "pm_equips:w5_mimicry",
-    "pm_equips:s5_mimicry",
-    "pm_equips:w5_da_capo",
-    "pm_equips:s5_da_capo",
-    "pm_equips:w5_twilight",
-    "pm_equips:s5_twilight",
-    "pm_equips:w5_whitenight",
-    "pm_equips:s5_whitenight"
+    "pm_equips:lobego5_weapon_smile",
+    "pm_equips:lobego5_suit_smile",
+    "pm_equips:lobego5_weapon_star",
+    "pm_equips:lobego5_suit_star",
+    "pm_equips:lobego5_weapon_mimicry",
+    "pm_equips:lobego5_suit_mimicry",
+    "pm_equips:lobego5_weapon_dacapo",
+    "pm_equips:lobego5_suit_dacapo",
+    "pm_equips:lobego5_weapon_twilight",
+    "pm_equips:lobego5_suit_twilight",
+    "pm_equips:lobego5_weapon_whitenight",
+    "pm_equips:lobego5_suit_whitenight"
   ]
 }

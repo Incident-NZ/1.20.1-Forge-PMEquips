@@ -1,23 +1,23 @@
 package net.pm_equips.client.models;
 
 import net.minecraft.resources.ResourceLocation;
-import net.pm_equips.items.WCorpArmor;
+import net.pm_equips.items.WingWCorpArmor;
 import software.bernie.geckolib.model.GeoModel;
 
-public class WCorpArmorM extends GeoModel<WCorpArmor> {
+public class WCorpArmorM extends GeoModel<WingWCorpArmor> {
 
     @Override
-    public ResourceLocation getModelResource(WCorpArmor animatable) {
+    public ResourceLocation getModelResource(WingWCorpArmor animatable) {
         return new ResourceLocation("pm_equips", "geo/wcorp_armor.geo.json");
     }
 
     @Override
-    public ResourceLocation getTextureResource(WCorpArmor animatable) {
+    public ResourceLocation getTextureResource(WingWCorpArmor animatable) {
         return new ResourceLocation("pm_equips", "textures/armor/wcorp_armor.png");
     }
 
     @Override
-    public ResourceLocation getAnimationResource(WCorpArmor animatable) {
+    public ResourceLocation getAnimationResource(WingWCorpArmor animatable) {
         return new ResourceLocation("pm_equips", "animations/armor.animation.json");
     }
 }

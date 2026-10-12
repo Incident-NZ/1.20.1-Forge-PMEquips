@@ -566,6 +566,17 @@ public final class TooltipLines {
             Component.literal("弾丸は離れた敵の元へと届き、発射された弾丸は過ぎ去った歴史を辿ることさえできる。")
     );
 
+    public static final List<Component> HORNET_ALTER_WEAPON = List.of(
+            Component.literal("攻撃力3x7 | 射程：近 | 高速"),
+            Component.literal("特殊能力なし"),
+            Component.literal("作業開始シーケンス確認…完了。個体T-04-50の38番目の洞察作業、進行します。- ムルソー"),
+            Component.literal("王国は永続的に復興しなければならず、それにはもっと多くの働き蜂が必要だった。"),
+            Component.literal("王国は歴史に名を残るだろうが、彼女のために死んでいった蜂の犠牲を誰が記憶しているだろうか？"),
+            Component.literal("弾丸は脅威となる対象のみに向かって飛んでいくので、銃で狙いを定める必要がない。"),
+            Component.literal("必要なのは意志だけである。"),
+            Component.literal("弾丸は離れた敵の元へと届き、発射された弾丸は過ぎ去った歴史を辿ることさえできる。")
+    );
+
     public static final List<Component> LAMP_WEAPON = List.of(
             Component.literal("特殊能力：攻撃的中時、25%の確率で対象の耐性弱化。"),
             Component.literal("森の仲間を救う度に大鳥の目も増えていった。"),
@@ -664,5 +675,13 @@ public final class TooltipLines {
             Component.literal("我は終焉より訪れ、つかの間の世界に留まる者。"),
             Component.literal("それと同時に、新世界への灯火を点ける者。"),
             Component.literal("愛する者どもよ、これから我が汝らに最善の道を見せよう。")
+    );
+
+    public static final List<Component> LAMENT_YISANG = List.of(
+            Component.literal("攻撃力8x6 | 射程：超長 | 超高速"),
+            Component.literal("特殊能力なし"),
+            Component.literal("初終。訃報を伝えん。"),
+            Component.literal("なる砲火、胡蝶がそなたを火葬せん！"),
+            Component.literal("この凄惨...その後には、何ひとつ残るまじ。")
     );
 }

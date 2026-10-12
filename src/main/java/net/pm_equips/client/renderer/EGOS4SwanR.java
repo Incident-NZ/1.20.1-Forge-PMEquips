@@ -2,10 +2,10 @@ package net.pm_equips.client.renderer;
 
 import net.minecraft.world.entity.EquipmentSlot;
 import net.pm_equips.client.models.EGOS4SwanM;
-import net.pm_equips.items.EGOP4Swan;
+import net.pm_equips.items.LobEGOSuit4Swan;
 import software.bernie.geckolib.renderer.GeoArmorRenderer;
 
-public class EGOS4SwanR extends GeoArmorRenderer<EGOP4Swan> {
+public class EGOS4SwanR extends GeoArmorRenderer<LobEGOSuit4Swan> {
     public EGOS4SwanR() {
         super(new EGOS4SwanM());
     }

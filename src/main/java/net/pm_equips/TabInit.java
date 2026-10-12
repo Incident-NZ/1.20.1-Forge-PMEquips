@@ -1,8 +1,6 @@
 package net.pm_equips;
 
-import net.pm_equips.tabs.PMBaseTabs;
-import net.pm_equips.tabs.PMFixerWeaponTabs;
-import net.pm_equips.tabs.PMLobotomyEGOTabs;
+import net.pm_equips.tabs.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -10,7 +8,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
-import net.pm_equips.tabs.PMWingsTabs;
 
 public class TabInit {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, PMEquipsMain.MOD_ID);
@@ -54,6 +51,17 @@ public class TabInit {
                     .icon(() -> ItemStack.EMPTY)
                     .displayItems((param, output) -> {
                         for (Item item : PMWingsTabs.items) {
+                            output.accept(item);
+                        }
+                    })
+                    .build());
+
+    public static final RegistryObject<CreativeModeTab> PM_LIMBUS = CREATIVE_TABS.register("pm_limbus",
+            () -> CreativeModeTab.builder()
+                    .title(Component.translatable("itemGroup.pm_limbus"))
+                    .icon(() -> ItemStack.EMPTY)
+                    .displayItems((param, output) -> {
+                        for (Item item : PMLimbusTabs.items) {
                             output.accept(item);
                         }
                     })

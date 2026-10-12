@@ -11,7 +11,7 @@ import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.pm_equips.PMEquipsMain;
-import net.pm_equips.items.EGOW5WhiteNight;
+import net.pm_equips.items.LobEGOWeapon5WhiteNight;
 
 import java.util.Map;
 import java.util.UUID;
@@ -24,7 +24,7 @@ public class WhiteNightDebuffHandler {
     private static final Map<UUID, Integer> BLOCK_HEAL_TICKS = new ConcurrentHashMap<>();
 
     private static boolean hasWeapon(Player player) {
-        return EGOW5WhiteNight.hasInInventory(player);
+        return LobEGOWeapon5WhiteNight.hasInInventory(player);
     }
 
     @SubscribeEvent

@@ -1,6 +1,5 @@
 package net.pm_equips.client;
 
-import net.pm_equips.BlockInit;
 import net.pm_equips.ItemInit;
 import net.pm_equips.PMEquipsMain;
 import net.pm_equips.TabInit;
@@ -21,9 +20,11 @@ public class ClientSetup {
     public static void onClientSetup(final FMLClientSetupEvent event) {
         try {
             setTabIcon(TabInit.PM_LOBOTOMY_EGO.get(), () -> ItemInit.W1_PENITENCE.get().getDefaultInstance());
-            setTabIcon(TabInit.PM_BASE.get(), () -> new ItemStack(BlockInit.BlockItems.ZAYIN_PE_BOX.get()));
+            setTabIcon(TabInit.PM_BASE.get(), () -> new ItemStack(ItemInit.ITEM_ENKEPHALIN.get()));
             setTabIcon(TabInit.PM_FIXERS.get(), () -> ItemInit.EX_DURANDAL.get().getDefaultInstance());
             setTabIcon(TabInit.PM_WCORP.get(), () -> ItemInit.WCORP_WEAPON_1.get().getDefaultInstance());
+            setTabIcon(TabInit.PM_LIMBUS.get(), () -> ItemInit.LCA_AUTO_RIFLE.get().getDefaultInstance());
+
         } catch (Throwable t) {
             // ignore to avoid crashing client if reflection fails
         }

@@ -8,7 +8,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.pm_equips.ItemInit;
 import net.pm_equips.PMEquipsMain;
-import net.pm_equips.items.WeaponRolandMook;
+import net.pm_equips.items.FixerColorRolandWeapon6;
 
 @Mod.EventBusSubscriber(modid = PMEquipsMain.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class RolandMookClient {
@@ -16,6 +16,6 @@ public class RolandMookClient {
     public static void onClientSetup(FMLClientSetupEvent event) {
         ItemProperties.register(ItemInit.FIXER_ROLAND_MOOK.get(),
                 new ResourceLocation(PMEquipsMain.MOD_ID, "drawn"),
-                (stack, level, entity, seed) -> stack.getItem() instanceof WeaponRolandMook mook && mook.isDrawn(stack) ? 1.0F : 0.0F);
+                (stack, level, entity, seed) -> stack.getItem() instanceof FixerColorRolandWeapon6 mook && mook.isDrawn(stack) ? 1.0F : 0.0F);
     }
 }

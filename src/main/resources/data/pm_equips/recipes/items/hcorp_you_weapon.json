@@ -8,13 +8,13 @@
       "item": "pm_equips:item_hcorp_bolus_you"
     },
     "Y": {
-      "item": "pm_equips:item_metal"
+      "item": "minecraft:iron_ingot"
     },
     "Z": {
       "item": "minecraft:stick"
     }
   },
   "result": {
-    "item": "pm_equips:hcorp_you_weapon"
+    "item": "pm_equips:wing_hcorp_you_weapon"
   }
 }

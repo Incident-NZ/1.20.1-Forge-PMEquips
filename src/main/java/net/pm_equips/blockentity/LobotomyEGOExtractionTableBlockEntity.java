@@ -7,6 +7,8 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.Container;
+import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -18,7 +20,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.pm_equips.BlockEntityInit;
-import net.pm_equips.BlockInit;
+import net.pm_equips.ItemInit;
 import net.pm_equips.TagInit;
 import net.pm_equips.menu.LobotomyEGOExtractionMenu;
 import org.jetbrains.annotations.Nullable;
@@ -27,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class LobotomyEGOExtractionTableBlockEntity extends BlockEntity implements MenuProvider, net.minecraft.world.Container {
+public class LobotomyEGOExtractionTableBlockEntity extends BlockEntity implements MenuProvider, Container {
     public static final int INPUT_SLOT_START = 0;
     public static final int INPUT_SLOT_COUNT = 9;
     public static final int OUTPUT_SLOT = 9;
@@ -49,25 +51,24 @@ public class LobotomyEGOExtractionTableBlockEntity extends BlockEntity implement
         return new LobotomyEGOExtractionMenu(containerId, inventory, this);
     }
 
-    public boolean craft(Player player) {
+    public void craft(Player player) {
         if (level == null || level.isClientSide) {
-            return false;
+            return;
         }
 
         ExtractionRule rule = findCraftableRule();
         if (rule == null || countInputs(rule.input()) < rule.cost()) {
-            return false;
+            return;
         }
 
         ItemStack generated = getRandomResult(level, rule.resultTag());
         if (generated.isEmpty() || !canMoveToOutput(generated)) {
-            return false;
+            return;
         }
 
         consumeInputs(rule.input(), rule.cost());
         moveToOutput(generated);
         setChanged();
-        return true;
     }
 
     public boolean canPlaceInput(ItemStack stack) {
@@ -157,7 +158,7 @@ public class LobotomyEGOExtractionTableBlockEntity extends BlockEntity implement
     @Override
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
-        net.minecraft.world.ContainerHelper.saveAllItems(tag, items);
+        ContainerHelper.saveAllItems(tag, items);
     }
 
     @Override
@@ -189,7 +190,7 @@ public class LobotomyEGOExtractionTableBlockEntity extends BlockEntity implement
 
     @Override
     public ItemStack removeItem(int slot, int amount) {
-        ItemStack stack = net.minecraft.world.ContainerHelper.removeItem(items, slot, amount);
+        ItemStack stack = ContainerHelper.removeItem(items, slot, amount);
         if (!stack.isEmpty()) {
             setChanged();
         }
@@ -198,7 +199,7 @@ public class LobotomyEGOExtractionTableBlockEntity extends BlockEntity implement
 
     @Override
     public ItemStack removeItemNoUpdate(int slot) {
-        return net.minecraft.world.ContainerHelper.takeItem(items, slot);
+        return ContainerHelper.takeItem(items, slot);
     }
 
     @Override
@@ -225,20 +226,20 @@ public class LobotomyEGOExtractionTableBlockEntity extends BlockEntity implement
 
     private record ExtractionRule(Item input, int cost, TagKey<Item> resultTag) {
         private static ExtractionRule forInput(ItemStack stack) {
-            if (stack.is(BlockInit.BlockItems.ZAYIN_PE_BOX.get())) {
-                return new ExtractionRule(BlockInit.BlockItems.ZAYIN_PE_BOX.get(), 15, TagInit.Items.EGO_T1_ZAYIN);
+            if (stack.is(ItemInit.LCORP_EBOX.get())) {
+                return new ExtractionRule(ItemInit.LCORP_EBOX.get(), 8, TagInit.Items.EGO_T1_ZAYIN);
             }
-            if (stack.is(BlockInit.BlockItems.TETH_PE_BOX.get())) {
-                return new ExtractionRule(BlockInit.BlockItems.TETH_PE_BOX.get(), 30, TagInit.Items.EGO_T2_TETH);
+            if (stack.is(ItemInit.LCORP_EBOX.get())) {
+                return new ExtractionRule(ItemInit.LCORP_EBOX.get(), 16, TagInit.Items.EGO_T2_TETH);
             }
-            if (stack.is(BlockInit.BlockItems.HE_PE_BOX.get())) {
-                return new ExtractionRule(BlockInit.BlockItems.HE_PE_BOX.get(), 45, TagInit.Items.EGO_T3_HE);
+            if (stack.is(ItemInit.LCORP_EBOX.get())) {
+                return new ExtractionRule(ItemInit.LCORP_EBOX.get(), 32, TagInit.Items.EGO_T3_HE);
             }
-            if (stack.is(BlockInit.BlockItems.WAW_PE_BOX.get())) {
-                return new ExtractionRule(BlockInit.BlockItems.WAW_PE_BOX.get(), 60, TagInit.Items.EGO_T4_WAW);
+            if (stack.is(ItemInit.LCORP_EBOX.get())) {
+                return new ExtractionRule(ItemInit.LCORP_EBOX.get(), 48, TagInit.Items.EGO_T4_WAW);
             }
-            if (stack.is(BlockInit.BlockItems.ALEPH_PE_BOX.get())) {
-                return new ExtractionRule(BlockInit.BlockItems.ALEPH_PE_BOX.get(), 120, TagInit.Items.EGO_T5_ALEPH);
+            if (stack.is(ItemInit.LCORP_EBOX.get())) {
+                return new ExtractionRule(ItemInit.LCORP_EBOX.get(), 64, TagInit.Items.EGO_T5_ALEPH);
             }
             return null;
         }

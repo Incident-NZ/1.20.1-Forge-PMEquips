@@ -20,7 +20,8 @@
 					"parent": "bipedHead",
 					"pivot": [0, 24, 0],
 					"cubes": [
-						{"origin": [-4, 24, -4], "size": [8, 8, 8], "inflate": 0.6, "uv": [32, 16]}
+						{"origin": [-4, 24, -4], "size": [8, 2, 8], "inflate": 0.6, "uv": [32, 16]},
+						{"origin": [-6, 25, -6], "size": [12, 7, 12], "inflate": 0.6, "uv": [0, 38]}
 					]
 				},
 				{

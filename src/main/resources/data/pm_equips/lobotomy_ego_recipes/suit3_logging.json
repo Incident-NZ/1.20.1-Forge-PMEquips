@@ -1,0 +1,13 @@
+{
+  "id": "pm_equips:lobego3_suit_logging",
+  "result": {
+    "item": "pm_equips:lobego3_suit_logging",
+    "count": 1
+  },
+  "ingredients": [
+    {
+      "item": "pm_equips:item_lcorp_pebox",
+      "count": 30
+    }
+  ]
+}

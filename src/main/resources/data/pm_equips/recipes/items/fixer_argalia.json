@@ -5,13 +5,13 @@
   ],
   "key": {
     "X": {
-      "item": "pm_equips:w5_da_capo"
+      "item": "pm_equips:lobego5_weapon_dacapo"
     },
     "Y": {
-      "item": "pm_equips:item_platinum"
+      "item": "minecraft:diamond"
     }
   },
   "result": {
-    "item": "pm_equips:fixer_argalia"
+    "item": "pm_equips:fixer_color_argalia"
   }
 }

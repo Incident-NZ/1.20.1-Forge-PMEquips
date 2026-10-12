@@ -5,13 +5,13 @@
   ],
   "key": {
     "X": {
-      "item": "pm_equips:item_metal"
+      "item": "minecraft:iron_ingot"
     },
     "Y": {
-      "item": "pm_equips:w4_tears"
+      "item": "minecraft:netherite_sword"
     }
   },
   "result": {
-    "item": "pm_equips:fixer_roland_durandal"
+    "item": "pm_equips:fixer_color_roland_durandal"
   }
 }

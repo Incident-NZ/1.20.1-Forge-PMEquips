@@ -8,7 +8,6 @@ import net.pm_equips.MenuInit;
 import net.pm_equips.client.renderer.*;
 import net.pm_equips.client.screen.LobotomyEGOCraftScreen;
 import net.pm_equips.client.screen.LobotomyEGOExtractionScreen;
-import net.pm_equips.items.CorePageItem;
 import net.pm_equips.PMEquipsMain;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -18,7 +17,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.registries.ForgeRegistries;
-import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
 
 @Mod.EventBusSubscriber(
         modid = PMEquipsMain.MOD_ID,
@@ -30,9 +28,6 @@ public class ClientEvents {
     //Menu Registry
     @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent event) {
-        event.enqueueWork(() -> ForgeRegistries.ITEMS.getValues().stream()
-                .filter(CorePageItem.class::isInstance)
-                .forEach(item -> CuriosRendererRegistry.register(item, CorePageCurioRenderer::new)));
         event.enqueueWork(() -> MenuScreens.register(MenuInit.LOBOTOMY_EGO_EXTRACTION_TABLE.get(), LobotomyEGOExtractionScreen::new));
 
         event.enqueueWork(() ->
@@ -57,8 +52,7 @@ public class ClientEvents {
     public static void registerKeys(RegisterKeyMappingsEvent event) {
         event.register(KeyBindInit.RELOAD_KEY);
         event.register(KeyBindInit.SCOPE_KEY);
-        event.register(KeyBindInit.CORE_PAGE_ABILITY_KEY);
+        event.register(KeyBindInit.LEG_ARMOR_ABILITY_KEY);
         event.register(KeyBindInit.WEAPON_ABILITY_KEY);
     }
 }
-

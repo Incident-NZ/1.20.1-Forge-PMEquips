@@ -40,6 +40,7 @@ public class PMLobotomyEGOTabs {
             ItemInit.W4_DIFFRACTION.get(),
             ItemInit.W4_STEM.get(),
             ItemInit.W4_HORNET.get(),
+            ItemInit.W4_HORNET_ALTER.get(),
             ItemInit.W4_THE_SWORD_SHARPENED_WITH_TEARS.get(),
             ItemInit.W5_JUSTITIA.get(),
             ItemInit.W5_PINK.get(),

@@ -1,22 +1,22 @@
 package net.pm_equips.client.models;
 
 import net.minecraft.resources.ResourceLocation;
-import net.pm_equips.items.EGOP4Hatred;
+import net.pm_equips.items.LobEGOSuit4Hatred;
 import software.bernie.geckolib.model.GeoModel;
 
-public class EGOS4HatredM extends GeoModel<EGOP4Hatred> {
+public class EGOS4HatredM extends GeoModel<LobEGOSuit4Hatred> {
     @Override
-    public ResourceLocation getModelResource(EGOP4Hatred animatable) {
+    public ResourceLocation getModelResource(LobEGOSuit4Hatred animatable) {
         return new ResourceLocation("pm_equips", "geo/ego_armor_type2.geo.json");
     }
 
     @Override
-    public ResourceLocation getTextureResource(EGOP4Hatred animatable) {
+    public ResourceLocation getTextureResource(LobEGOSuit4Hatred animatable) {
         return new ResourceLocation("pm_equips", "textures/armor/ego_s4_hatred.png");
     }
 
     @Override
-    public ResourceLocation getAnimationResource(EGOP4Hatred animatable) {
-        return new ResourceLocation("pm_equips", "animations/ego_armor.animation.json");
+    public ResourceLocation getAnimationResource(LobEGOSuit4Hatred animatable) {
+        return new ResourceLocation("pm_equips", "animations/armor.animation.json");
     }
 }

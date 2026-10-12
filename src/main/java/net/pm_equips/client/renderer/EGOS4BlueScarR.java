@@ -2,10 +2,10 @@ package net.pm_equips.client.renderer;
 
 import net.minecraft.world.entity.EquipmentSlot;
 import net.pm_equips.client.models.EGOS4BlueScarM;
-import net.pm_equips.items.EGOP4BlueScar;
+import net.pm_equips.items.LobEGOSuit4BlueScar;
 import software.bernie.geckolib.renderer.GeoArmorRenderer;
 
-public class EGOS4BlueScarR extends GeoArmorRenderer<EGOP4BlueScar> {
+public class EGOS4BlueScarR extends GeoArmorRenderer<LobEGOSuit4BlueScar> {
     public EGOS4BlueScarR() {
         super(new EGOS4BlueScarM());
     }

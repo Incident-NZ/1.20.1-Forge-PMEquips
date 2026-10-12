@@ -10,14 +10,7 @@ public class PMBaseTabs {
             BlockInit.BlockItems.EGO_EXTRACTION_TABLE.get(),
             BlockInit.BlockItems.EGO_CRAFT_TABLE.get(),
             ItemInit.ITEM_ENKEPHALIN.get(),
-            BlockInit.BlockItems.ZAYIN_PE_BOX.get(),
-            BlockInit.BlockItems.TETH_PE_BOX.get(),
-            BlockInit.BlockItems.HE_PE_BOX.get(),
-            BlockInit.BlockItems.WAW_PE_BOX.get(),
-            BlockInit.BlockItems.ALEPH_PE_BOX.get(),
-            ItemInit.PLATINUM_INGOT.get(),
-            ItemInit.METAL_INGOT.get(),
-            ItemInit.SILVER_INGOT.get(),
+            ItemInit.LCORP_EBOX.get(),
             ItemInit.BLADE_GEAR.get(),
             ItemInit.WCORP_BATTERY.get(),
             ItemInit.RCORP_BATTERY.get(),
@@ -30,6 +23,7 @@ public class PMBaseTabs {
             ItemInit.P_BULLET_LASG.get(),
             ItemInit.RIFLE_BULLET_AMMO.get(),
             ItemInit.PISTOL_BULLET_AMMO.get(),
+            ItemInit.SHOTGUN_BULLET_AMMO.get(),
             ItemInit.EXPLOSIVE_BULLET_AMMO.get(),
     };
 }

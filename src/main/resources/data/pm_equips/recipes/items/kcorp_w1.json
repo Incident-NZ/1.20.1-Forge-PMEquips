@@ -5,7 +5,7 @@
   ],
   "key": {
     "X": {
-      "item": "pm_equips:item_platinum"
+      "item": "minecraft:diamond"
     },
     "Y": {
       "item": "pm_equips:item_kcorp_ampoule"
@@ -15,6 +15,6 @@
     }
   },
   "result": {
-    "item": "pm_equips:kcorp_w1"
+    "item": "pm_equips:wing_kcorp_w1"
   }
 }

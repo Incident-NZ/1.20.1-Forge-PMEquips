@@ -6,8 +6,8 @@ import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.pm_equips.items.EGOW4Lamp;
-import net.pm_equips.items.WeaponRolandWheels;
+import net.pm_equips.items.LobEGOWeapon4Lamp;
+import net.pm_equips.items.FixerColorRolandWeapon10;
 
 @Mod.EventBusSubscriber(modid = "pm_equips")
 public class ModCommonEvents {
@@ -16,7 +16,7 @@ public class ModCommonEvents {
         if (event.getEntity().level().isClientSide) return;
 
         LivingEntity target = event.getEntity();
-        float modified = EGOW4Lamp.applyExtraDamage(
+        float modified = LobEGOWeapon4Lamp.applyExtraDamage(
                 target,
                 event.getSource(),
                 event.getAmount()
@@ -36,7 +36,7 @@ public class ModCommonEvents {
         }
         if (attacker == player) return;
 
-        if (WeaponRolandWheels.tryGuard(player, attacker)) {
+        if (FixerColorRolandWeapon10.tryGuard(player, attacker)) {
             event.setCanceled(true); // 被ダメージ無効
         }
     }

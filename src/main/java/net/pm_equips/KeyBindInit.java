@@ -25,9 +25,9 @@ public class KeyBindInit {
                     "key.categories.pm_equips"
             );
 
-    public static final KeyMapping CORE_PAGE_ABILITY_KEY =
+    public static final KeyMapping LEG_ARMOR_ABILITY_KEY =
             new KeyMapping(
-                    "key.categories.pm_equips.core_page_ability",
+                    "key.categories.pm_equips.leg_armor_ability",
                     KeyConflictContext.IN_GAME,
                     KeyModifier.SHIFT,
                     InputConstants.Type.KEYSYM,

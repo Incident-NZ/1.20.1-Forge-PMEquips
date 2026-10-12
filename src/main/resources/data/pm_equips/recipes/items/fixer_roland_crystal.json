@@ -6,14 +6,14 @@
   ],
   "key": {
     "A": {
-      "item": "pm_equips:item_platinum"
+      "item": "minecraft:iron_ingot"
     },
     "B": {
       "item": "minecraft:stick"
     }
   },
   "result": {
-    "item": "pm_equips:fixer_roland_crystal",
+    "item": "pm_equips:fixer_color_roland_9",
     "count": 2
   }
 }

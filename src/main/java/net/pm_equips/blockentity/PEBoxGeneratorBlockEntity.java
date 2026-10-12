@@ -2,6 +2,7 @@ package net.pm_equips.blockentity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
@@ -120,7 +121,7 @@ public class PEBoxGeneratorBlockEntity extends BlockEntity {
     }
 
     private static List<Item> getTaggedItems(Level level, TagKey<Item> tagKey) {
-        Optional<net.minecraft.core.HolderSet.Named<Item>> tag = level.registryAccess()
+        Optional<HolderSet.Named<Item>> tag = level.registryAccess()
                 .registryOrThrow(Registries.ITEM)
                 .getTag(tagKey);
         if (tag.isEmpty()) {

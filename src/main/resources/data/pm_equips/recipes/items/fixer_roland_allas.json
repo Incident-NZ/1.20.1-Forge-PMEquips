@@ -5,13 +5,13 @@
   ],
   "key": {
     "A": {
-      "item": "pm_equips:item_silver"
+      "item": "minecraft:gold_ingot"
     },
     "B": {
       "item": "minecraft:stick"
     }
   },
   "result": {
-    "item": "pm_equips:fixer_roland_allas"
+    "item": "pm_equips:fixer_color_roland_5"
   }
 }

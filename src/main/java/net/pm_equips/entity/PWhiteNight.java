@@ -22,7 +22,7 @@ import java.util.Set;
 
 public class PWhiteNight extends Projectile implements IEntityAdditionalSpawnData {
 
-    private static final int LIFETIME = 40; // 40 ticks = 2 seconds
+    private static final int LIFETIME = 60; // 60 ticks = 3 seconds
     private int ticksExisted = 0;
     private final Set<Integer> hitEntities = new HashSet<>();
     private float damage = 25.0f;

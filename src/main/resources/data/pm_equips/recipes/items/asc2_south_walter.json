@@ -5,7 +5,7 @@
   ],
   "key": {
     "X": {
-      "item": "pm_equips:item_metal"
+      "item": "minecraft:iron_ingot"
     },
     "Y": {
       "item": "pm_equips:asc2_south_weapon2"

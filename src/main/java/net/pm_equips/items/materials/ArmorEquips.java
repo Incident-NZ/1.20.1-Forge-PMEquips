@@ -1,7 +1,6 @@
 package net.pm_equips.items.materials;
 
 import net.minecraft.world.item.Items;
-import net.pm_equips.BlockInit;
 import net.pm_equips.ItemInit;
 import net.pm_equips.PMEquipsMain;
 import net.minecraft.sounds.SoundEvent;
@@ -14,124 +13,124 @@ import java.util.function.Supplier;
 
 public enum ArmorEquips implements ArmorMaterial {
     A5_TWILIGHT("s5_twilight", 4000, new int[]{0, 0, 40, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 40.0f, 0.9f, () -> Ingredient.of(BlockInit.BlockItems.ALEPH_PE_BOX.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 40.0f, 0.9f, () -> Ingredient.of(ItemInit.LCORP_EBOX.get())),
 
     A5_PARADISE_LOST("s5_white_night", 4000, new int[]{0, 0, 40, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 40.0f, 0.9f, () -> Ingredient.of(BlockInit.BlockItems.ALEPH_PE_BOX.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 40.0f, 0.9f, () -> Ingredient.of(ItemInit.LCORP_EBOX.get())),
 
     A5_MIMICRY("s5_mimicry", 4000, new int[]{0, 0, 30, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 30.0f, 0.75f, () -> Ingredient.of(BlockInit.BlockItems.ALEPH_PE_BOX.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 30.0f, 0.75f, () -> Ingredient.of(ItemInit.LCORP_EBOX.get())),
 
     A5_SMILE("s5_smile", 4000, new int[]{0, 0, 30, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 30.0f, 0.75f, () -> Ingredient.of(BlockInit.BlockItems.ALEPH_PE_BOX.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 30.0f, 0.75f, () -> Ingredient.of(ItemInit.LCORP_EBOX.get())),
 
     A5_SOUND_OF_A_STAR("s5_star", 4000, new int[]{0, 0, 30, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 30.0f, 0.75f, () -> Ingredient.of(BlockInit.BlockItems.ALEPH_PE_BOX.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 30.0f, 0.75f, () -> Ingredient.of(ItemInit.LCORP_EBOX.get())),
 
     A5_DA_CAPO("s5_da_capo", 4000, new int[]{0, 0, 30, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 30.0f, 0.75f, () -> Ingredient.of(BlockInit.BlockItems.ALEPH_PE_BOX.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 30.0f, 0.75f, () -> Ingredient.of(ItemInit.LCORP_EBOX.get())),
 
     A5_PINK("s5_pink", 4000, new int[]{0, 0, 30, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 30.0f, 0.75f, () -> Ingredient.of(BlockInit.BlockItems.ZAYIN_PE_BOX.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 30.0f, 0.75f, () -> Ingredient.of(ItemInit.LCORP_EBOX.get())),
 
     A5_JUSTITIA("s5_justitia", 4000, new int[]{0, 0, 30, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 30.0f, 0.75f, () -> Ingredient.of(BlockInit.BlockItems.WAW_PE_BOX.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 30.0f, 0.75f, () -> Ingredient.of(ItemInit.LCORP_EBOX.get())),
 
     A4_HATRED("s4_hatred", 3000, new int[]{0, 0, 25, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 25.0f, 0.6f, () -> Ingredient.of(BlockInit.BlockItems.WAW_PE_BOX.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 25.0f, 0.6f, () -> Ingredient.of(ItemInit.LCORP_EBOX.get())),
 
     A4_CRIMSON_SCAR("s4_crimson_scar", 3000, new int[]{0, 0, 25, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 25.0f, 0.6f, () -> Ingredient.of(BlockInit.BlockItems.WAW_PE_BOX.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 25.0f, 0.6f, () -> Ingredient.of(ItemInit.LCORP_EBOX.get())),
 
     A4_THE_SWORD_SHARPENED_WITH_TEARS("s4_tears", 3000, new int[]{0, 0, 25, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 25.0f, 0.6f, () -> Ingredient.of(BlockInit.BlockItems.WAW_PE_BOX.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 25.0f, 0.6f, () -> Ingredient.of(ItemInit.LCORP_EBOX.get())),
 
     A4_HORNET("s4_hornet", 3000, new int[]{0, 0, 25, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 25.0f, 0.6f, () -> Ingredient.of(BlockInit.BlockItems.WAW_PE_BOX.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 25.0f, 0.6f, () -> Ingredient.of(ItemInit.LCORP_EBOX.get())),
 
     A4_HEAVEN("s4_heaven", 3000, new int[]{0, 0, 25, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 25.0f, 0.6f, () -> Ingredient.of(BlockInit.BlockItems.WAW_PE_BOX.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 25.0f, 0.6f, () -> Ingredient.of(ItemInit.LCORP_EBOX.get())),
 
     A4_AROMA("s4_aroma", 3000, new int[]{0, 0, 25, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 25.0f, 0.6f, () -> Ingredient.of(BlockInit.BlockItems.WAW_PE_BOX.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 25.0f, 0.6f, () -> Ingredient.of(ItemInit.LCORP_EBOX.get())),
 
     A4_SWAN("s4_swan", 3000, new int[]{0, 0, 25, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 25.0f, 0.6f, () -> Ingredient.of(BlockInit.BlockItems.WAW_PE_BOX.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 25.0f, 0.6f, () -> Ingredient.of(ItemInit.LCORP_EBOX.get())),
 
     A4_STEM("s4_stem", 3000, new int[]{0, 0, 25, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 25.0f, 0.6f, () -> Ingredient.of(BlockInit.BlockItems.WAW_PE_BOX.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 25.0f, 0.6f, () -> Ingredient.of(ItemInit.LCORP_EBOX.get())),
 
     A4_LAMP("s4_lamp", 3000, new int[]{0, 0, 25, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 25.0f, 0.6f, () -> Ingredient.of(BlockInit.BlockItems.WAW_PE_BOX.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 25.0f, 0.6f, () -> Ingredient.of(ItemInit.LCORP_EBOX.get())),
 
     A4_BLUE_SCAR("s4_blue_scar", 3000, new int[]{0, 0, 25, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 25.0f, 0.6f, () -> Ingredient.of(BlockInit.BlockItems.WAW_PE_BOX.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 25.0f, 0.6f, () -> Ingredient.of(ItemInit.LCORP_EBOX.get())),
 
     A3_MAGIC_BULLET("s3_magic_bullet", 2000, new int[]{0, 0, 20, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 20.0f, 0.45f, () -> Ingredient.of(BlockInit.BlockItems.HE_PE_BOX.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 20.0f, 0.45f, () -> Ingredient.of(ItemInit.LCORP_EBOX.get())),
 
     A3_ICE_SHARD("s3_ice_shard", 2000, new int[]{0, 0, 20, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 20.0f, 0.45f, () -> Ingredient.of(BlockInit.BlockItems.HE_PE_BOX.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 20.0f, 0.45f, () -> Ingredient.of(ItemInit.LCORP_EBOX.get())),
 
     A3_LAETITIA("s3_laetitia", 2000, new int[]{0, 0, 20, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 20.0f, 0.45f, () -> Ingredient.of(BlockInit.BlockItems.HE_PE_BOX.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 20.0f, 0.45f, () -> Ingredient.of(ItemInit.LCORP_EBOX.get())),
 
     A3_BLOOD("s3_blood", 2000, new int[]{0, 0, 20, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 20.0f, 0.45f, () -> Ingredient.of(BlockInit.BlockItems.HE_PE_BOX.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 20.0f, 0.45f, () -> Ingredient.of(ItemInit.LCORP_EBOX.get())),
 
     A3_BEAR("s3_bear", 2000, new int[]{0, 0, 20, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 20.0f, 0.45f, () -> Ingredient.of(BlockInit.BlockItems.HE_PE_BOX.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 20.0f, 0.45f, () -> Ingredient.of(ItemInit.LCORP_EBOX.get())),
 
     A3_SOLEMN_LAMENT("s3_solemn_lament", 2000, new int[]{0, 0, 20, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 20.0f, 0.45f, () -> Ingredient.of(BlockInit.BlockItems.HE_PE_BOX.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 20.0f, 0.45f, () -> Ingredient.of(ItemInit.LCORP_EBOX.get())),
 
     A3_LOGGING("s3_logging", 2000, new int[]{0, 0, 20, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 20.0f, 0.45f, () -> Ingredient.of(BlockInit.BlockItems.HE_PE_BOX.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 20.0f, 0.45f, () -> Ingredient.of(ItemInit.LCORP_EBOX.get())),
 
     A3_GRINDER_MK4("s3_grinder_mk4", 2000, new int[]{0, 0, 20, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 20.0f, 0.45f, () -> Ingredient.of(BlockInit.BlockItems.HE_PE_BOX.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 20.0f, 0.45f, () -> Ingredient.of(ItemInit.LCORP_EBOX.get())),
 
     A3_GALAXY("s3_galaxy", 2000, new int[]{0, 0, 20, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 20.0f, 0.45f, () -> Ingredient.of(BlockInit.BlockItems.HE_PE_BOX.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 20.0f, 0.45f, () -> Ingredient.of(ItemInit.LCORP_EBOX.get())),
 
     A3_HARVEST("s3_harvest", 2000, new int[]{0, 0, 20, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 20.0f, 0.45f, () -> Ingredient.of(BlockInit.BlockItems.HE_PE_BOX.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 20.0f, 0.45f, () -> Ingredient.of(ItemInit.LCORP_EBOX.get())),
 
     A2_FOURTH_MATCH_FIRE("s2_match", 1000, new int[]{0, 0, 15, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 15.0f, 0.3f, () -> Ingredient.of(BlockInit.BlockItems.TETH_PE_BOX.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 15.0f, 0.3f, () -> Ingredient.of(ItemInit.LCORP_EBOX.get())),
 
     A2_BEAK("s2_beak", 1000, new int[]{0, 0, 15, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 15.0f, 0.3f, () -> Ingredient.of(BlockInit.BlockItems.TETH_PE_BOX.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 15.0f, 0.3f, () -> Ingredient.of(ItemInit.LCORP_EBOX.get())),
 
     A2_BATH("s2_bath", 1000, new int[]{0, 0, 15, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 15.0f, 0.3f, () -> Ingredient.of(BlockInit.BlockItems.TETH_PE_BOX.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 15.0f, 0.3f, () -> Ingredient.of(ItemInit.LCORP_EBOX.get())),
 
     A2_SOMEWHERE("s2_somewhere", 1000, new int[]{0, 0, 15, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 15.0f, 0.3f, () -> Ingredient.of(BlockInit.BlockItems.TETH_PE_BOX.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 15.0f, 0.3f, () -> Ingredient.of(ItemInit.LCORP_EBOX.get())),
 
     A2_SOLITUDE("s2_solitude", 1000, new int[]{0, 0, 15, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 15.0f, 0.3f, () -> Ingredient.of(BlockInit.BlockItems.TETH_PE_BOX.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 15.0f, 0.3f, () -> Ingredient.of(ItemInit.LCORP_EBOX.get())),
 
     A2_TODAY("s2_today", 1000, new int[]{0, 0, 15, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 15.0f, 0.3f, () -> Ingredient.of(BlockInit.BlockItems.TETH_PE_BOX.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 15.0f, 0.3f, () -> Ingredient.of(ItemInit.LCORP_EBOX.get())),
 
     A2_LANTERN("s2_lantern", 1000, new int[]{0, 0, 15, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 15.0f, 0.3f, () -> Ingredient.of(BlockInit.BlockItems.TETH_PE_BOX.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 15.0f, 0.3f, () -> Ingredient.of(ItemInit.LCORP_EBOX.get())),
 
     A2_RED_EYE("s2_red_eye", 1000, new int[]{0, 0, 15, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 15.0f, 0.3f, () -> Ingredient.of(BlockInit.BlockItems.TETH_PE_BOX.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 15.0f, 0.3f, () -> Ingredient.of(ItemInit.LCORP_EBOX.get())),
 
     A2_REGLET("s2_reglet", 1000, new int[]{0, 0, 15, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 15.0f, 0.3f, () -> Ingredient.of(BlockInit.BlockItems.TETH_PE_BOX.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 15.0f, 0.3f, () -> Ingredient.of(ItemInit.LCORP_EBOX.get())),
 
     A1_PENITENCE("s1_penitence", 800, new int[]{0, 0, 10, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 10.0f, 0.15f, () -> Ingredient.of(BlockInit.BlockItems.ZAYIN_PE_BOX.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 10.0f, 0.15f, () -> Ingredient.of(ItemInit.LCORP_EBOX.get())),
 
     A1_SODA("s1_soda", 800, new int[]{0, 0, 10, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 10.0f, 0.15f, () -> Ingredient.of(BlockInit.BlockItems.ZAYIN_PE_BOX.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 10.0f, 0.15f, () -> Ingredient.of(ItemInit.LCORP_EBOX.get())),
 
     A1_WINGBEAT("s1_wingbeat", 800, new int[]{0, 0, 10, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 10.0f, 0.15f, () -> Ingredient.of(BlockInit.BlockItems.ZAYIN_PE_BOX.get())),
+            SoundEvents.ARMOR_EQUIP_GENERIC, 10.0f, 0.15f, () -> Ingredient.of(ItemInit.LCORP_EBOX.get())),
 
     ASC2_ARMOR_SEC6("asc2_armor_sec6", 100, new int[]{0, 0, 4, 0}, 0,
             SoundEvents.ARMOR_EQUIP_GENERIC, 1.0f, 0.0f, () -> Ingredient.of(Items.LEATHER)),
@@ -239,7 +238,19 @@ public enum ArmorEquips implements ArmorMaterial {
             SoundEvents.ARMOR_EQUIP_GENERIC, 12.0f, 0.4f, () -> Ingredient.of(ItemInit.HCORP_BOLUS_YOU.get())),
 
     HCORP_YOU_ARMOR_L5("hcorp_you_armor_class5", 1000, new int[]{0, 0, 20, 0}, 0,
-            SoundEvents.ARMOR_EQUIP_GENERIC, 15.0f, 0.5f, () -> Ingredient.of(ItemInit.HCORP_BOLUS_YOU.get())),;
+            SoundEvents.ARMOR_EQUIP_GENERIC, 15.0f, 0.5f, () -> Ingredient.of(ItemInit.HCORP_BOLUS_YOU.get())),
+
+    LCA_UDJAT("lca_udjat", 4000, new int[]{0, 0, 30, 0}, 0,
+            SoundEvents.ARMOR_EQUIP_GENERIC, 15.0f, 0.9f, () -> Ingredient.of(Items.GOLD_INGOT)),
+
+    LCC_BEFORE("lcc_before", 1000, new int[]{0, 0, 15, 0}, 0,
+            SoundEvents.ARMOR_EQUIP_GENERIC, 15.0f, 0.35f, () -> Ingredient.of(Items.IRON_INGOT)),
+
+    LCD_AENG_DU("lcd_aeng_du", 3000, new int[]{0, 0, 20, 0}, 0,
+            SoundEvents.ARMOR_EQUIP_GENERIC, 15.0f, 0.5f, () -> Ingredient.of(Items.LEATHER)),
+
+    LCE_EGO_DIMENSION_SHREDDER("lce_ego_dimension_shredder", 2000, new int[]{0, 0, 18, 0}, 0,
+            SoundEvents.ARMOR_EQUIP_GENERIC, 15.0f, 0.75f, () -> Ingredient.of(Items.REDSTONE));
 
     private final String name;
     private final int durabilityMultiplier;

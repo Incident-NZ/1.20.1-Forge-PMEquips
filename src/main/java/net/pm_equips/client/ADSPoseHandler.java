@@ -15,6 +15,7 @@ public class ADSPoseHandler
             List.of(
                     ItemInit.W5_PINK,
                     ItemInit.W4_HORNET,
+                    ItemInit.W4_HORNET_ALTER,
                     ItemInit.W4_AROMA,
                     ItemInit.W4_MAGIC_BULLET,
                     ItemInit.W4_SOLEMN_LAMENT_R,
@@ -29,7 +30,11 @@ public class ADSPoseHandler
                     ItemInit.LCORP_PISTOL,
                     ItemInit.WEAPON_ROLAND_REVOLVER,
                     ItemInit.WEAPON_ROLAND_SHOTGUN,
-                    ItemInit.RCORP_RABBIT_RIFLE
+                    ItemInit.RCORP_RABBIT_RIFLE,
+                    ItemInit.LAMENT_YISANG,
+                    ItemInit.LCA_AUTO_RIFLE,
+                    ItemInit.LCCB_PISTOL,
+                    ItemInit.LCCB_SHOTGUN
             );
 
     public static boolean isADSWeapon(

@@ -6,16 +6,16 @@
   ],
   "key": {
     "X": {
-      "item": "pm_equips:item_metal"
+      "item": "minecraft:iron_ingot"
     },
     "Y": {
-      "item": "pm_equips:item_bullet_r"
+      "item": "pm_equips:ammo_large"
     },
     "Z": {
       "item": "pm_equips:item_rcorp_battery"
     }
   },
   "result": {
-    "item": "pm_equips:rcorp_rabbit_rifle"
+    "item": "pm_equips:wing_rcorp04_rabbit_w1"
   }
 }
