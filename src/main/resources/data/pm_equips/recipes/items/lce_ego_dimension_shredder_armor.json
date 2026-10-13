@@ -24,7 +24,7 @@
       }
     ],
     "B": {
-      "item": "pm_equips:wcorp_battery"
+      "item": "pm_equips:item_wcorp_battery"
     },
     "C": {
       "item": "minecraft:rotten_flesh"

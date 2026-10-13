@@ -1,17 +1,13 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "AB ",
-    "A  "
-  ],
-  "key": {
-    "A": {
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
       "item": "alltheores:steel_ingot"
     },
-    "B": {
-      "item": "alltheores:aluminium_ingot"
+    {
+      "item": "alltheores:aluminum_ingot"
     }
-  },
+  ],
   "result": {
     "item": "pm_equips:lccb_pistol"
   }

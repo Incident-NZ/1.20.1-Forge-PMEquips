@@ -18,10 +18,10 @@
       "item": "minecraft:golden_boots"
     },
     "E": {
-      "item": "alltheores:aluminium_ingot"
+      "item": "alltheores:aluminum_ingot"
     }
   },
   "result": {
-    "item": "pm_equips:asc2_south_armor_5"
+    "item": "pm_equips:asc2_west_armor_5"
   }
 }
