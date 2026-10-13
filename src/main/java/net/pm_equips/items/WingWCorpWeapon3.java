@@ -6,10 +6,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.SwordItem;
-import net.minecraft.world.item.Tier;
-import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
@@ -20,12 +17,12 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class WingWCorpWeapon3 extends SwordItem {
+public class WingWCorpWeapon3 extends AxeItem {
     public static final int MAX_FE = 5000;
     public static final int FE_PER_HIT = 200;
 
     public WingWCorpWeapon3() {
-        super(new CustomTier(), 9, -2.8f, new Properties());
+        super(new CustomTier(), 9, -2.0f, new Properties());
     }
 
     @Override

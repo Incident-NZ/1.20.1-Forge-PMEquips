@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABE",
+    "CD "
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:chainmail_helmet"
+    },
+    "B": {
+      "item": "minecraft:chainmail_chestplate"
+    },
+    "C": {
+      "item": "minecraft:chainmail_leggings"
+    },
+    "D": {
+      "item": "minecraft:chainmail_boots"
+    },
+    "E": {
+      "item": "alltheores:lead_ingot"
+    }
+  },
+  "result": {
+    "item": "pm_equips:asc2_south_armor_4"
+  }
+}

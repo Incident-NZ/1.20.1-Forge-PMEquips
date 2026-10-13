@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AAB",
+    "BC "
+  ],
+  "key": {
+    "A": {
+      "item": "alltheores:steel_ingot"
+    },
+    "B": {
+      "item": "minecraft:gold_ingot"
+    },
+    "C": {
+      "item": "pm_equips:ammo_shell"
+    }
+  },
+  "result": {
+    "item": "pm_equips:lccb_shotgun"
+  }
+}

@@ -5,10 +5,10 @@
   ],
   "key": {
     "A": {
-      "item": "minecraft:iron_ingot"
+      "item": "alltheores:platinum_ingot"
     },
     "B": {
-      "item": "minecraft:stick"
+      "item": "alltheores:steel_rod"
     }
   },
   "result": {

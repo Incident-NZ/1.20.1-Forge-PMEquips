@@ -1,14 +1,11 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "YXX"
+    "XXX"
   ],
   "key": {
     "X": {
       "item": "pm_equips:lobego5_weapon_mimicry"
-    },
-    "Y": {
-      "item": "minecraft:iron_ingot"
     }
   },
   "result": {

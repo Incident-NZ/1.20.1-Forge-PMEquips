@@ -1,14 +1,17 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "AAB"
+    "ABC"
   ],
   "key": {
     "A": {
-      "item": "minecraft:gold_ingot"
+      "item": "alltheores:platinum_ingot"
     },
     "B": {
-      "item": "minecraft:stick"
+      "item": "alltheores:steel_ingot"
+    },
+    "C": {
+      "item": "alltheores:steel_rod"
     }
   },
   "result": {

@@ -5,13 +5,13 @@
   ],
   "key": {
     "A": {
-      "item": "minecraft:iron_ingot"
+      "item": "alltheores:steel_ingot"
     },
     "B": {
-      "item": "minecraft:gold_ingot"
+      "item": "alltheores:platinum_ingot"
     },
     "C": {
-      "item": "minecraft:stick"
+      "item": "alltheores:steel_rod"
     }
   },
   "result": {

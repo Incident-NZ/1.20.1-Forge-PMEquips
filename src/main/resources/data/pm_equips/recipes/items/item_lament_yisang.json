@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CBA",
+    "CAB",
+    "CBA"
+  ],
+  "key": {
+    "A": {
+      "item": "lobego3_weapon_lament_black"
+    },
+    "B": {
+      "item": "lobego3_weapon_lament_white"
+    },
+    "C": {
+      "item": "lobego3_suit_lament"
+    }
+  },
+  "result": {
+    "item": "pm_equips:item_lament_yisang"
+  }
+}

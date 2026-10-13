@@ -5,10 +5,10 @@
   ],
   "key": {
     "X": {
-      "item": "minecraft:gold_ingot"
+      "item": "alltheores:aluminium_ingot"
     },
     "Y": {
-      "tag": "minecraft:swords"
+      "item": "alltheores:lead_rod"
     }
   },
   "result": {

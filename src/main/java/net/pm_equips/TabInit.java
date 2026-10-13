@@ -17,7 +17,7 @@ public class TabInit {
                     .title(Component.translatable("itemGroup.pm_lobotomy_ego"))
                     .icon(() -> ItemStack.EMPTY)
                     .displayItems((param, output) -> {
-                        for (Item item : PMLobotomyEGOTabs.items) {
+                        for (Item item : PMLCorpEGOTabs.items) {
                             output.accept(item);
                         }
                     })
@@ -39,7 +39,7 @@ public class TabInit {
                     .title(Component.translatable("itemGroup.pm_fixers"))
                     .icon(() -> ItemStack.EMPTY)
                     .displayItems((param, output) -> {
-                        for (Item item : PMFixerWeaponTabs.items) {
+                        for (Item item : PMFixersTabs.items) {
                             output.accept(item);
                         }
                     })

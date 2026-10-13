@@ -2,15 +2,18 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "XX ",
-    "XXY",
+    "XZY",
     "XX "
   ],
   "key": {
     "X": {
-      "item": "minecraft:diamond"
+      "item": "alltheores:silver_ingot"
     },
     "Y": {
-      "tag": "minecraft:swords"
+      "item": "alltheores:lead_rod"
+    },
+    "Z": {
+      "item": "minecraft:gold_ingot"
     }
   },
   "result": {

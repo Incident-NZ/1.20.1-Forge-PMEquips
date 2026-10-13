@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AB ",
+    "A  "
+  ],
+  "key": {
+    "A": {
+      "item": "alltheores:steel_ingot"
+    },
+    "B": {
+      "item": "alltheores:aluminium_ingot"
+    }
+  },
+  "result": {
+    "item": "pm_equips:lccb_pistol"
+  }
+}

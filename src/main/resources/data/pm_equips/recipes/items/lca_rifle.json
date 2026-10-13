@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AAA",
+    "AA "
+  ],
+  "key": {
+    "A": {
+      "item": "alltheores:steel_ingot"
+    }
+  },
+  "result": {
+    "item": "pm_equips:lca_auto_rifle"
+  }
+}

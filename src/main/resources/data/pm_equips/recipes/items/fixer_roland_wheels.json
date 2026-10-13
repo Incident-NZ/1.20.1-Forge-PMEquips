@@ -1,14 +1,17 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "AAB"
+    "ABC"
   ],
   "key": {
     "A": {
-      "item": "minecraft:iron_ingot"
+      "item": "alltheores:steel_ingot"
     },
     "B": {
-      "item": "minecraft:stick"
+      "item": "pm_equips:item_blade_gear"
+    },
+    "C": {
+      "item": "alltheores:steel_rod"
     }
   },
   "result": {

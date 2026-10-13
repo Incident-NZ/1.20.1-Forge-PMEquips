@@ -1,14 +1,22 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "XYX"
+    "ABD",
+    "  C",
+    "  D"
   ],
   "key": {
-    "X": {
-      "item": "pm_equips:lobego5_weapon_dacapo"
+    "A": {
+      "item": "alltheores:platinum_ingot"
     },
-    "Y": {
-      "item": "minecraft:diamond"
+    "B": {
+      "item": "minecraft:note_block"
+    },
+    "C": {
+      "item": "minecraft:bone"
+    },
+    "D": {
+      "item": "minecraft:blue_dye"
     }
   },
   "result": {

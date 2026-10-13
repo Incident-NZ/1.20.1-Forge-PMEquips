@@ -1,14 +1,11 @@
 package net.pm_equips.items;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.pm_equips.ItemInit;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.SwordItem;
-import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -17,7 +14,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class LobEGOWeapon5DaCapo extends SwordItem {
+public class LobEGOWeapon5DaCapo extends AxeItem {
     public LobEGOWeapon5DaCapo() {
         super(new CustomTier(), 24, -2.0f, new Properties().durability(4000));
     }

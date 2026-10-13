@@ -1,14 +1,17 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "YXX"
+    "XYZ"
   ],
   "key": {
     "X": {
-      "item": "minecraft:iron_ingot"
+      "item": "alltheores:steel_ingot"
     },
     "Y": {
-      "item": "minecraft:netherite_sword"
+      "item": "alltheores:platinum_ingot"
+    },
+    "Z": {
+      "item": "alltheores:steel_rod"
     }
   },
   "result": {

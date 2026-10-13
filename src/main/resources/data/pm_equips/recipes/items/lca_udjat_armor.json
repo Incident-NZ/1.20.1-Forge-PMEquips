@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CBC",
+    "AAA",
+    "AAA"
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:netherite_ingot"
+    },
+    "B": {
+      "item": "alltheores:steel_ingot"
+    },
+    "C": {
+      "item": "minecraf:gold_ingot"
+    }
+  },
+  "result": {
+    "item": "pm_equips:lca_udjat_armor"
+  }
+}

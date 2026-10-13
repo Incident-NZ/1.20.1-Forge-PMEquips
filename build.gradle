@@ -84,27 +84,36 @@ repositories {
     mavenCentral()
     maven { url = "https://maven.theillusivec4.top/" }
     maven { url = "https://maven.blamejared.com/" }
+    maven {
+        name = "CurseMaven"
+        url = "https://www.cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
 }
 
 dependencies {
     minecraft "net.minecraftforge:forge:1.20.1-47.4.10"
 
+    //GeckoLib
     implementation fg.deobf("software.bernie.geckolib:geckolib-forge-1.20.1:4.7.4")
 
+    //Curios API
     implementation fg.deobf('top.theillusivec4.curios:curios-forge:5.14.1+1.20.1')
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:5.14.1+1.20.1:api")
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:5.14.1+1.20.1")
 
-    // ===== JEI（ここを修正）=====
-    def jei_version = "15.20.0.106"
+    //AllTheOres
+    implementation fg.deobf("curse.maven:ato-405593:5348605")
 
-    // コンパイル用 API（両方必要）
+    //JEI
+    def jei_version = "15.20.0.106"
     compileOnly fg.deobf("mezz.jei:jei-1.20.1-common-api:${jei_version}")
     compileOnly fg.deobf("mezz.jei:jei-1.20.1-forge-api:${jei_version}")
-
-    // 開発実行用本体
     runtimeOnly fg.deobf("mezz.jei:jei-1.20.1-forge:${jei_version}")
 
+    //Mixin
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }
 

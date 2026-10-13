@@ -5,10 +5,10 @@
   ],
   "key": {
     "A": {
-      "item": "minecraft:gold_ingot"
+      "item": "alltheores:steel_ingot"
     },
     "B": {
-      "tag": "minecraft:planks"
+      "tag": "minecraft:stick"
     }
   },
   "result": {
