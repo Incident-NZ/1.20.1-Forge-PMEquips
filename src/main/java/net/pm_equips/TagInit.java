@@ -9,10 +9,6 @@ public class TagInit {
     public static class Items {
         public static final TagKey<Item> BULLET = createTag("bullet");
         public static final TagKey<Item> E_BOX = createTag("e_box");
-        public static final TagKey<Item> EGO_LOW = createTag("ego_low");
-        public static final TagKey<Item> EGO_MED = createTag("ego_med");
-        public static final TagKey<Item> EGO_HIGH = createTag("ego_high");
-        public static final TagKey<Item> EGO_BOSS = createTag("ego_boss");
         public static final TagKey<Item> EGO_T1_ZAYIN = createTag("ego_t1_zayin");
         public static final TagKey<Item> EGO_T2_TETH = createTag("ego_t2_teth");
         public static final TagKey<Item> EGO_T3_HE = createTag("ego_t3_he");

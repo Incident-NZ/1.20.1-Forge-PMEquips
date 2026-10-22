@@ -33,7 +33,7 @@ public class LobEGOWeapon4Hornet extends ProjectileWeaponItem {
     private static final double RANGE = 128.0;
 
     public LobEGOWeapon4Hornet(Properties properties) {
-        super(properties.durability(4000));
+        super(properties);
     }
 
     @Override

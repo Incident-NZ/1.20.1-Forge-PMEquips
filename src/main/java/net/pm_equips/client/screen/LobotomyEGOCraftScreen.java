@@ -31,24 +31,28 @@ public class LobotomyEGOCraftScreen extends AbstractContainerScreen<LobotomyEGOC
 
     // ===== テクスチャ上の座標（解析値） =====
     private static final int GRID_X = 8;
-    private static final int GRID_Y = 27;
+    private static final int GRID_Y = 18;
     private static final int SLOT = 18;
     private static final int COLS = 6;
     private static final int ROWS = 6;
     private static final int VISIBLE = COLS * ROWS; // 36
 
-    private static final int SCROLL_X = 116;
-    private static final int SCROLL_Y = 27;
-    private static final int SCROLL_W = 12;
-    private static final int SCROLL_H = ROWS * SLOT; // 108
+    private static final int SCROLL_X = 115;
+    private static final int SCROLL_Y = 18;
+    private static final int SCROLL_W = 6;
+    private static final int SCROLL_H = ROWS * SLOT - 3; // Fit inside the texture's scrollbar frame
 
-    /** 右の小スロット（成果物プレビュー） */
-    private static final int RESULT_X = 152;
+    /**
+     * 右の小スロット（成果物プレビュー）
+     */
+    private static final int RESULT_X = 134;
     private static final int RESULT_Y = 80;
 
     private final List<LobotomyEGORecipe> recipes = new ArrayList<>();
     private int selectedIndex = 0;
-    /** 行単位スクロール（6列グリッドなので 1スクロール = 1行 = 6レシピ） */
+    /**
+     * 行単位スクロール（6列グリッドなので 1スクロール = 1行 = 6レシピ）
+     */
     private int scrollRow = 0;
 
     public LobotomyEGOCraftScreen(LobotomyEGOCraftMenu menu, Inventory inv, Component title) {

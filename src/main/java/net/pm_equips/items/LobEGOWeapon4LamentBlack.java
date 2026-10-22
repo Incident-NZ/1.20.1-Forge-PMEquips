@@ -82,13 +82,15 @@ public class LobEGOWeapon4LamentBlack extends ProjectileWeaponItem {
 
         // クライアントは音だけ
         if (level.isClientSide) {
-            float pitch = 1.0F;
-            float volume = 1.0F;
-            level.playSound(player, player.blockPosition(), SoundInit.EGO_LAMENT.get(), SoundSource.PLAYERS, volume, pitch);
+            level.playLocalSound(
+                    player.getX(), player.getY(), player.getZ(),
+                    SoundInit.EGO_LAMENT.get(), SoundSource.PLAYERS, 1.0F, 1.0F, false
+            );
             return InteractionResultHolder.consume(gun);
         }
 
         // ===== サーバー側 =====
+        level.playSound(player, player.blockPosition(), SoundInit.EGO_LAMENT.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
         if (dual) {
             shootDual(level, player);
             // 両方の銃の耐久を減らす
@@ -149,6 +151,8 @@ public class LobEGOWeapon4LamentBlack extends ProjectileWeaponItem {
         if (entityHit != null) {
             hitPos = entityHit.getLocation();
             if (entityHit.getEntity() instanceof LivingEntity target) {
+                target.invulnerableTime = 0;
+                target.hurtTime = 0;
                 target.hurt(level.damageSources().playerAttack(player), damage);
             }
         } else {

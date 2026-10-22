@@ -35,6 +35,12 @@
 
   "container.pm_equips.lobotomy_ego_extraction_table": "ロボトミーE.G.O抽出台",
   "gui.pm_equips.lobotomy_ego_extraction_table.craft": "抽出",
+  "gui.pm_equips.lobotomy_ego_extraction_table.requirement": "%s: E-Box %s個",
+  "gui.pm_equips.lobotomy_ego_extraction_table.tier.zayin": "ZAYIN",
+  "gui.pm_equips.lobotomy_ego_extraction_table.tier.teth": "TETH",
+  "gui.pm_equips.lobotomy_ego_extraction_table.tier.he": "HE",
+  "gui.pm_equips.lobotomy_ego_extraction_table.tier.waw": "WAW",
+  "gui.pm_equips.lobotomy_ego_extraction_table.tier.aleph": "ALEPH",
   "gui.pm_equips.lobotomy_ego_craft_table.craft": "ロボトミーE.G.O製造",
 
   "item.pm_equips.lobego5_weapon_mimicry": "E.G.O 武器 ALEPH - ミミック",

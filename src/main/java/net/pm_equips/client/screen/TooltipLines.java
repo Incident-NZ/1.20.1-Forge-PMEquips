@@ -510,7 +510,7 @@ public final class TooltipLines {
 
     public static final List<Component> BLUE_SCAR_WEAPON = List.of(
             Component.literal("特殊能力：自身のHPが50%以下になると攻撃力が50%上昇。"),
-            Component.literal("WARN：強化中は魔弾同様Config制御不可のフレンドリーファイアが適用されます。"),
+            Component.literal("WARN：強化中は魔法の弾丸同様Config制御不可のフレンドリーファイアが適用されます。"),
             Component.literal("凶悪なオオカミの爪を連想させるガントレット。"),
             Component.literal("かつては、この爪で多くの命の腹が裂かれ、内臓をぶち撒かれただろう。"),
             Component.literal("相手の肉を切り刻み、傷から血が止めどなく流れていった。")
@@ -519,6 +519,7 @@ public final class TooltipLines {
     public static final List<Component> CRIMSON_SCAR_GUN_WEAPON = List.of(
             Component.literal("攻撃力13 | 射程：中 | 高速"),
             Component.literal("特殊能力：オフハンドに同名の武器を持っているなら、自身のHPが50%以下になると攻撃力が50%上昇。"),
+            Component.literal("WARN：強化中は魔法の弾丸同様Config制御不可のフレンドリーファイアが適用されます。"),
             Component.literal("片手には鉄を、片手には火薬を持てば、この世に恐れるものはない。"),
             Component.literal("中途半端な勇気より、憎悪に満ちた躊躇なき一撃が重要だ。"),
             Component.literal("この果てしなく愛らしい童話の物語も、いつかは終われる事を願う。")
@@ -526,6 +527,7 @@ public final class TooltipLines {
 
     public static final List<Component> CRIMSON_SCAR_SCYTHE_WEAPON = List.of(
             Component.literal("特殊能力：オフハンドに同名の武器を持っているなら、自身のHPが50%以下になると攻撃力が50%上昇。"),
+            Component.literal("WARN：強化中は魔法の弾丸同様Config制御不可のフレンドリーファイアが適用されます。"),
             Component.literal("片手には鉄を、片手には火薬を持てば、この世に恐れるものはない。"),
             Component.literal("中途半端な勇気より、憎悪に満ちた躊躇なき一撃が重要だ。"),
             Component.literal("この果てしなく愛らしい童話の物語も、いつかは終われる事を願う。")

@@ -129,7 +129,7 @@ public class LobEGOWeapon4HornetAlter extends ProjectileWeaponItem {
 			if (level instanceof ServerLevel server) {
 				Vec3 p = hit.getBoundingBox().getCenter();
 				server.sendParticles(ParticleTypes.ASH, p.x, p.y, p.z, 4, 0.1, 0.1, 0.1, 0.01);
-				server.sendParticles(ParticleTypes.DRIPPING_HONEY, p.x, p.y, p.z, 3, 0.1, 0.1, 0.1, 0.01);
+				server.sendParticles(ParticleTypes.CRIT, p.x, p.y, p.z, 3, 0.1, 0.1, 0.1, 0.01);
 			}
 		}
 	}
@@ -152,7 +152,7 @@ public class LobEGOWeapon4HornetAlter extends ProjectileWeaponItem {
 			current = current.add(step);
 			level.sendParticles(ParticleTypes.ASH, current.x, current.y, current.z, 1, 0.02, 0.02, 0.02, 0.0);
 			if (i % 2 == 0) {
-				level.sendParticles(ParticleTypes.DRIPPING_HONEY, current.x, current.y, current.z, 1, 0.02, 0.02, 0.02, 0.0);
+				level.sendParticles(ParticleTypes.CRIT, current.x, current.y, current.z, 1, 0.02, 0.02, 0.02, 0.0);
 			}
 		}
 	}

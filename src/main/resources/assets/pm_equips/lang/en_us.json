@@ -35,6 +35,12 @@
 
   "container.pm_equips.lobotomy_ego_extraction_table": "Lobotomy E.G.O Extraction Table",
   "gui.pm_equips.lobotomy_ego_extraction_table.craft": "Extract",
+  "gui.pm_equips.lobotomy_ego_extraction_table.requirement": "%s: %s E-Boxes",
+  "gui.pm_equips.lobotomy_ego_extraction_table.tier.zayin": "ZAYIN",
+  "gui.pm_equips.lobotomy_ego_extraction_table.tier.teth": "TETH",
+  "gui.pm_equips.lobotomy_ego_extraction_table.tier.he": "HE",
+  "gui.pm_equips.lobotomy_ego_extraction_table.tier.waw": "WAW",
+  "gui.pm_equips.lobotomy_ego_extraction_table.tier.aleph": "ALEPH",
   "gui.pm_equips.lobotomy_ego_craft_table.craft": "Lobotomy E.G.O Crafting",
 
   "item.pm_equips.lobego5_weapon_mimicry": "E.G.O Weapon ALEPH - Mimicry",

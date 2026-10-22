@@ -174,8 +174,8 @@ public class LimbusEGOYisangLament extends ProjectileWeaponItem implements GeoIt
 
             if (level instanceof ServerLevel server) {
                 Vec3 p = hit.getBoundingBox().getCenter();
-                server.sendParticles(ParticleTypes.CRIT, p.x, p.y, p.z, 4, 0.1, 0.1, 0.1, 0.05);
-                server.sendParticles(ParticleTypes.SMOKE, p.x, p.y, p.z, 2, 0.05, 0.05, 0.05, 0.01);
+                server.sendParticles(ParticleTypes.ASH, p.x, p.y, p.z, 4, 0.1, 0.1, 0.1, 0.05);
+                server.sendParticles(ParticleTypes.WHITE_ASH, p.x, p.y, p.z, 2, 0.05, 0.05, 0.05, 0.01);
             }
         }
     }

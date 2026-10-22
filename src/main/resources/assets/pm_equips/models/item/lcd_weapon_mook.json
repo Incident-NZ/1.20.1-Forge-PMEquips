@@ -4,6 +4,9 @@
 	"textures": {
 		"layer0": "pm_equips:item/lcd_mook_casing"
 	},
+	"overrides": [
+		{"predicate": {"pm_equips:drawn": 1}, "model": "pm_equips:item/lcd_weapon_mook_drawn"}
+	],
 	"display": {
 		"thirdperson_righthand": {
 			"rotation": [0, 90, 45],

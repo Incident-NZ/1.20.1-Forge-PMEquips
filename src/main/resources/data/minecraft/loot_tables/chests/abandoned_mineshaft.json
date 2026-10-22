@@ -7,17 +7,17 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "pm_equips:e_box_4",
+          "name": "pm_equips:item_lcorp_pebox",
           "weight": 2
         },
         {
           "type": "minecraft:item",
-          "name": "pm_equips:e_box_3",
+          "name": "pm_equips:item_lcorp_pebox",
           "weight": 3
         },
         {
           "type": "minecraft:item",
-          "name": "pm_equips:e_box_2",
+          "name": "pm_equips:item_lcorp_pebox",
           "weight": 4
         },
         {

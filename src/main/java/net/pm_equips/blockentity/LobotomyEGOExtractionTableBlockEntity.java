@@ -31,7 +31,7 @@ import java.util.Optional;
 
 public class LobotomyEGOExtractionTableBlockEntity extends BlockEntity implements MenuProvider, Container {
     public static final int INPUT_SLOT_START = 0;
-    public static final int INPUT_SLOT_COUNT = 9;
+    public static final int INPUT_SLOT_COUNT = 1;
     public static final int OUTPUT_SLOT = 9;
     public static final int CONTAINER_SIZE = 10;
     private final NonNullList<ItemStack> items = NonNullList.withSize(CONTAINER_SIZE, ItemStack.EMPTY);
@@ -56,8 +56,8 @@ public class LobotomyEGOExtractionTableBlockEntity extends BlockEntity implement
             return;
         }
 
-        ExtractionRule rule = findCraftableRule();
-        if (rule == null || countInputs(rule.input()) < rule.cost()) {
+        ExtractionRule rule = ExtractionRule.forInput(items.get(INPUT_SLOT_START));
+        if (rule == null) {
             return;
         }
 
@@ -72,7 +72,7 @@ public class LobotomyEGOExtractionTableBlockEntity extends BlockEntity implement
     }
 
     public boolean canPlaceInput(ItemStack stack) {
-        return stack.is(TagInit.Items.E_BOX);
+        return stack.is(ItemInit.LCORP_EBOX.get());
     }
 
     private static ItemStack getRandomResult(Level level, TagKey<Item> tagKey) {
@@ -111,27 +111,6 @@ public class LobotomyEGOExtractionTableBlockEntity extends BlockEntity implement
         } else {
             output.grow(generated.getCount());
         }
-    }
-
-    private ExtractionRule findCraftableRule() {
-        for (int slot = INPUT_SLOT_START; slot < INPUT_SLOT_START + INPUT_SLOT_COUNT; slot++) {
-            ExtractionRule rule = ExtractionRule.forInput(items.get(slot));
-            if (rule != null && countInputs(rule.input()) >= rule.cost()) {
-                return rule;
-            }
-        }
-        return null;
-    }
-
-    private int countInputs(Item item) {
-        int count = 0;
-        for (int slot = INPUT_SLOT_START; slot < INPUT_SLOT_START + INPUT_SLOT_COUNT; slot++) {
-            ItemStack stack = items.get(slot);
-            if (stack.is(item)) {
-                count += stack.getCount();
-            }
-        }
-        return count;
     }
 
     private void consumeInputs(Item item, int amount) {
@@ -226,22 +205,18 @@ public class LobotomyEGOExtractionTableBlockEntity extends BlockEntity implement
 
     private record ExtractionRule(Item input, int cost, TagKey<Item> resultTag) {
         private static ExtractionRule forInput(ItemStack stack) {
-            if (stack.is(ItemInit.LCORP_EBOX.get())) {
-                return new ExtractionRule(ItemInit.LCORP_EBOX.get(), 8, TagInit.Items.EGO_T1_ZAYIN);
+            if (!stack.is(ItemInit.LCORP_EBOX.get())) {
+                return null;
             }
-            if (stack.is(ItemInit.LCORP_EBOX.get())) {
-                return new ExtractionRule(ItemInit.LCORP_EBOX.get(), 16, TagInit.Items.EGO_T2_TETH);
-            }
-            if (stack.is(ItemInit.LCORP_EBOX.get())) {
-                return new ExtractionRule(ItemInit.LCORP_EBOX.get(), 32, TagInit.Items.EGO_T3_HE);
-            }
-            if (stack.is(ItemInit.LCORP_EBOX.get())) {
-                return new ExtractionRule(ItemInit.LCORP_EBOX.get(), 48, TagInit.Items.EGO_T4_WAW);
-            }
-            if (stack.is(ItemInit.LCORP_EBOX.get())) {
-                return new ExtractionRule(ItemInit.LCORP_EBOX.get(), 64, TagInit.Items.EGO_T5_ALEPH);
-            }
-            return null;
+
+            return switch (stack.getCount()) {
+                case 8 -> new ExtractionRule(ItemInit.LCORP_EBOX.get(), 8, TagInit.Items.EGO_T1_ZAYIN);
+                case 16 -> new ExtractionRule(ItemInit.LCORP_EBOX.get(), 16, TagInit.Items.EGO_T2_TETH);
+                case 32 -> new ExtractionRule(ItemInit.LCORP_EBOX.get(), 32, TagInit.Items.EGO_T3_HE);
+                case 48 -> new ExtractionRule(ItemInit.LCORP_EBOX.get(), 48, TagInit.Items.EGO_T4_WAW);
+                case 64 -> new ExtractionRule(ItemInit.LCORP_EBOX.get(), 64, TagInit.Items.EGO_T5_ALEPH);
+                default -> null;
+            };
         }
     }
 }

@@ -18,7 +18,8 @@ public class LobotomyEGOExtractionScreen extends AbstractContainerScreen<Lobotom
     public LobotomyEGOExtractionScreen(LobotomyEGOExtractionMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title);
         imageWidth = 176;
-        imageHeight = 166;
+        imageHeight = 222;
+        inventoryLabelY = imageHeight - 90;
     }
 
     @Override
@@ -36,6 +37,20 @@ public class LobotomyEGOExtractionScreen extends AbstractContainerScreen<Lobotom
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShaderTexture(0, TEXTURE);
         guiGraphics.blit(TEXTURE, leftPos, topPos, 0, 0, imageWidth, imageHeight, 256, 256);
+    }
+
+    @Override
+    protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
+        super.renderLabels(guiGraphics, mouseX, mouseY);
+        String[] tiers = {"zayin", "teth", "he", "waw", "aleph"};
+        int[] costs = {8, 16, 32, 48, 64};
+        for (int i = 0; i < tiers.length; i++) {
+            guiGraphics.drawString(font,
+                    Component.translatable("gui.pm_equips.lobotomy_ego_extraction_table.requirement",
+                            Component.translatable("gui.pm_equips.lobotomy_ego_extraction_table.tier." + tiers[i]),
+                            costs[i]),
+                    8, 32 + i * 9, 0x404040, false);
+        }
     }
 
     @Override
