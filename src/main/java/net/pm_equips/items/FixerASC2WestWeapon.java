@@ -7,7 +7,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 
 public class FixerASC2WestWeapon extends SwordItem {
     public FixerASC2WestWeapon() {
-        super(new CustomTier(), 28, -3.0f, new Properties());
+        super(new CustomTier(), 15, -3.0f, new Properties());
     }
 
     private static class CustomTier implements Tier {

@@ -12,7 +12,7 @@ import net.pm_equips.items.FixerColorRolandWeapon6;
 import net.pm_equips.items.LCDWeaponMook;
 
 @Mod.EventBusSubscriber(modid = PMEquipsMain.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-public class RolandMookClient {
+public class KatanaClient {
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
         ItemProperties.register(ItemInit.FIXER_ROLAND_MOOK.get(),

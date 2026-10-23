@@ -1,6 +1,7 @@
 package net.pm_equips.items;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -11,6 +12,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
@@ -26,10 +28,9 @@ public class FixerColorRolandWeapon6 extends SwordItem {
     private static final String TAG_DRAWN = "roland_mook_drawn";
     private static final String TAG_DAMAGE = "roland_mook_damage";
     private static final String TAG_COOLDOWN = "roland_mook_cooldown";
-    private static final int USE_DURATION = 60;
-    private static final int COOLDOWN_TICKS = 20 * 15;
-    /** これ未満で離したら「抜刀」、以上（最後まで）で必殺 */
-    private static final int DRAW_THRESHOLD = USE_DURATION; // 満チャージ必須
+    private static final int USE_DURATION = 72000;
+    private static final int COOLDOWN_TICKS = 20 * 5;
+    private static final int LONG_PRESS_TICKS = 15;
 
     public FixerColorRolandWeapon6() {
         super(new CustomTier(), 14, -2.8f, new Properties().durability(1000));
@@ -38,16 +39,6 @@ public class FixerColorRolandWeapon6 extends SwordItem {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
-
-        // 抜刀中の右クリック → 納刀
-        if (isDrawn(stack)) {
-            setDrawn(stack, false);
-            return InteractionResultHolder.consume(stack);
-        }
-
-        if (isCoolingDown(stack, level)) {
-            return InteractionResultHolder.fail(stack);
-        }
 
         player.startUsingItem(hand);
         if (!level.isClientSide) {
@@ -68,13 +59,13 @@ public class FixerColorRolandWeapon6 extends SwordItem {
     }
 
     /**
-     * 途中で離したとき。
+     * ボタンを離したとき。
      * timeLeft = 残り時間（満チャージほど 0 に近い）
      * 使用時間 = getUseDuration - timeLeft
      */
     @Override
     public void releaseUsing(ItemStack stack, Level level, LivingEntity entity, int timeLeft) {
-        if (!(entity instanceof Player player) || isDrawn(stack)) {
+        if (!(entity instanceof Player player)) {
             return;
         }
         if (level.isClientSide) {
@@ -83,23 +74,16 @@ public class FixerColorRolandWeapon6 extends SwordItem {
 
         int usedTicks = getUseDuration(stack) - timeLeft;
 
-        // 途中解除 → 抜刀のみ
-        if (usedTicks < DRAW_THRESHOLD) {
-            setDrawn(stack, true);
-            return;
-        }
-        tryPerformSpecial(stack, level, player);
-    }
-
-    /**
-     * 右クリックを最後まで押し切ったとき（必殺発動）
-     */
-    @Override
-    public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
-        if (entity instanceof Player player && !isDrawn(stack) && !level.isClientSide) {
+        boolean longPress = usedTicks >= LONG_PRESS_TICKS;
+        if (isDrawn(stack)) {
+            if (longPress) {
+                setDrawn(stack, false);
+            }
+        } else if (longPress) {
             tryPerformSpecial(stack, level, player);
+        } else {
+            setDrawn(stack, true);
         }
-        return stack;
     }
 
     private void tryPerformSpecial(ItemStack stack, Level level, Player player) {
@@ -126,6 +110,24 @@ public class FixerColorRolandWeapon6 extends SwordItem {
             });
         }
         return result;
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
+        if (isDrawn(stack)) {
+            tooltip.add(Component.literal("§c抜刀 / Drawn"));
+            tooltip.add(Component.literal("長押し: 納刀"));
+        } else {
+            tooltip.add(Component.literal("§7納刀 / Sheathed"));
+            tooltip.add(Component.literal("短押し: 抜刀 / 長押し: 必殺技"));
+        }
+
+        tooltip.add(Component.literal("必殺技クールダウン: 5秒"));
+        if (level != null && isCoolingDown(stack, level)) {
+            long remainingTicks = stack.getOrCreateTag().getLong(TAG_COOLDOWN) - level.getGameTime();
+            tooltip.add(Component.literal("§8必殺技冷却中: " + String.format("%.1f", remainingTicks / 20.0) + "秒"));
+        }
+        super.appendHoverText(stack, level, tooltip, flag);
     }
 
     public boolean isDrawn(ItemStack stack) {

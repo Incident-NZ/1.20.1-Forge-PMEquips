@@ -54,7 +54,7 @@ public class LCDWeaponMook extends Item {
     private static final UUID SPEED_UUID = Item.BASE_ATTACK_SPEED_UUID;
 
     public LCDWeaponMook(Properties properties) {
-        super(properties.durability(2000));
+        super(properties.durability(3000));
         MinecraftForge.EVENT_BUS.register(new CounterHandler());
     }
 

@@ -462,14 +462,14 @@ public class ItemInit {
 
     //リンバス社装備
     public static final RegistryObject<Item> LCA_AUTO_RIFLE = ITEMS.register("lca_auto_rifle",
-                () -> new LCAAutoRifle(new Item.Properties()));
+                () -> new LCAAutoRifle(new Item.Properties().durability(4000)));
     public static final RegistryObject<Item> LCA_KHOPESH = ITEMS.register("lca_khopesh", LCAKhopesh::new);
     public static final RegistryObject<Item> LCA_ARMOR = ITEMS.register("lca_udjat_armor",
             () -> new LCAUdjatArmor(ArmorEquips.LCA_UDJAT, ArmorItem.Type.LEGGINGS,
                     new Item.Properties().stacksTo(1)));
 
     public static final RegistryObject<Item> LCCB_PISTOL = ITEMS.register("lccb_pistol",
-            () -> new LCCBPistol(new Item.Properties()));
+            () -> new LCCBPistol(new Item.Properties().durability(1000)));
     public static final RegistryObject<Item> LCCB_SHOTGUN = ITEMS.register("lccb_shotgun",
             () -> new LCCBShotgun(new Item.Properties().durability(2000)));
     public static final RegistryObject<Item> LCCB_BATON = ITEMS.register("lccb_baton", LCCBBaton::new);
@@ -478,7 +478,7 @@ public class ItemInit {
                     new Item.Properties().stacksTo(1)));
 
     public static final RegistryObject<Item> LCD_WEAPON_MOOK = ITEMS.register("lcd_weapon_mook",
-            () -> new LCDWeaponMook(new Item.Properties().durability(2000)));
+            () -> new LCDWeaponMook(new Item.Properties().durability(3000)));
     public static final RegistryObject<Item> LCD_ARMOR = ITEMS.register("lcd_armor",
             () -> new LCDArmor(ArmorEquips.LCD_AENG_DU, ArmorItem.Type.LEGGINGS,
                     new Item.Properties().stacksTo(1)));
