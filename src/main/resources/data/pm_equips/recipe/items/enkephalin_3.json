@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "pm_equips:item_lcorp_pebox"
+    }
+  ],
+  "result": {
+    "count": 3,
+    "id": "pm_equips:item_enkephalin"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABC"
+  ],
+  "key": {
+    "A": {
+      "item": "alltheores:aluminum_ingot"
+    },
+    "B": {
+      "item": "pm_equips:item_wcorp_battery"
+    },
+    "C": {
+      "item": "minecraft:rotten_flesh"
+    }
+  },
+  "result": {
+    "id": "pm_equips:lce_ego_dimension_shredder_weapon"
+  }
+}

@@ -1,10 +1,9 @@
 package net.pm_equips.client.renderer;
 
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import net.minecraft.client.renderer.LightTexture;
-import net.pm_equips.entity.PWhiteNight;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -12,6 +11,10 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.pm_equips.entity.PWhiteNight;
+import org.joml.Matrix3f;
+import org.joml.Matrix4f;
+import org.joml.Vector3f;
 
 public class PWhiteNightR extends EntityRenderer<PWhiteNight> {
 
@@ -42,6 +45,12 @@ public class PWhiteNightR extends EntityRenderer<PWhiteNight> {
         PoseStack.Pose pose =
                 poseStack.last();
 
+        Matrix4f poseMatrix =
+                pose.pose();
+
+        Matrix3f normalMatrix =
+                pose.normal();
+
         VertexConsumer vertexConsumer =
                 buffer.getBuffer(RenderType.entityCutoutNoCull(getTextureLocation(entity)));
 
@@ -50,7 +59,8 @@ public class PWhiteNightR extends EntityRenderer<PWhiteNight> {
 
         vertex(
                 vertexConsumer,
-                pose,
+                poseMatrix,
+                normalMatrix,
                 -0.5F,
                 -0.5F,
                 0.0F,
@@ -59,7 +69,8 @@ public class PWhiteNightR extends EntityRenderer<PWhiteNight> {
         );
         vertex(
                 vertexConsumer,
-                pose,
+                poseMatrix,
+                normalMatrix,
                 0.5F,
                 -0.5F,
                 1.0F,
@@ -68,7 +79,8 @@ public class PWhiteNightR extends EntityRenderer<PWhiteNight> {
         );
         vertex(
                 vertexConsumer,
-                pose,
+                poseMatrix,
+                normalMatrix,
                 0.5F,
                 0.5F,
                 1.0F,
@@ -77,7 +89,8 @@ public class PWhiteNightR extends EntityRenderer<PWhiteNight> {
         );
         vertex(
                 vertexConsumer,
-                pose,
+                poseMatrix,
+                normalMatrix,
                 -0.5F,
                 0.5F,
                 0.0F,
@@ -92,19 +105,21 @@ public class PWhiteNightR extends EntityRenderer<PWhiteNight> {
 
     private static void vertex(
             VertexConsumer vertexConsumer,
-            PoseStack.Pose pose,
+            Matrix4f poseMatrix,
+            Matrix3f normalMatrix,
             float x,
             float y,
             float u,
             float v,
             int light
     ) {
-        vertexConsumer.addVertex(pose, x, y, 0.0F)
+        Vector3f normal = normalMatrix.transform(new Vector3f(0.0F, 1.0F, 0.0F));
+        vertexConsumer.addVertex(poseMatrix, x, y, 0.0F)
                 .setColor(255, 255, 255, 255)
                 .setUv(u, v)
                 .setOverlay(OverlayTexture.NO_OVERLAY)
                 .setLight(light)
-                .setNormal(pose, 0.0F, 1.0F, 0.0F);
+                .setNormal(normal.x(), normal.y(), normal.z());
     }
 
     @Override

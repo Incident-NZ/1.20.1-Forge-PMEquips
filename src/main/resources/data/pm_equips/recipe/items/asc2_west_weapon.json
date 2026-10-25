@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XX ",
+    "XZY",
+    "XX "
+  ],
+  "key": {
+    "X": {
+      "item": "alltheores:silver_ingot"
+    },
+    "Y": {
+      "item": "alltheores:lead_rod"
+    },
+    "Z": {
+      "item": "minecraft:gold_ingot"
+    }
+  },
+  "result": {
+    "id": "pm_equips:asc2_west_weapon"
+  }
+}

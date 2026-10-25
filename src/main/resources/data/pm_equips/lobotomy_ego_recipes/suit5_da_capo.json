@@ -1,0 +1,13 @@
+{
+  "id": "pm_equips:lobego5_suit_dacapo",
+  "result": {
+    "item": "pm_equips:lobego5_suit_dacapo",
+    "count": 1
+  },
+  "ingredients": [
+    {
+      "item": "pm_equips:item_lcorp_pebox",
+      "count": 120
+    }
+  ]
+}

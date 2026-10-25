@@ -1,0 +1,25 @@
+{
+	"format_version": "1.9.0",
+	"parent": "item/handheld",
+	"textures": {
+		"layer0": "pm_equips:item/fixer_roland_oldboys"
+	},
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [45, 90, 0],
+			"translation": [0, 4.5, 1]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [45, -90, 0],
+			"translation": [0, 4.5, 1]
+		},
+		"firstperson_righthand": {
+			"rotation": [45, 90, 0],
+			"translation": [0, 4.5, 1]
+		},
+		"firstperson_lefthand": {
+			"rotation": [45, -90, 0],
+			"translation": [0, 4.5, 1]
+		}
+	}
+}

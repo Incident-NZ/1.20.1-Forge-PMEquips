@@ -1,0 +1,13 @@
+{
+  "id": "pm_equips:lobego3_suit_harvest",
+  "result": {
+    "item": "pm_equips:lobego3_suit_harvest",
+    "count": 1
+  },
+  "ingredients": [
+    {
+      "item": "pm_equips:item_lcorp_pebox",
+      "count": 35
+    }
+  ]
+}

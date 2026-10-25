@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABE",
+    "CD "
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:leather_helmet"
+    },
+    "B": {
+      "item": "minecraft:leather_chestplate"
+    },
+    "C": {
+      "item": "minecraft:leather_leggings"
+    },
+    "D": {
+      "item": "minecraft:leather_boots"
+    },
+    "E": {
+      "item": "alltheores:lead_ingot"
+    }
+  },
+  "result": {
+    "id": "pm_equips:asc2_south_armor_6"
+  }
+}

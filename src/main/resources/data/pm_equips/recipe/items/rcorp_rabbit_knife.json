@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XYZ"
+  ],
+  "key": {
+    "X": {
+      "item": "minecraft:iron_ingot"
+    },
+    "Y": {
+      "item": "pm_equips:item_rcorp_battery"
+    },
+    "Z": {
+      "tag": "minecraft:swords"
+    }
+  },
+  "result": {
+    "id": "pm_equips:wing_rcorp04_rabbit_w2"
+  }
+}

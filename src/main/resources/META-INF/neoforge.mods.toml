@@ -1,9 +1,9 @@
 modLoader="javafml"
-loaderVersion="${loader_version_range}"
+loaderVersion="[4,)"
 license="${mod_license}"
 
 [[mods]]
-modId="${mod_id}"
+modId="pm_equips"
 version="${mod_version}"
 displayName="${mod_name}"
 authors="${mod_authors}"
@@ -12,37 +12,44 @@ description='''${mod_description}'''
 [[mixins]]
 config="pm_equips.mixins.json"
 
-[[dependencies."${mod_id}"]]
+[[dependencies.pm_equips]]
 modId="neoforge"
 type="required"
-versionRange="${neo_version_range}"
+versionRange="[${neo_version},21.2)"
 ordering="NONE"
 side="BOTH"
 
-[[dependencies."${mod_id}"]]
+[[dependencies.pm_equips]]
 modId="minecraft"
 type="required"
-versionRange="${minecraft_version_range}"
+versionRange="[1.21.1,1.21.2)"
 ordering="NONE"
 side="BOTH"
 
-[[dependencies."${mod_id}"]]
+[[dependencies.pm_equips]]
 modId="geckolib"
 type="required"
-versionRange="[${geckolib_version},)"
+versionRange="[${geckolib_version},5)"
 ordering="AFTER"
 side="BOTH"
 
-[[dependencies."${mod_id}"]]
+[[dependencies.pm_equips]]
 modId="curios"
 type="required"
-versionRange="${curios_version_range}"
+versionRange="[9.5.1,10)"
 ordering="AFTER"
 side="BOTH"
 
-[[dependencies."${mod_id}"]]
+[[dependencies.pm_equips]]
+modId="alltheores"
+type="required"
+versionRange="[3.2.0,4)"
+ordering="AFTER"
+side="BOTH"
+
+[[dependencies.pm_equips]]
 modId="jei"
 type="optional"
-versionRange="[19,)"
-ordering="NONE"
+versionRange="[19,20)"
+ordering="AFTER"
 side="CLIENT"

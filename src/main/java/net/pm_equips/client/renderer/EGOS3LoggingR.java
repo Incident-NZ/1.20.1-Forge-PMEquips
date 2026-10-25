@@ -2,10 +2,10 @@ package net.pm_equips.client.renderer;
 
 import net.minecraft.world.entity.EquipmentSlot;
 import net.pm_equips.client.models.EGOS3LoggingM;
-import net.pm_equips.items.LCorpEGOL3Logging;
+import net.pm_equips.items.LobEGOSuit3Logging;
 import software.bernie.geckolib.renderer.GeoArmorRenderer;
 
-public class EGOS3LoggingR extends GeoArmorRenderer<LCorpEGOL3Logging> {
+public class EGOS3LoggingR extends GeoArmorRenderer<LobEGOSuit3Logging> {
     public EGOS3LoggingR() {
         super(new EGOS3LoggingM());
     }

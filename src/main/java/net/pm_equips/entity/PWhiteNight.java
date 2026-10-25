@@ -1,10 +1,15 @@
 package net.pm_equips.entity;
 
-import net.minecraft.server.level.ServerEntity;
-
-import net.minecraft.network.RegistryFriendlyByteBuf;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerEntity;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -12,23 +17,13 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.entity.IEntityWithComplexSpawn;
-import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+public class PWhiteNight extends Projectile {
 
-public class PWhiteNight extends Projectile implements IEntityWithComplexSpawn {
-
-    private static final int LIFETIME = 40; // 40 ticks = 2 seconds
+    private static final int LIFETIME = 60; // 60 ticks = 3 seconds
     private int ticksExisted = 0;
     private final Set<Integer> hitEntities = new HashSet<>();
     private float damage = 25.0f;
-    private int weaponType = 0; // 0, 1, or 2 for different weapon models
 
     private static final EntityDataAccessor<Integer> TEXTURE_ID = SynchedEntityData.defineId(PWhiteNight.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> WEAPON_TYPE = SynchedEntityData.defineId(PWhiteNight.class, EntityDataSerializers.INT);
@@ -38,11 +33,6 @@ public class PWhiteNight extends Projectile implements IEntityWithComplexSpawn {
 
     public PWhiteNight(EntityType<? extends PWhiteNight> type, Level level) {
         super(type, level);
-    }
-
-    public PWhiteNight(EntityType<? extends PWhiteNight> type, Level level,
-                       LivingEntity shooter, Vec3 pos, float damage, int weaponType) {
-        this(type, level, shooter, pos, damage, weaponType, 0.0F, DEFAULT_RENDER_SCALE);
     }
 
     public PWhiteNight(EntityType<? extends PWhiteNight> type, Level level,
@@ -57,7 +47,7 @@ public class PWhiteNight extends Projectile implements IEntityWithComplexSpawn {
         this.noPhysics = true;
         this.setDeltaMovement(Vec3.ZERO);
         this.damage = damage;
-        this.weaponType = weaponType;
+        // 0, 1, or 2 for different weapon models
         this.entityData.set(RENDER_SCALE, renderScale);
 
         if (!level.isClientSide) {
@@ -98,9 +88,7 @@ public class PWhiteNight extends Projectile implements IEntityWithComplexSpawn {
         }
 
         // Client-side: minimal visual (actual rendering is in renderer)
-        if (this.level().isClientSide) {
-            // Particle effects handled by client renderer
-        }
+        // Particle effects handled by client renderer
     }
 
     @Override
@@ -114,40 +102,8 @@ public class PWhiteNight extends Projectile implements IEntityWithComplexSpawn {
         return this.entityData.get(TEXTURE_ID);
     }
 
-    public void setTextureId(int id) {
-        this.entityData.set(TEXTURE_ID, id);
-    }
-
-    public int getWeaponType() {
-        return this.entityData.get(WEAPON_TYPE);
-    }
-
-    public void setWeaponType(int t) {
-        this.entityData.set(WEAPON_TYPE, t);
-    }
-
     public float getRenderScale() {
         return this.entityData.get(RENDER_SCALE);
-    }
-
-    public void setRenderScale(float scale) {
-        this.entityData.set(RENDER_SCALE, scale);
-    }
-
-    @Override
-    public void writeSpawnData(RegistryFriendlyByteBuf buffer) {
-        buffer.writeInt(this.entityData.get(TEXTURE_ID));
-        buffer.writeInt(this.entityData.get(WEAPON_TYPE));
-        buffer.writeFloat(this.getYRot());
-        buffer.writeFloat(this.entityData.get(RENDER_SCALE));
-    }
-
-    @Override
-    public void readSpawnData(RegistryFriendlyByteBuf buffer) {
-        this.entityData.set(TEXTURE_ID, buffer.readInt());
-        this.entityData.set(WEAPON_TYPE, buffer.readInt());
-        this.setYRot(buffer.readFloat());
-        this.entityData.set(RENDER_SCALE, buffer.readFloat());
     }
 
     @Override

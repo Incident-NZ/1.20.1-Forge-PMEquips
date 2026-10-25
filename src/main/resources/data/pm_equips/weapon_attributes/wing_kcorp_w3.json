@@ -1,0 +1,6 @@
+{
+  "parent": "bettercombat:twin_blade",
+  "attributes": {
+    "two_handed": true
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "id": "pm_equips:lobego4_suit_heaven",
+  "result": {
+    "item": "pm_equips:lobego4_suit_heaven",
+    "count": 1
+  },
+  "ingredients": [
+    {
+      "item": "pm_equips:item_lcorp_pebox",
+      "count": 50
+    }
+  ]
+}

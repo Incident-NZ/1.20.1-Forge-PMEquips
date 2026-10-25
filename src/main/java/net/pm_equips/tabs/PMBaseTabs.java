@@ -1,34 +1,30 @@
 package net.pm_equips.tabs;
 
-import net.pm_equips.PMERegistryBlock;
-import net.pm_equips.PMERegistryItem;
 import net.minecraft.world.item.Item;
+import net.pm_equips.BlockInit;
+import net.pm_equips.ItemInit;
 
 public class PMBaseTabs {
     public static final Item[] items = {
-            PMERegistryBlock.BlockItems.PEBOX_GENERATOR.get(),
-            PMERegistryBlock.BlockItems.EGO_EXTRACTION_TABLE.get(),
-            PMERegistryItem.ITEM_ENKEPHALIN.get(),
-            PMERegistryBlock.BlockItems.ZAYIN_PE_BOX.get(),
-            PMERegistryBlock.BlockItems.TETH_PE_BOX.get(),
-            PMERegistryBlock.BlockItems.HE_PE_BOX.get(),
-            PMERegistryBlock.BlockItems.WAW_PE_BOX.get(),
-            PMERegistryBlock.BlockItems.ALEPH_PE_BOX.get(),
-            PMERegistryItem.PLATINUM_INGOT.get(),
-            PMERegistryItem.METAL_INGOT.get(),
-            PMERegistryItem.SILVER_INGOT.get(),
-            PMERegistryItem.BLADE_GEAR.get(),
-            PMERegistryItem.WCORP_BATTERY.get(),
-            PMERegistryItem.RCORP_BATTERY.get(),
-            PMERegistryItem.KCORP_AMPOULE.get(),
-            PMERegistryItem.HCORP_BOLUS_MAO.get(),
-            PMERegistryItem.HCORP_BOLUS_SI.get(),
-            PMERegistryItem.HCORP_BOLUS_YOU.get(),
-            PMERegistryItem.MAGIC_BULLET_AMMO.get(),
-            PMERegistryItem.P_BULLET_LARV.get(),
-            PMERegistryItem.P_BULLET_LASG.get(),
-            PMERegistryItem.RIFLE_BULLET_AMMO.get(),
-            PMERegistryItem.PISTOL_BULLET_AMMO.get(),
-            PMERegistryItem.EXPLOSIVE_BULLET_AMMO.get(),
+            ItemInit.MOB_NPC_1_SPAWN_EGG.get(),
+            BlockInit.BlockItems.PEBOX_GENERATOR.get(),
+            BlockInit.BlockItems.EGO_EXTRACTION_TABLE.get(),
+            BlockInit.BlockItems.EGO_CRAFT_TABLE.get(),
+            ItemInit.ITEM_ENKEPHALIN.get(),
+            ItemInit.LCORP_EBOX.get(),
+            ItemInit.BLADE_GEAR.get(),
+            ItemInit.WCORP_BATTERY.get(),
+            ItemInit.RCORP_BATTERY.get(),
+            ItemInit.KCORP_AMPOULE.get(),
+            ItemInit.HCORP_BOLUS_MAO.get(),
+            ItemInit.HCORP_BOLUS_SI.get(),
+            ItemInit.HCORP_BOLUS_YOU.get(),
+            ItemInit.MAGIC_BULLET_AMMO.get(),
+            ItemInit.P_BULLET_LARV.get(),
+            ItemInit.P_BULLET_LASG.get(),
+            ItemInit.RIFLE_BULLET_AMMO.get(),
+            ItemInit.PISTOL_BULLET_AMMO.get(),
+            ItemInit.SHOTGUN_BULLET_AMMO.get(),
+            ItemInit.EXPLOSIVE_BULLET_AMMO.get(),
     };
 }

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABB"
+  ],
+  "key": {
+    "A": {
+      "item": "alltheores:platinum_ingot"
+    },
+    "B": {
+      "item": "alltheores:steel_rod"
+    }
+  },
+  "result": {
+    "id": "pm_equips:fixer_color_roland_1"
+  }
+}

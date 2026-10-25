@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " B ",
+    "CAC",
+    "CCC"
+  ],
+  "key": {
+    "A": [
+      {
+        "item": "pm_equips:wing_wcorp_armor_l1"
+      },
+      {
+        "item": "pm_equips:wing_wcorp_armor_l2"
+      },
+      {
+        "item": "pm_equips:wing_wcorp_armor_l3"
+      },
+      {
+        "item": "pm_equips:wing_wcorp_armor_l4"
+      },
+      {
+        "item": "pm_equips:wing_wcorp_armor_l5"
+      }
+    ],
+    "B": {
+      "item": "pm_equips:item_wcorp_battery"
+    },
+    "C": {
+      "item": "minecraft:rotten_flesh"
+    }
+  },
+  "result": {
+    "id": "pm_equips:lce_ego_dimension_shredder_armor"
+  }
+}

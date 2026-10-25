@@ -1,7 +1,8 @@
 {
   "variants": {
-    "": {
-      "model": "pm_equips:block/pe_box_generator"
-    }
+    "facing=north": { "model": "pm_equips:block/pe_box_generator" },
+    "facing=south": { "model": "pm_equips:block/pe_box_generator", "y": 180 },
+    "facing=west":  { "model": "pm_equips:block/pe_box_generator", "y": 270 },
+    "facing=east":  { "model": "pm_equips:block/pe_box_generator", "y": 90 }
   }
 }

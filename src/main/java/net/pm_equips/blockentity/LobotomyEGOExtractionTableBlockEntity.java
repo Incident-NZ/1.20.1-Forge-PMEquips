@@ -1,13 +1,19 @@
 package net.pm_equips.blockentity;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.Container;
+import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -18,25 +24,21 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.pm_equips.PMERegistryBlockEntity;
-import net.pm_equips.PMERegistryBlock;
-import net.pm_equips.PMERegistryTag;
+import net.pm_equips.BlockEntityInit;
+import net.pm_equips.ItemInit;
+import net.pm_equips.TagInit;
 import net.pm_equips.menu.LobotomyEGOExtractionMenu;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-public class LobotomyEGOExtractionTableBlockEntity extends BlockEntity implements MenuProvider, net.minecraft.world.Container {
+public class LobotomyEGOExtractionTableBlockEntity extends BlockEntity implements MenuProvider, Container {
     public static final int INPUT_SLOT_START = 0;
-    public static final int INPUT_SLOT_COUNT = 9;
+    public static final int INPUT_SLOT_COUNT = 1;
     public static final int OUTPUT_SLOT = 9;
     public static final int CONTAINER_SIZE = 10;
     private final NonNullList<ItemStack> items = NonNullList.withSize(CONTAINER_SIZE, ItemStack.EMPTY);
 
     public LobotomyEGOExtractionTableBlockEntity(BlockPos pos, BlockState state) {
-        super(PMERegistryBlockEntity.LOBOTOMY_EGO_EXTRACTION_TABLE.get(), pos, state);
+        super(BlockEntityInit.LOBOTOMY_EGO_EXTRACTION_TABLE.get(), pos, state);
     }
 
     @Override
@@ -50,29 +52,28 @@ public class LobotomyEGOExtractionTableBlockEntity extends BlockEntity implement
         return new LobotomyEGOExtractionMenu(containerId, inventory, this);
     }
 
-    public boolean craft(Player player) {
+    public void craft(Player player) {
         if (level == null || level.isClientSide) {
-            return false;
+            return;
         }
 
-        ExtractionRule rule = findCraftableRule();
-        if (rule == null || countInputs(rule.input()) < rule.cost()) {
-            return false;
+        ExtractionRule rule = ExtractionRule.forInput(items.get(INPUT_SLOT_START));
+        if (rule == null) {
+            return;
         }
 
         ItemStack generated = getRandomResult(level, rule.resultTag());
         if (generated.isEmpty() || !canMoveToOutput(generated)) {
-            return false;
+            return;
         }
 
         consumeInputs(rule.input(), rule.cost());
         moveToOutput(generated);
         setChanged();
-        return true;
     }
 
     public boolean canPlaceInput(ItemStack stack) {
-        return stack.is(PMERegistryTag.Items.E_BOX);
+        return stack.is(ItemInit.LCORP_EBOX.get());
     }
 
     private static ItemStack getRandomResult(Level level, TagKey<Item> tagKey) {
@@ -84,7 +85,7 @@ public class LobotomyEGOExtractionTableBlockEntity extends BlockEntity implement
     }
 
     private static List<Item> getTaggedItems(Level level, TagKey<Item> tagKey) {
-        Optional<net.minecraft.core.HolderSet.Named<Item>> tag = level.registryAccess()
+        Optional<HolderSet.Named<Item>> tag = level.registryAccess()
                 .registryOrThrow(Registries.ITEM)
                 .getTag(tagKey);
         if (tag.isEmpty()) {
@@ -113,27 +114,6 @@ public class LobotomyEGOExtractionTableBlockEntity extends BlockEntity implement
         }
     }
 
-    private ExtractionRule findCraftableRule() {
-        for (int slot = INPUT_SLOT_START; slot < INPUT_SLOT_START + INPUT_SLOT_COUNT; slot++) {
-            ExtractionRule rule = ExtractionRule.forInput(items.get(slot));
-            if (rule != null && countInputs(rule.input()) >= rule.cost()) {
-                return rule;
-            }
-        }
-        return null;
-    }
-
-    private int countInputs(Item item) {
-        int count = 0;
-        for (int slot = INPUT_SLOT_START; slot < INPUT_SLOT_START + INPUT_SLOT_COUNT; slot++) {
-            ItemStack stack = items.get(slot);
-            if (stack.is(item)) {
-                count += stack.getCount();
-            }
-        }
-        return count;
-    }
-
     private void consumeInputs(Item item, int amount) {
         int remaining = amount;
         for (int slot = INPUT_SLOT_START; slot < INPUT_SLOT_START + INPUT_SLOT_COUNT && remaining > 0; slot++) {
@@ -158,14 +138,14 @@ public class LobotomyEGOExtractionTableBlockEntity extends BlockEntity implement
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
-        net.minecraft.world.ContainerHelper.saveAllItems(tag, items, registries);
+        ContainerHelper.saveAllItems(tag, items, registries);
     }
 
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
         items.clear();
-        net.minecraft.world.ContainerHelper.loadAllItems(tag, items, registries);
+        ContainerHelper.loadAllItems(tag, items, registries);
     }
 
     @Override
@@ -190,7 +170,7 @@ public class LobotomyEGOExtractionTableBlockEntity extends BlockEntity implement
 
     @Override
     public ItemStack removeItem(int slot, int amount) {
-        ItemStack stack = net.minecraft.world.ContainerHelper.removeItem(items, slot, amount);
+        ItemStack stack = ContainerHelper.removeItem(items, slot, amount);
         if (!stack.isEmpty()) {
             setChanged();
         }
@@ -199,7 +179,7 @@ public class LobotomyEGOExtractionTableBlockEntity extends BlockEntity implement
 
     @Override
     public ItemStack removeItemNoUpdate(int slot) {
-        return net.minecraft.world.ContainerHelper.takeItem(items, slot);
+        return ContainerHelper.takeItem(items, slot);
     }
 
     @Override
@@ -226,22 +206,18 @@ public class LobotomyEGOExtractionTableBlockEntity extends BlockEntity implement
 
     private record ExtractionRule(Item input, int cost, TagKey<Item> resultTag) {
         private static ExtractionRule forInput(ItemStack stack) {
-            if (stack.is(PMERegistryBlock.BlockItems.ZAYIN_PE_BOX.get())) {
-                return new ExtractionRule(PMERegistryBlock.BlockItems.ZAYIN_PE_BOX.get(), 15, PMERegistryTag.Items.EGO_T1_ZAYIN);
+            if (!stack.is(ItemInit.LCORP_EBOX.get())) {
+                return null;
             }
-            if (stack.is(PMERegistryBlock.BlockItems.TETH_PE_BOX.get())) {
-                return new ExtractionRule(PMERegistryBlock.BlockItems.TETH_PE_BOX.get(), 30, PMERegistryTag.Items.EGO_T2_TETH);
-            }
-            if (stack.is(PMERegistryBlock.BlockItems.HE_PE_BOX.get())) {
-                return new ExtractionRule(PMERegistryBlock.BlockItems.HE_PE_BOX.get(), 45, PMERegistryTag.Items.EGO_T3_HE);
-            }
-            if (stack.is(PMERegistryBlock.BlockItems.WAW_PE_BOX.get())) {
-                return new ExtractionRule(PMERegistryBlock.BlockItems.WAW_PE_BOX.get(), 60, PMERegistryTag.Items.EGO_T4_WAW);
-            }
-            if (stack.is(PMERegistryBlock.BlockItems.ALEPH_PE_BOX.get())) {
-                return new ExtractionRule(PMERegistryBlock.BlockItems.ALEPH_PE_BOX.get(), 120, PMERegistryTag.Items.EGO_T5_ALEPH);
-            }
-            return null;
+
+            return switch (stack.getCount()) {
+                case 8 -> new ExtractionRule(ItemInit.LCORP_EBOX.get(), 8, TagInit.Items.EGO_T1_ZAYIN);
+                case 16 -> new ExtractionRule(ItemInit.LCORP_EBOX.get(), 16, TagInit.Items.EGO_T2_TETH);
+                case 32 -> new ExtractionRule(ItemInit.LCORP_EBOX.get(), 32, TagInit.Items.EGO_T3_HE);
+                case 48 -> new ExtractionRule(ItemInit.LCORP_EBOX.get(), 48, TagInit.Items.EGO_T4_WAW);
+                case 64 -> new ExtractionRule(ItemInit.LCORP_EBOX.get(), 64, TagInit.Items.EGO_T5_ALEPH);
+                default -> null;
+            };
         }
     }
 }

@@ -2,10 +2,10 @@ package net.pm_equips.client.renderer;
 
 import net.minecraft.world.entity.EquipmentSlot;
 import net.pm_equips.client.models.EGOS3GalaxyM;
-import net.pm_equips.items.LCorpEGOL3Galaxy;
+import net.pm_equips.items.LobEGOSuit3Galaxy;
 import software.bernie.geckolib.renderer.GeoArmorRenderer;
 
-public class EGOS3GalaxyR extends GeoArmorRenderer<LCorpEGOL3Galaxy> {
+public class EGOS3GalaxyR extends GeoArmorRenderer<LobEGOSuit3Galaxy> {
     public EGOS3GalaxyR() {
         super(new EGOS3GalaxyM());
     }

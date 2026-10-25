@@ -1,0 +1,13 @@
+{
+  "id": "pm_equips:lobego4_weapon_crimson_gun",
+  "result": {
+    "item": "pm_equips:lobego4_weapon_crimson_gun",
+    "count": 1
+  },
+  "ingredients": [
+    {
+      "item": "pm_equips:item_lcorp_pebox",
+      "count": 35
+    }
+  ]
+}

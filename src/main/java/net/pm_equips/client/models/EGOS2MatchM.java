@@ -1,22 +1,22 @@
 package net.pm_equips.client.models;
 
-import net.pm_equips.items.LCorpEGOL2Match;
 import net.minecraft.resources.ResourceLocation;
+import net.pm_equips.items.LobEGOSuit2Match;
 import software.bernie.geckolib.model.GeoModel;
 
-public class EGOS2MatchM extends GeoModel<LCorpEGOL2Match> {
+public class EGOS2MatchM extends GeoModel<LobEGOSuit2Match> {
     @Override
-    public ResourceLocation getModelResource(LCorpEGOL2Match animatable) {
+    public ResourceLocation getModelResource(LobEGOSuit2Match animatable) {
         return ResourceLocation.fromNamespaceAndPath("pm_equips", "geo/ego_armor_type1.geo.json");
     }
 
     @Override
-    public ResourceLocation getTextureResource(LCorpEGOL2Match animatable) {
+    public ResourceLocation getTextureResource(LobEGOSuit2Match animatable) {
         return ResourceLocation.fromNamespaceAndPath("pm_equips", "textures/armor/ego_s2_match.png");
     }
 
     @Override
-    public ResourceLocation getAnimationResource(LCorpEGOL2Match animatable) {
-        return ResourceLocation.fromNamespaceAndPath("pm_equips", "animations/ego_armor.animation.json");
+    public ResourceLocation getAnimationResource(LobEGOSuit2Match animatable) {
+        return ResourceLocation.fromNamespaceAndPath("pm_equips", "animations/armor.animation.json");
     }
 }

@@ -2,10 +2,10 @@ package net.pm_equips.client.renderer;
 
 import net.minecraft.world.entity.EquipmentSlot;
 import net.pm_equips.client.models.EGOS5PinkM;
-import net.pm_equips.items.LCorpEGOL5Pink;
+import net.pm_equips.items.LobEGOSuit5Pink;
 import software.bernie.geckolib.renderer.GeoArmorRenderer;
 
-public class EGOS5PinkR extends GeoArmorRenderer<LCorpEGOL5Pink> {
+public class EGOS5PinkR extends GeoArmorRenderer<LobEGOSuit5Pink> {
     public EGOS5PinkR() {
         super(new EGOS5PinkM());
     }

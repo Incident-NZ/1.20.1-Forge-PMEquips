@@ -1,0 +1,37 @@
+{
+	"format_version": "1.9.0",
+	"parent": "item/handheld",
+	"textures": {
+		"layer0": "pm_equips:item/fixer_kali_mimicry"
+	},
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [-45, -90, 0],
+			"translation": [0, 9, 1.5],
+			"scale": [1.5, 1.5, 1.5]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [-45, 90, 0],
+			"translation": [0, 9, 1.5],
+			"scale": [1.5, 1.5, 1.5]
+		},
+		"firstperson_righthand": {
+			"rotation": [-40, -90, 0],
+			"translation": [0, 3, -0.5],
+			"scale": [1.2, 1.2, 1.5]
+		},
+		"firstperson_lefthand": {
+			"rotation": [-40, 90, 0],
+			"translation": [0, 3, 0.5],
+			"scale": [1.2, 1.2, 1.5]
+		},
+		"ground": {
+			"translation": [0, 5, 0],
+			"scale": [1, 1, 0.75]
+		},
+		"on_shelf": {
+			"rotation": [0, 0, 45],
+			"scale": [1, 1, 0.75]
+		}
+	}
+}

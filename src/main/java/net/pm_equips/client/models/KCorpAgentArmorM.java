@@ -1,23 +1,23 @@
 package net.pm_equips.client.models;
 
 import net.minecraft.resources.ResourceLocation;
-import net.pm_equips.items.WingsKCorpAgentArmorTier3;
+import net.pm_equips.items.WingKCorpAgentArmor;
 import software.bernie.geckolib.model.GeoModel;
 
-public class KCorpAgentArmorM extends GeoModel<WingsKCorpAgentArmorTier3> {
+public class KCorpAgentArmorM extends GeoModel<WingKCorpAgentArmor> {
 
     @Override
-    public ResourceLocation getModelResource(WingsKCorpAgentArmorTier3 animatable) {
+    public ResourceLocation getModelResource(WingKCorpAgentArmor animatable) {
         return ResourceLocation.fromNamespaceAndPath("pm_equips", "geo/kcorp_agent_armor.geo.json");
     }
 
     @Override
-    public ResourceLocation getTextureResource(WingsKCorpAgentArmorTier3 animatable) {
+    public ResourceLocation getTextureResource(WingKCorpAgentArmor animatable) {
         return ResourceLocation.fromNamespaceAndPath("pm_equips", "textures/armor/kcorp_agent_armor.png");
     }
 
     @Override
-    public ResourceLocation getAnimationResource(WingsKCorpAgentArmorTier3 animatable) {
+    public ResourceLocation getAnimationResource(WingKCorpAgentArmor animatable) {
         return ResourceLocation.fromNamespaceAndPath("pm_equips", "animations/armor.animation.json");
     }
 }

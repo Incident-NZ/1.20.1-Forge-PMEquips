@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XYZ"
+  ],
+  "key": {
+    "X": {
+      "tag": "minecraft:swords"
+    },
+    "Y": {
+      "item": "pm_equips:item_wcorp_battery"
+    },
+    "Z": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "id": "pm_equips:wing_wcorp_w2"
+  }
+}

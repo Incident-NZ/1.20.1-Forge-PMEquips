@@ -1,0 +1,13 @@
+{
+  "id": "pm_equips:lobego2_weapon_match",
+  "result": {
+    "item": "pm_equips:lobego2_weapon_match",
+    "count": 1
+  },
+  "ingredients": [
+    {
+      "item": "pm_equips:item_lcorp_pebox",
+      "count": 25
+    }
+  ]
+}

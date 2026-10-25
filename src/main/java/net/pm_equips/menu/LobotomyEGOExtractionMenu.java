@@ -9,7 +9,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.pm_equips.PMERegistryMenu;
+import net.pm_equips.MenuInit;
 import net.pm_equips.blockentity.LobotomyEGOExtractionTableBlockEntity;
 
 public class LobotomyEGOExtractionMenu extends AbstractContainerMenu {
@@ -17,7 +17,8 @@ public class LobotomyEGOExtractionMenu extends AbstractContainerMenu {
     private static final int INPUT_SLOT_COUNT = LobotomyEGOExtractionTableBlockEntity.INPUT_SLOT_COUNT;
     private static final int INPUT_SLOT_END = INPUT_SLOT_START + INPUT_SLOT_COUNT;
     private static final int OUTPUT_SLOT = LobotomyEGOExtractionTableBlockEntity.OUTPUT_SLOT;
-    private static final int PLAYER_INVENTORY_START = LobotomyEGOExtractionTableBlockEntity.CONTAINER_SIZE;
+    private static final int OUTPUT_MENU_SLOT = INPUT_SLOT_COUNT;
+    private static final int PLAYER_INVENTORY_START = INPUT_SLOT_COUNT + 1;
     private static final int PLAYER_INVENTORY_END = PLAYER_INVENTORY_START + 27;
     private static final int HOTBAR_START = PLAYER_INVENTORY_END;
     private static final int HOTBAR_END = HOTBAR_START + 9;
@@ -28,14 +29,14 @@ public class LobotomyEGOExtractionMenu extends AbstractContainerMenu {
     }
 
     public LobotomyEGOExtractionMenu(int containerId, Inventory inventory, LobotomyEGOExtractionTableBlockEntity blockEntity) {
-        super(PMERegistryMenu.LOBOTOMY_EGO_EXTRACTION_TABLE.get(), containerId);
+        super(MenuInit.LOBOTOMY_EGO_EXTRACTION_TABLE.get(), containerId);
         this.container = blockEntity;
         addExtractionSlots(blockEntity);
         addPlayerInventory(inventory);
     }
 
     private LobotomyEGOExtractionMenu(int containerId, Inventory inventory, Container container) {
-        super(PMERegistryMenu.LOBOTOMY_EGO_EXTRACTION_TABLE.get(), containerId);
+        super(MenuInit.LOBOTOMY_EGO_EXTRACTION_TABLE.get(), containerId);
         this.container = container;
         addExtractionSlots(container);
         addPlayerInventory(inventory);
@@ -50,26 +51,15 @@ public class LobotomyEGOExtractionMenu extends AbstractContainerMenu {
     }
 
     private void addExtractionSlots(Container container) {
-        for (int row = 0; row < 3; row++) {
-            for (int column = 0; column < 3; column++) {
-                int slot = INPUT_SLOT_START + column + row * 3;
-                addSlot(new Slot(container, slot, 30 + column * 18, 17 + row * 18) {
-                    @Override
-                    public boolean mayPlace(ItemStack stack) {
-                        return container instanceof LobotomyEGOExtractionTableBlockEntity blockEntity
-                                ? blockEntity.canPlaceInput(stack)
-                                : super.mayPlace(stack);
-                    }
-
-                    @Override
-                    public int getMaxStackSize() {
-                        return super.getMaxStackSize();
-                    }
-                });
+        addSlot(new Slot(container, INPUT_SLOT_START, 43, 83) {
+            @Override
+            public boolean mayPlace(ItemStack stack) {
+                return container instanceof LobotomyEGOExtractionTableBlockEntity blockEntity
+                        && blockEntity.canPlaceInput(stack);
             }
-        }
+        });
 
-        addSlot(new Slot(container, OUTPUT_SLOT, 124, 35) {
+        addSlot(new Slot(container, OUTPUT_SLOT, 116, 83) {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return false;
@@ -80,12 +70,12 @@ public class LobotomyEGOExtractionMenu extends AbstractContainerMenu {
     private void addPlayerInventory(Inventory inventory) {
         for (int row = 0; row < 3; row++) {
             for (int column = 0; column < 9; column++) {
-                addSlot(new Slot(inventory, column + row * 9 + 9, 8 + column * 18, 84 + row * 18));
+                addSlot(new Slot(inventory, column + row * 9 + 9, 8 + column * 18, 140 + row * 18));
             }
         }
 
         for (int column = 0; column < 9; column++) {
-            addSlot(new Slot(inventory, column, 8 + column * 18, 142));
+            addSlot(new Slot(inventory, column, 8 + column * 18, 198));
         }
     }
 
@@ -105,25 +95,27 @@ public class LobotomyEGOExtractionMenu extends AbstractContainerMenu {
 
         ItemStack stack = slot.getItem();
         result = stack.copy();
-        if (index == OUTPUT_SLOT) {
+        if (index == OUTPUT_MENU_SLOT) {
             if (!moveItemStackTo(stack, PLAYER_INVENTORY_START, HOTBAR_END, true)) {
                 return ItemStack.EMPTY;
             }
             slot.onQuickCraft(stack, result);
-        } else if (index >= INPUT_SLOT_START && index < INPUT_SLOT_END) {
+        } else if (index == INPUT_SLOT_START) {
             if (!moveItemStackTo(stack, PLAYER_INVENTORY_START, HOTBAR_END, false)) {
                 return ItemStack.EMPTY;
             }
-        } else if (container instanceof LobotomyEGOExtractionTableBlockEntity blockEntity && blockEntity.canPlaceInput(stack)) {
-            if (!moveItemStackTo(stack, INPUT_SLOT_START, INPUT_SLOT_END, false)) {
+        } else if (index >= PLAYER_INVENTORY_START) {
+            if (container instanceof LobotomyEGOExtractionTableBlockEntity blockEntity && blockEntity.canPlaceInput(stack)) {
+                if (!moveItemStackTo(stack, INPUT_SLOT_START, INPUT_SLOT_END, false)) {
+                    return ItemStack.EMPTY;
+                }
+            } else if (index < PLAYER_INVENTORY_END) {
+                if (!moveItemStackTo(stack, HOTBAR_START, HOTBAR_END, false)) {
+                    return ItemStack.EMPTY;
+                }
+            } else if (!moveItemStackTo(stack, PLAYER_INVENTORY_START, PLAYER_INVENTORY_END, false)) {
                 return ItemStack.EMPTY;
             }
-        } else if (index >= PLAYER_INVENTORY_START && index < PLAYER_INVENTORY_END) {
-            if (!moveItemStackTo(stack, HOTBAR_START, HOTBAR_END, false)) {
-                return ItemStack.EMPTY;
-            }
-        } else if (index >= HOTBAR_START && index < HOTBAR_END && !moveItemStackTo(stack, PLAYER_INVENTORY_START, PLAYER_INVENTORY_END, false)) {
-            return ItemStack.EMPTY;
         }
 
         if (stack.isEmpty()) {

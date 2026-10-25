@@ -1,0 +1,6 @@
+{
+  "parent": "bettercombat:lance",
+  "attributes": {
+    "two_handed": true
+  }
+}

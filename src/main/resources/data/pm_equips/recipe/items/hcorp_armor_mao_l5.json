@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABE",
+    "CD "
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:netherite_helmet"
+    },
+    "B": {
+      "item": "minecraft:netherite_chestplate"
+    },
+    "C": {
+      "item": "minecraft:netherite_leggings"
+    },
+    "D": {
+      "item": "minecraft:netherite_boots"
+    },
+    "E": {
+      "item": "pm_equips:item_hcorp_bolus_mao"
+    }
+  },
+  "result": {
+    "id": "pm_equips:wing_hcorp_mao_armor_l5"
+  }
+}

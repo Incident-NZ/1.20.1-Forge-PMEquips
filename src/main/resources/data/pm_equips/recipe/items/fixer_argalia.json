@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABD",
+    "  C",
+    "  D"
+  ],
+  "key": {
+    "A": {
+      "item": "alltheores:platinum_ingot"
+    },
+    "B": {
+      "item": "minecraft:note_block"
+    },
+    "C": {
+      "item": "minecraft:bone"
+    },
+    "D": {
+      "item": "minecraft:blue_dye"
+    }
+  },
+  "result": {
+    "id": "pm_equips:fixer_color_argalia"
+  }
+}

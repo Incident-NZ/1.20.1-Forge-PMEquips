@@ -1,22 +1,27 @@
 package net.pm_equips.blockentity;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
-import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
+import net.minecraft.world.Containers;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -24,19 +29,15 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.pm_equips.PMERegistryBlockEntity;
-import net.pm_equips.PMERegistryTag;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import net.pm_equips.BlockEntityInit;
+import net.pm_equips.TagInit;
 
 public class PEBoxGeneratorBlockEntity extends BlockEntity {
     private static final String STORED_ITEMS_TAG = "StoredItems";
     private final NonNullList<ItemStack> storedItems = NonNullList.create();
 
     public PEBoxGeneratorBlockEntity(BlockPos pos, BlockState state) {
-        super(PMERegistryBlockEntity.EBOX_GEN.get(), pos, state);
+        super(BlockEntityInit.EBOX_GEN.get(), pos, state);
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, PEBoxGeneratorBlockEntity blockEntity) {
@@ -63,7 +64,7 @@ public class PEBoxGeneratorBlockEntity extends BlockEntity {
     }
 
     public boolean giveStoredItemsTo(LivingEntity entity) {
-        if (!(entity instanceof net.minecraft.world.entity.player.Player player) || storedItems.isEmpty()) {
+        if (!(entity instanceof Player player) || storedItems.isEmpty()) {
             return false;
         }
 
@@ -94,7 +95,7 @@ public class PEBoxGeneratorBlockEntity extends BlockEntity {
     public void dropStoredItems(Level level, BlockPos pos) {
         for (ItemStack stack : storedItems) {
             if (!stack.isEmpty()) {
-                net.minecraft.world.Containers.dropItemStack(level, pos.getX() + 0.5D, pos.getY() + 1.0D, pos.getZ() + 0.5D, stack);
+                Containers.dropItemStack(level, pos.getX() + 0.5D, pos.getY() + 1.0D, pos.getZ() + 0.5D, stack);
             }
         }
         storedItems.clear();
@@ -110,7 +111,7 @@ public class PEBoxGeneratorBlockEntity extends BlockEntity {
     }
 
     private void generateRandomEBoxes(Level level, int rolls) {
-        List<Item> candidates = getTaggedItems(level, PMERegistryTag.Items.E_BOX);
+        List<Item> candidates = getTaggedItems(level, TagInit.Items.E_BOX);
         if (candidates.isEmpty()) {
             return;
         }
@@ -121,7 +122,7 @@ public class PEBoxGeneratorBlockEntity extends BlockEntity {
     }
 
     private static List<Item> getTaggedItems(Level level, TagKey<Item> tagKey) {
-        Optional<net.minecraft.core.HolderSet.Named<Item>> tag = level.registryAccess()
+        Optional<HolderSet.Named<Item>> tag = level.registryAccess()
                 .registryOrThrow(Registries.ITEM)
                 .getTag(tagKey);
         if (tag.isEmpty()) {
@@ -160,7 +161,7 @@ public class PEBoxGeneratorBlockEntity extends BlockEntity {
         ListTag items = new ListTag();
         for (ItemStack stack : storedItems) {
             if (!stack.isEmpty()) {
-                items.add((CompoundTag) stack.save(registries));
+                items.add(stack.save(registries));
             }
         }
         tag.put(STORED_ITEMS_TAG, items);
@@ -185,21 +186,8 @@ public class PEBoxGeneratorBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void handleUpdateTag(CompoundTag tag, HolderLookup.Provider registries) {
-        loadAdditional(tag, registries);
-    }
-
-    @Override
     public Packet<ClientGamePacketListener> getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
-    }
-
-    @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket packet, HolderLookup.Provider registries) {
-        CompoundTag tag = packet.getTag();
-        if (tag != null) {
-            loadAdditional(tag, registries);
-        }
     }
 
     private void markUpdated() {

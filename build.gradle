@@ -1,201 +1,105 @@
 plugins {
     id 'java-library'
     id 'idea'
-    id 'net.neoforged.moddev' version '2.0.147'
+    id 'net.neoforged.moddev' version '2.0.148'
 }
 
 group = mod_group_id
 version = mod_version
-
-base {
-    archivesName = mod_id
-}
-
-java {
-    toolchain.languageVersion = JavaLanguageVersion.of(21)
-}
-
-sourceSets.main.resources {
-    srcDir 'src/generated/resources'
+base { archivesName = mod_id }
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+sourceSets.main.resources.srcDir 'src/generated/resources'
+sourceSets {
+    npcTest {
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += sourceSets.main.output
+    }
 }
 
 repositories {
     maven {
-        name = 'GeckoLib'
         url = 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
         content { includeGroup 'software.bernie.geckolib' }
     }
     maven {
-        name = "C4's Maven"
         url = 'https://maven.theillusivec4.top/'
         content { includeGroup 'top.theillusivec4.curios' }
     }
     maven {
-        name = "Modrinth"
-        url = "https://api.modrinth.com/maven"
+        url = 'https://maven.blamejared.com/'
+        content {
+            includeGroup 'mezz.jei'
+            includeGroup 'net.mezzdev.config'
+        }
+    }
+    maven {
+        url = 'https://www.cursemaven.com'
+        content { includeGroup 'curse.maven' }
     }
     mavenCentral()
 }
 
 neoForge {
-    version = project.neo_version
-
+    version = neo_version
+    addModdingDependenciesTo sourceSets.npcTest
     runs {
-        client {
-            client()
-            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
-        }
+        client { client() }
         server {
             server()
             programArgument '--nogui'
-            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
         }
-        gameTestServer {
+        npcTest {
             type = 'gameTestServer'
-            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+            sourceSet = sourceSets.npcTest
+            gameDirectory = project.file('build/npc-gametest')
+            systemProperty 'neoforge.enabledGameTestNamespaces', mod_id
         }
         data {
             data()
-            programArguments.addAll '--mod', project.mod_id, '--all', '--output',
-                    file('src/generated/resources/').getAbsolutePath(), '--existing',
-                    file('src/main/resources/').getAbsolutePath()
-        }
-        configureEach {
-            systemProperty 'forge.logging.markers', 'REGISTRIES'
-            logLevel = org.slf4j.event.Level.DEBUG
+            programArguments.addAll '--mod', mod_id, '--all', '--output',
+                    file('src/generated/resources').absolutePath, '--existing',
+                    file('src/main/resources').absolutePath
         }
     }
-
     mods {
         "${mod_id}" {
             sourceSet sourceSets.main
+            if (project.hasProperty('npcTests')) sourceSet sourceSets.npcTest
         }
     }
 }
 
 configurations {
+    localRuntime
     runtimeClasspath.extendsFrom localRuntime
+    npcTestImplementation.extendsFrom implementation
+    npcTestRuntimeOnly.extendsFrom runtimeOnly, localRuntime
 }
 
 dependencies {
     implementation "software.bernie.geckolib:geckolib-neoforge-${minecraft_version}:${geckolib_version}"
-
-    compileOnly "top.theillusivec4.curios:curios-neoforge:${curios_version}:api"
-    localRuntime "top.theillusivec4.curios:curios-neoforge:${curios_version}"
-
-    implementation "maven.modrinth:u6dRKJwZ:TKsCmRlt"
-
-    annotationProcessor 'org.spongepowered:mixin:0.8.7:processor'
+    implementation "top.theillusivec4.curios:curios-neoforge:${curios_version}"
+    compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
+    compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
+    localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
+    localRuntime "curse.maven:ato-405593:${alltheores_file}"
 }
 
-def mixinMappingsFile = layout.buildDirectory.file('tmp/mixin/pm_equips.srg')
-def mixinRefmapFile = layout.buildDirectory.file('generated/resources/pm_equips.refmap.json')
-
-sourceSets.main.resources.srcDir(layout.buildDirectory.dir('generated/resources'))
-
-tasks.register('generateMixinMappings') {
-    dependsOn(tasks.named('createMinecraftArtifacts'))
-    outputs.file(mixinMappingsFile)
-
-    doLast {
-        def mappingCache = new File(System.getProperty('user.home'), '.gradle/caches/neoformruntime/intermediate_results')
-        def inputMappings = fileTree(mappingCache) {
-            include 'mergeMappings_*_output.tsrg'
-        }.files.find { candidate ->
-            def contents = candidate.getText('UTF-8')
-            contents.contains('net/minecraft/client/model/HumanoidModel') &&
-                    contents.contains('a (Lbtn;FFFFF)V setupAnim')
-        }
-        if (inputMappings == null) {
-            throw new GradleException('Could not find the Minecraft 1.21.1 official-to-obfuscated mappings required for the Mixin refmap.')
-        }
-
-        def classMappings = [:]
-        def members = []
-        String obfuscatedClass = null
-        String namedClass = null
-
-        inputMappings.eachLine('UTF-8') { line ->
-            if (line == 'tsrg2 left right' || line.trim().isEmpty()) return
-
-            def indented = Character.isWhitespace(line.charAt(0))
-            def parts = line.trim().split(/\s+/)
-            if (!indented) {
-                obfuscatedClass = parts[0]
-                namedClass = parts.length > 1 ? parts[1] : parts[0]
-                classMappings[obfuscatedClass] = namedClass
-                members << [kind: 'CL', namedOwner: namedClass, obfuscatedOwner: obfuscatedClass]
-            } else if (parts.length == 2) {
-                members << [kind: 'FD', namedOwner: namedClass, namedName: parts[1],
-                            obfuscatedOwner: obfuscatedClass, obfuscatedName: parts[0]]
-            } else if (parts.length >= 3 && parts[1].startsWith('(')) {
-                members << [kind: 'MD', namedOwner: namedClass, namedName: parts[2],
-                            obfuscatedOwner: obfuscatedClass, obfuscatedName: parts[0],
-                            obfuscatedDescriptor: parts[1]]
-            }
-        }
-
-        def remapDescriptor = { String descriptor ->
-            descriptor.replaceAll(/L([^;]+);/) { fullMatch, obfuscatedName ->
-                "L${classMappings.getOrDefault(obfuscatedName, obfuscatedName)};"
-            }
-        }
-
-        def output = new File(mixinMappingsFile.get().asFile.absolutePath)
-        output.parentFile.mkdirs()
-        output.withWriter('UTF-8') { writer ->
-            members.each { member ->
-                if (member.kind == 'CL') {
-                    writer.write("CL: ${member.namedOwner} ${member.obfuscatedOwner}${System.lineSeparator()}")
-                } else if (member.kind == 'FD') {
-                    writer.write("FD: ${member.namedOwner}/${member.namedName} ${member.obfuscatedOwner}/${member.obfuscatedName}${System.lineSeparator()}")
-                } else {
-                    def namedDescriptor = remapDescriptor(member.obfuscatedDescriptor)
-                    writer.write("MD: ${member.namedOwner}/${member.namedName} ${namedDescriptor} ${member.obfuscatedOwner}/${member.obfuscatedName} ${member.obfuscatedDescriptor}${System.lineSeparator()}")
-                }
-            }
-        }
-    }
-}
-
-tasks.named('compileJava') {
-    dependsOn(tasks.named('generateMixinMappings'))
-}
-
-tasks.named('processResources') {
-    dependsOn(tasks.named('compileJava'))
-}
-
-def replaceProperties = [
-        minecraft_version      : minecraft_version,
-        minecraft_version_range: minecraft_version_range,
-        neo_version            : neo_version,
-        neo_version_range      : neo_version_range,
-        loader_version_range   : loader_version_range,
-        mod_id                 : mod_id,
-        mod_name               : mod_name,
-        mod_license            : mod_license,
-        mod_version            : mod_version,
-        mod_authors            : mod_authors,
-        mod_description        : mod_description,
-        geckolib_version       : geckolib_version,
-        curios_version         : curios_version,
-        curios_version_range   : curios_version_range,
-        jei_version            : jei_version
-]
-
-tasks.withType(ProcessResources).configureEach {
+def replaceProperties = [mod_id: mod_id, mod_name: mod_name, mod_version: mod_version,
+                         mod_authors: mod_authors, mod_license: mod_license,
+                         mod_description: mod_description, neo_version: neo_version,
+                         geckolib_version: geckolib_version, curios_version: curios_version]
+tasks.named('processResources', ProcessResources) {
     inputs.properties replaceProperties
-    filesMatching(['META-INF/neoforge.mods.toml', 'pack.mcmeta']) {
-        expand replaceProperties + [project: project]
-    }
+    filesMatching('META-INF/neoforge.mods.toml') { expand replaceProperties }
+    exclude '**/.cache/**'
 }
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
-    options.compilerArgs.addAll([
-            "-AreobfSrgFile=${mixinMappingsFile.get().asFile.absolutePath}",
-            "-AoutRefMapFile=${mixinRefmapFile.get().asFile.absolutePath}",
-            '-AdefaultObfuscationEnv=notch'
-    ])
+    options.compilerArgs.addAll(['-Xmaxerrs', '1000'])
+}
+
+tasks.named('jar', Jar) {
+    manifest.attributes('Implementation-Title': mod_name, 'Implementation-Version': mod_version)
 }

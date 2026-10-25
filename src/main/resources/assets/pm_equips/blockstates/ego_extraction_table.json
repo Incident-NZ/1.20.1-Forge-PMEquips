@@ -1,7 +1,8 @@
 {
   "variants": {
-    "": {
-      "model": "pm_equips:block/ego_extraction_table"
-    }
+    "facing=north": { "model": "pm_equips:block/ego_extraction_table" },
+    "facing=south": { "model": "pm_equips:block/ego_extraction_table", "y": 180 },
+    "facing=west":  { "model": "pm_equips:block/ego_extraction_table", "y": 270 },
+    "facing=east":  { "model": "pm_equips:block/ego_extraction_table", "y": 90 }
   }
 }

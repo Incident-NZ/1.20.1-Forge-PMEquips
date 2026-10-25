@@ -1,5 +1,7 @@
 {
   "size": 1,
-  "order": 20,
-  "icon": "curios:slot/empty_curios_slot"
+  "operation": "SET",
+  "order": 0,
+  "use_native_gui": true,
+  "render_toggle": true
 }

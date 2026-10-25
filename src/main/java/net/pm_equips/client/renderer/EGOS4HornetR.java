@@ -2,10 +2,10 @@ package net.pm_equips.client.renderer;
 
 import net.minecraft.world.entity.EquipmentSlot;
 import net.pm_equips.client.models.EGOS4HornetM;
-import net.pm_equips.items.LCorpEGOL4Hornet;
+import net.pm_equips.items.LobEGOSuit4Hornet;
 import software.bernie.geckolib.renderer.GeoArmorRenderer;
 
-public class EGOS4HornetR extends GeoArmorRenderer<LCorpEGOL4Hornet> {
+public class EGOS4HornetR extends GeoArmorRenderer<LobEGOSuit4Hornet> {
     public EGOS4HornetR() {
         super(new EGOS4HornetM());
     }

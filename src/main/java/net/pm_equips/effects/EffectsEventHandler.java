@@ -1,12 +1,14 @@
 package net.pm_equips.effects;
 
 import net.minecraft.world.entity.LivingEntity;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.pm_equips.PMERegistryMobEffect;
+import net.pm_equips.MobEffectInit;
 
-@net.neoforged.fml.common.EventBusSubscriber(modid = "pm_equips", bus = net.neoforged.fml.common.EventBusSubscriber.Bus.GAME)
+@EventBusSubscriber(modid = "pm_equips", bus = EventBusSubscriber.Bus.GAME)
 public class EffectsEventHandler {
 
     @SubscribeEvent
@@ -15,27 +17,26 @@ public class EffectsEventHandler {
         LivingEntity target = event.getEntity();
 
         // W.Corp singularity evade handling
-        if (target.hasEffect(PMERegistryMobEffect.WCORP_SIN)) {
+        if (target.hasEffect(MobEffectInit.WCORP_SIN)) {
             var tag = target.getPersistentData();
             int charges = tag.getInt("wcorp_evade_charges");
             if (charges > 0) {
                 tag.putInt("wcorp_evade_charges", charges - 1);
                 event.setCanceled(true);
+                return;
             }
         }
     }
-
-    @SubscribeEvent
-    public static void onMobEffectRemoved(MobEffectEvent.Remove event) {
-        if (event.getEffect().value() == PMERegistryMobEffect.WCORP_SIN.get()) {
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public static void onEffectRemoved(MobEffectEvent.Remove event) {
+        if (!event.getEntity().level().isClientSide && event.getEffect().is(MobEffectInit.WCORP_SIN.getKey()))
             event.getEntity().getPersistentData().remove("wcorp_evade_charges");
-        }
     }
 
-    @SubscribeEvent
-    public static void onMobEffectExpired(MobEffectEvent.Expired event) {
-        if (event.getEffectInstance().getEffect().value() == PMERegistryMobEffect.WCORP_SIN.get()) {
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public static void onEffectExpired(MobEffectEvent.Expired event) {
+        var effect = event.getEffectInstance();
+        if (!event.getEntity().level().isClientSide && effect != null && effect.getEffect().is(MobEffectInit.WCORP_SIN.getKey()))
             event.getEntity().getPersistentData().remove("wcorp_evade_charges");
-        }
     }
 }

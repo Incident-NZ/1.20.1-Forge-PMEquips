@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "alltheores:silver_ingot"
+    },
+    {
+      "item": "alltheores:steel_rod"
+    }
+  ],
+  "result": {
+    "id": "pm_equips:fixer_color_roland_4"
+  }
+}

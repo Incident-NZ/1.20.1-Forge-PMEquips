@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XYZ"
+  ],
+  "key": {
+    "X": {
+      "item": "alltheores:steel_ingot"
+    },
+    "Y": {
+      "item": "alltheores:platinum_ingot"
+    },
+    "Z": {
+      "item": "alltheores:steel_rod"
+    }
+  },
+  "result": {
+    "id": "pm_equips:fixer_color_roland_durandal"
+  }
+}

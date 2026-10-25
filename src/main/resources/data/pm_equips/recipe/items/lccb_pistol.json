@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "alltheores:steel_ingot"
+    },
+    {
+      "item": "alltheores:aluminum_ingot"
+    }
+  ],
+  "result": {
+    "id": "pm_equips:lccb_pistol"
+  }
+}

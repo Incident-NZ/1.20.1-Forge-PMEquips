@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXY"
+  ],
+  "key": {
+    "X": {
+      "item": "alltheores:aluminum_ingot"
+    },
+    "Y": {
+      "item": "alltheores:lead_rod"
+    }
+  },
+  "result": {
+    "id": "pm_equips:asc2_south_weapon1"
+  }
+}

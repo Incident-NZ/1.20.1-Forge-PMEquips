@@ -1,46 +1,68 @@
 {
   "item.gun_semi": {
-    "subtitle": "Gun Semi",
-    "sounds": ["pm_equips:item/gun_semi"]
+    "subtitle": "subtitles.pm_equips.item.gun_semi",
+    "sounds": [
+      "pm_equips:item/gun_semi"
+    ]
   },
   "item.gun_auto": {
-    "subtitle": "Gun Auto",
-    "sounds": ["pm_equips:item/gun_auto"]
+    "subtitle": "subtitles.pm_equips.item.gun_auto",
+    "sounds": [
+      "pm_equips:item/gun_auto"
+    ]
   },
   "item.gun_roland_revolver": {
-    "subtitle": "Gun Roland Revolver",
-    "sounds": ["pm_equips:item/gun_roland_revolver"]
+    "subtitle": "subtitles.pm_equips.item.gun_roland_revolver",
+    "sounds": [
+      "pm_equips:item/gun_roland_revolver"
+    ]
   },
   "item.gun_roland_shotgun": {
-    "subtitle": "Gun Roland Shotgun",
-    "sounds": ["pm_equips:item/gun_roland_shotgun"]
-  },
-  "item.roland_mook_atk": {
-    "subtitle": "Roland Mook Attack",
-    "sounds": ["pm_equips:item/roland_mook_atk"]
+    "subtitle": "subtitles.pm_equips.item.gun_roland_shotgun",
+    "sounds": [
+      "pm_equips:item/gun_roland_shotgun"
+    ]
   },
   "item.roland_mook_charge": {
-    "subtitle": "Roland Mook Charge",
-    "sounds": ["pm_equips:item/roland_mook_charge"]
+    "subtitle": "subtitles.pm_equips.item.roland_mook_charge",
+    "sounds": [
+      "pm_equips:item/roland_mook_charge"
+    ]
+  },
+  "item.roland_mook_attack": {
+    "subtitle": "subtitles.pm_equips.item.roland_mook_attack",
+    "sounds": [
+      "pm_equips:item/roland_mook_atk"
+    ]
   },
   "item.ego_magic_bullet": {
-    "subtitle": "E.G.O Magic Bullet",
-    "sounds": ["pm_equips:item/ego_magic_bullet"]
+    "subtitle": "subtitles.pm_equips.item.ego_magic_bullet",
+    "sounds": [
+      "pm_equips:item/ego_magic_bullet"
+    ]
   },
   "item.ego_lament": {
-    "subtitle": "E.G.O Solemn Lament",
-    "sounds": ["pm_equips:item/ego_lament"]
+    "subtitle": "subtitles.pm_equips.item.ego_lament",
+    "sounds": [
+      "pm_equips:item/ego_lament"
+    ]
   },
   "item.ego_crimson_scar": {
-    "subtitle": "E.G.O Crimson Scar",
-    "sounds": ["pm_equips:item/ego_crimson_scar"]
+    "subtitle": "subtitles.pm_equips.item.ego_crimson_scar",
+    "sounds": [
+      "pm_equips:item/ego_crimson_scar"
+    ]
   },
   "item.ego_whitenight_atk_1": {
-    "subtitle": "E.G.O WhiteNight Attack 1",
-    "sounds": ["pm_equips:item/ego_whitenight_atk_1"]
+    "subtitle": "subtitles.pm_equips.item.ego_whitenight_atk_1",
+    "sounds": [
+      "pm_equips:item/ego_whitenight_atk_1"
+    ]
   },
   "item.ego_whitenight_atk_2": {
-    "subtitle": "E.G.O WhiteNight Attack 2",
-    "sounds": ["pm_equips:item/ego_whitenight_atk_2"]
+    "subtitle": "subtitles.pm_equips.item.ego_whitenight_atk_2",
+    "sounds": [
+      "pm_equips:item/ego_whitenight_atk_2"
+    ]
   }
 }

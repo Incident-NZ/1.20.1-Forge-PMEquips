@@ -1,18 +1,18 @@
 package net.pm_equips.events;
 
-import net.pm_equips.util.ItemStackData;
-
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.common.util.FakePlayer;
-import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.common.util.FakePlayer;
+import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.pm_equips.PMEquipsMain;
-import net.pm_equips.items.WingsRCorp4thRabbitWeapon2;
+import net.pm_equips.items.WingRCorp4thRabbitWeapon2;
+import net.pm_equips.util.ItemStackData;
 
-@net.neoforged.fml.common.EventBusSubscriber(
+@EventBusSubscriber(
         modid = PMEquipsMain.MOD_ID
 )
 public class CombatEvents {
@@ -24,7 +24,7 @@ public class CombatEvents {
             priority = EventPriority.LOWEST
     )
     public static void onLivingDamage(
-            LivingIncomingDamageEvent event)
+            LivingDamageEvent.Pre event)
     {
         if (!(event.getSource().getEntity()
                 instanceof Player player))
@@ -41,18 +41,20 @@ public class CombatEvents {
                 player.getMainHandItem();
 
         if (!(weapon.getItem()
-                instanceof WingsRCorp4thRabbitWeapon2))
+                instanceof WingRCorp4thRabbitWeapon2))
         {
             return;
         }
 
-        if (!WingsRCorp4thRabbitWeapon2
+        if (!WingRCorp4thRabbitWeapon2
                 .hasEnoughEnergy(weapon))
         {
             return;
         }
 
-        CompoundTag tag = ItemStackData.copy(weapon);
+        CompoundTag tag =
+                ItemStackData.copy(weapon);
+
         long currentTick =
                 player.level().getGameTime();
 
@@ -70,10 +72,10 @@ public class CombatEvents {
                 currentTick);
         ItemStackData.set(weapon, tag);
 
-        event.setAmount(
-                event.getAmount() * 2.0F);
+        event.setNewDamage(
+                event.getNewDamage() * 2.0F);
 
-        WingsRCorp4thRabbitWeapon2
+        WingRCorp4thRabbitWeapon2
                 .consumeEnergy(weapon);
     }
 }

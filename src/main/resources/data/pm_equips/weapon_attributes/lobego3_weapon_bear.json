@@ -1,0 +1,6 @@
+{
+  "parent": "bettercombat:fist",
+  "attributes": {
+    "two_handed": false
+  }
+}

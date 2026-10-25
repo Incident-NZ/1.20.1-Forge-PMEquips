@@ -1,0 +1,207 @@
+package net.pm_equips.items;
+
+import java.util.List;
+import java.util.function.Predicate;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.Stats;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.entity.projectile.ProjectileUtil;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.ProjectileWeaponItem;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
+import net.pm_equips.ItemInit;
+import net.pm_equips.SoundInit;
+
+public class LCCBPistol extends ProjectileWeaponItem {
+    private static final float DAMAGE = 3.0f;
+    private static final int COOLDOWN_TICKS = 30;
+    private static final double RANGE = 32.0;
+
+    public LCCBPistol(Properties properties) {
+        super(properties);
+    }
+
+    @Override
+    public Predicate<ItemStack> getAllSupportedProjectiles() {
+        return stack -> stack.getItem() == ItemInit.PISTOL_BULLET_AMMO.get();
+    }
+
+    @Override
+    public int getDefaultProjectileRange() {
+        return (int) RANGE;
+    }
+
+    @Override
+    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+        ItemStack gun = player.getItemInHand(hand);
+
+        // 弾薬チェック
+        if (!hasAmmo(player)) {
+            if (!level.isClientSide) {
+                player.displayClientMessage(Component.literal("弾薬切れ / No Ammo"), true);
+                level.playSound(null, player.blockPosition(), SoundEvents.DISPENSER_FAIL, SoundSource.PLAYERS, 1.0F, 1.0F);
+            }
+            return InteractionResultHolder.fail(gun);
+        }
+
+        // クライアント側は音だけ（実際の処理はサーバー）
+        if (level.isClientSide) {
+            level.playSound(player, player.blockPosition(), SoundInit.GUN_SEMI.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
+            return InteractionResultHolder.consume(gun);
+        }
+
+        // ===== サーバー側処理 =====
+        shootHitscan(level, player);
+        consumeAmmo(player);
+
+        gun.hurtAndBreak(1, player, (hand == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND));
+        player.awardStat(Stats.ITEM_USED.get(this));
+        player.getCooldowns().addCooldown(this, COOLDOWN_TICKS);
+
+        return InteractionResultHolder.consume(gun);
+    }
+
+    private void shootHitscan(Level level, Player player) {
+        Vec3 eyePos = player.getEyePosition();
+        Vec3 look = player.getLookAngle();
+        Vec3 endPos = eyePos.add(look.scale(RANGE));
+
+        // エンティティヒット判定
+        EntityHitResult entityHit = ProjectileUtil.getEntityHitResult(
+                level,
+                player,
+                eyePos,
+                endPos,
+                player.getBoundingBox().expandTowards(look.scale(RANGE)).inflate(1.0D),
+                e -> e != player && e instanceof LivingEntity && e.isAlive()
+        );
+
+        Vec3 hitPos;
+        if (entityHit != null) {
+            // エンティティに命中
+            hitPos = entityHit.getLocation();
+            if (entityHit.getEntity() instanceof LivingEntity target) {
+                target.hurt(level.damageSources().playerAttack(player), DAMAGE);
+                level.playSound(null, target.blockPosition(), SoundEvents.GENERIC_HURT, SoundSource.PLAYERS, 1.0F, 1.0F);
+            }
+        } else {
+            // ブロックヒット判定（ブロックに当たった場合の位置を取得）
+            HitResult blockHit = level.clip(new ClipContext(
+                    eyePos, endPos,
+                    ClipContext.Block.COLLIDER,
+                    ClipContext.Fluid.NONE,
+                    player
+            ));
+            hitPos = blockHit.getLocation();
+        }
+
+        // パーティクルの軌跡を描画
+        spawnBulletTrail((ServerLevel) level, eyePos, hitPos);
+        // 着弾パーティクル
+        spawnImpactParticles((ServerLevel) level, hitPos);
+    }
+
+    /** 弾の軌跡パーティクルを生成 */
+    private void spawnBulletTrail(ServerLevel level, Vec3 start, Vec3 end) {
+        Vec3 direction = end.subtract(start);
+        double distance = direction.length();
+        Vec3 step = direction.normalize().scale(0.4); // 0.4ブロックごとに1個
+
+        Vec3 current = start;
+        int count = (int) (distance / 0.4);
+
+        for (int i = 0; i < count; i++) {
+            current = current.add(step);
+
+            // 火花風のパーティクル
+            level.sendParticles(
+                    ParticleTypes.CRIT,
+                    current.x, current.y, current.z,
+                    1,          // 個数
+                    0.02, 0.02, 0.02, // 拡散
+                    0.0         // 速度
+            );
+
+            // 少し煙も混ぜる（任意）
+            if (i % 3 == 0) {
+                level.sendParticles(
+                        ParticleTypes.SMOKE,
+                        current.x, current.y, current.z,
+                        1,
+                        0.01, 0.01, 0.01,
+                        0.0
+                );
+            }
+        }
+    }
+
+    /** 着弾時のパーティクル */
+    private void spawnImpactParticles(ServerLevel level, Vec3 pos) {
+        level.sendParticles(
+                ParticleTypes.CRIT,
+                pos.x, pos.y, pos.z,
+                12,
+                0.25, 0.25, 0.25,
+                0.15
+        );
+        level.sendParticles(
+                ParticleTypes.SMOKE,
+                pos.x, pos.y, pos.z,
+                6,
+                0.2, 0.2, 0.2,
+                0.05
+        );
+    }
+
+    private boolean hasAmmo(Player player) {
+        return player.getInventory().contains(new ItemStack(ItemInit.PISTOL_BULLET_AMMO.get()));
+    }
+
+    private void consumeAmmo(Player player) {
+        if (!player.getAbilities().instabuild) {
+            player.getInventory().clearOrCountMatchingItems(
+                    stack -> stack.is(ItemInit.PISTOL_BULLET_AMMO.get()),
+                    1,
+                    player.inventoryMenu.getCraftSlots()
+            );
+        }
+    }
+
+    @Override
+    public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        target.hurt(attacker.level().damageSources().generic(), DAMAGE);
+        stack.hurtAndBreak(1, attacker, EquipmentSlot.MAINHAND);
+        return true;
+    }
+
+    @Override
+    public boolean isValidRepairItem(ItemStack stack, ItemStack repair) {
+        return repair.is(Items.IRON_INGOT);
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, TooltipContext level, List<Component> tooltip, TooltipFlag flag) {
+        tooltip.add(Component.literal("攻撃力3 | 並 | 近"));
+        super.appendHoverText(stack, level, tooltip, flag);
+    }
+    @Override
+    protected void shootProjectile(LivingEntity shooter, Projectile projectile, int index,
+                                   float velocity, float inaccuracy, float angle, LivingEntity target) {
+        projectile.shootFromRotation(shooter, shooter.getXRot(), shooter.getYRot(), angle, velocity, inaccuracy);
+    }
+}

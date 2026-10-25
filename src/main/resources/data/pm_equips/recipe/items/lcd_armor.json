@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CBC",
+    "CAC",
+    "CBC"
+  ],
+  "key": {
+    "A": {
+      "item": "alltheores:steel_ingot"
+    },
+    "B": {
+      "item": "alltheores:aluminum_ingot"
+    },
+    "C": {
+      "item": "alltheores:lead_ingot"
+    }
+  },
+  "result": {
+    "id": "pm_equips:lcd_armor"
+  }
+}

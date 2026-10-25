@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "item": "pm_equips:lobego5_weapon_mimicry"
+    }
+  },
+  "result": {
+    "id": "pm_equips:fixer_color_kali"
+  }
+}

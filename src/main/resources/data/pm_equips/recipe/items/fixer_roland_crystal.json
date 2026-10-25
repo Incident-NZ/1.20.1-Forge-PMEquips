@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AAB"
+  ],
+  "key": {
+    "A": {
+      "item": "alltheores:platinum_ingot"
+    },
+    "B": {
+      "item": "alltheores:steel_rod"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "pm_equips:fixer_color_roland_9"
+  }
+}

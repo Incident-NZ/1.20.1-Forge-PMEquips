@@ -1,28 +1,31 @@
 package net.pm_equips.client;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.neoforged.fml.common.Mod;
-import net.pm_equips.PMERegistryItem;
-import net.minecraft.world.item.Item;
-import net.neoforged.neoforge.client.event.RenderGuiEvent;
-import net.minecraft.resources.ResourceLocation;
-import net.pm_equips.PMEquipsMain;
+import java.util.List;
 import net.minecraft.client.Minecraft;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
-import net.neoforged.neoforge.client.event.ViewportEvent;
-import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
+import net.neoforged.neoforge.client.event.InputEvent;
+import net.neoforged.neoforge.client.event.RenderGuiEvent;
+import net.neoforged.neoforge.client.event.ViewportEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.registries.DeferredHolder;
-import net.pm_equips.PMERegistryKeyBind;
-import net.pm_equips.network.ModPackets;
+import net.pm_equips.ItemInit;
+import net.pm_equips.KeyBindInit;
+import net.pm_equips.PMEquipsMain;
+import net.pm_equips.items.WingRCorp4thRabbitWeapon1;
+import net.pm_equips.network.NetworkPacketInit;
+import net.pm_equips.network.RCorpRabbitRiflePacket;
 
-import java.util.List;
-
-@net.neoforged.fml.common.EventBusSubscriber(
+@EventBusSubscriber(
         modid = PMEquipsMain.MOD_ID,
-        bus = net.neoforged.fml.common.EventBusSubscriber.Bus.GAME,
+        bus = EventBusSubscriber.Bus.GAME,
         value = Dist.CLIENT)
 public class ClientForgeEvents {
 
@@ -32,24 +35,30 @@ public class ClientForgeEvents {
     private static final ResourceLocation SCOPE_OVERLAY =
             ResourceLocation.fromNamespaceAndPath(PMEquipsMain.MOD_ID, "textures/gui/gun_scope.png");
 
-    private static final List<DeferredHolder<Item, ? extends Item>> OVERLAY_ITEMS = List.of(
-            PMERegistryItem.W1_SODA,
-            PMERegistryItem.W2_SOLITUDE,
-            PMERegistryItem.W2_TODAY,
-            PMERegistryItem.W2_FOURTH_MATCH_FIRE,
-            PMERegistryItem.W2_BEAK,
-            PMERegistryItem.W3_LAETITIA,
-            PMERegistryItem.W3_HARMONY,
-            PMERegistryItem.W4_MAGIC_BULLET,
-            PMERegistryItem.W4_AROMA,
-            PMERegistryItem.W4_SOLEMN_LAMENT_R,
-            PMERegistryItem.W4_HORNET,
-            PMERegistryItem.W4_CRIMSON_SCAR_L,
-            PMERegistryItem.W5_PARADISE_LOST,
-            PMERegistryItem.W5_PINK,
-            PMERegistryItem.WEAPON_ROLAND_REVOLVER,
-            PMERegistryItem.WEAPON_ROLAND_SHOTGUN,
-            PMERegistryItem.RCORP_RABBIT_RIFLE
+    private static final List<DeferredHolder<Item, Item>> OVERLAY_ITEMS = List.of(
+            ItemInit.W1_SODA,
+            ItemInit.W2_SOLITUDE,
+            ItemInit.W2_TODAY,
+            ItemInit.W2_FOURTH_MATCH_FIRE,
+            ItemInit.W2_BEAK,
+            ItemInit.W3_LAETITIA,
+            ItemInit.W3_HARMONY,
+            ItemInit.W4_MAGIC_BULLET,
+            ItemInit.W4_AROMA,
+            ItemInit.W4_SOLEMN_LAMENT_R,
+            ItemInit.W4_HORNET,
+            ItemInit.W4_HORNET_ALTER,
+            ItemInit.W4_CRIMSON_SCAR_L,
+            ItemInit.W5_PARADISE_LOST,
+            ItemInit.W5_PINK,
+            ItemInit.WEAPON_ROLAND_REVOLVER,
+            ItemInit.WEAPON_ROLAND_SHOTGUN,
+            ItemInit.RCORP_RABBIT_RIFLE,
+            ItemInit.LCORP_PISTOL,
+            ItemInit.LAMENT_YISANG,
+            ItemInit.LCA_AUTO_RIFLE,
+            ItemInit.LCCB_PISTOL,
+            ItemInit.LCCB_SHOTGUN
     );
 
     @SubscribeEvent
@@ -61,7 +70,7 @@ public class ClientForgeEvents {
         ItemStack stack = player.getMainHandItem();
         if (stack.isEmpty()) return;
         if (!isScopeItem(stack.getItem())) return;
-        if (!net.pm_equips.client.ClientForgeEvents.isScopeActive) return;
+        if (!ClientForgeEvents.isScopeActive) return;
 
         RenderSystem.disableDepthTest();
         RenderSystem.depthMask(false);
@@ -89,7 +98,7 @@ public class ClientForgeEvents {
     }
 
     public static boolean isScopeItem(Item item) {
-        for (DeferredHolder<Item, ? extends Item> regObj : OVERLAY_ITEMS) {
+        for (DeferredHolder<Item, Item> regObj : OVERLAY_ITEMS) {
             if (regObj.get() == item) return true;
         }
         return false;
@@ -97,12 +106,16 @@ public class ClientForgeEvents {
 
     @SubscribeEvent
     public static void onClientTick(ClientTickEvent.Post event) {
-        isScopeActive = PMERegistryKeyBind.SCOPE_KEY.isDown();
-        if (PMERegistryKeyBind.RELOAD_KEY.consumeClick()) {
-            net.neoforged.neoforge.network.PacketDistributor.sendToServer(new ModPackets.ReloadPacket());
-        }
-        if (PMERegistryKeyBind.CORE_PAGE_ABILITY_KEY.consumeClick()) {
-            net.neoforged.neoforge.network.PacketDistributor.sendToServer(new ModPackets.CorePageActivatePacket());
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.player == null || mc.screen != null) { isScopeActive = false; return; }
+         {
+            isScopeActive = KeyBindInit.SCOPE_KEY.isDown();
+            if (KeyBindInit.RELOAD_KEY.consumeClick()) {
+                PacketDistributor.sendToServer(new NetworkPacketInit.ReloadPacket());
+            }
+            if (KeyBindInit.LEG_ARMOR_ABILITY_KEY.consumeClick()) {
+                PacketDistributor.sendToServer(new NetworkPacketInit.LegArmorAbilityActivatePacket());
+            }
         }
     }
 
@@ -117,6 +130,26 @@ public class ClientForgeEvents {
 
         if (ClientForgeEvents.isScopeItem(stack.getItem()) && isScopeActive) {
             event.setFOV(event.getFOV() * 0.5F);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onKeyInput(InputEvent.Key event) {
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.player == null || mc.screen != null) {
+            return;
+        }
+
+        if (KeyBindInit.WEAPON_ABILITY_KEY.consumeClick()) {
+            Player player = mc.player;
+            ItemStack main = player.getMainHandItem();
+            ItemStack off = player.getOffhandItem();
+
+            // ライフルを持っているときだけ送信（無駄パケット防止）
+            if (main.getItem() instanceof WingRCorp4thRabbitWeapon1
+                    || off.getItem() instanceof WingRCorp4thRabbitWeapon1) {
+                PacketDistributor.sendToServer(new RCorpRabbitRiflePacket());
+            }
         }
     }
 }

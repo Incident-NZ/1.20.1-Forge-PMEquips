@@ -3,8 +3,6 @@
   "minVersion": "0.8",
   "package": "net.pm_equips.mixin",
   "compatibilityLevel": "JAVA_21",
-  "refmap": "pm_equips.refmap.json",
-  "mixins": [],
   "client": [
     "HumanoidModelMixin"
   ],

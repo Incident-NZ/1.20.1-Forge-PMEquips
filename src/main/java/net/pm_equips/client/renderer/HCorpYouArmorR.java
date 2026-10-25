@@ -1,9 +1,9 @@
 package net.pm_equips.client.renderer;
 
 import net.pm_equips.client.models.HCorpYouArmorM;
-import net.pm_equips.items.WingsHCorpYouArmorTier1;
+import net.pm_equips.items.WingHCorpYouArmor;
 
-public class HCorpYouArmorR extends FullBodyArmorRenderer<WingsHCorpYouArmorTier1> {
+public class HCorpYouArmorR extends FullBodyArmorRenderer<WingHCorpYouArmor> {
     public HCorpYouArmorR() {
         super(new HCorpYouArmorM());
     }

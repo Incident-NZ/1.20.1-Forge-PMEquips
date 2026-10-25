@@ -1,0 +1,13 @@
+{
+  "id": "pm_equips:lobego1_weapon_wingbeat",
+  "result": {
+    "item": "pm_equips:lobego1_weapon_wingbeat",
+    "count": 1
+  },
+  "ingredients": [
+    {
+      "item": "pm_equips:item_lcorp_pebox",
+      "count": 10
+    }
+  ]
+}

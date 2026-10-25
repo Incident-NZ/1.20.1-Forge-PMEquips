@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XYX"
+  ],
+  "key": {
+    "X": {
+      "tag": "minecraft:swords"
+    },
+    "Y": {
+      "item": "pm_equips:item_kcorp_ampoule"
+    }
+  },
+  "result": {
+    "id": "pm_equips:wing_kcorp_w3"
+  }
+}

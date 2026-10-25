@@ -1,0 +1,32 @@
+{
+	"format_version": "1.9.0",
+	"parent": "item/handheld",
+	"textures": {
+		"layer0": "pm_equips:item/fixer_roland_wheels"
+	},
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [45, 90, 0],
+			"translation": [0, 11, 1.5],
+			"scale": [1.8, 1.8, 1.8]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [45, -90, 0],
+			"translation": [0, 11, 1.5],
+			"scale": [1.8, 1.8, 1.8]
+		},
+		"firstperson_righthand": {
+			"rotation": [45, 90, 0],
+			"translation": [0, 11, 1.5],
+			"scale": [1.8, 1.8, 1.8]
+		},
+		"firstperson_lefthand": {
+			"rotation": [45, -90, 0],
+			"translation": [0, 11, 1.5],
+			"scale": [1.8, 1.8, 1.8]
+		},
+		"ground": {
+			"translation": [0, 6, 0]
+		}
+	}
+}

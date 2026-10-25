@@ -11,62 +11,71 @@ import net.minecraft.world.entity.player.Player;
 public class SingularityEffects {
 
     public static class KCorpSingularityEffect extends MobEffect {
-        private static final ResourceLocation HEALTH_ID = id("kcorp_health");
-        private static final ResourceLocation ARMOR_ID = id("kcorp_armor");
+        private static final ResourceLocation HEALTH_UUID = ResourceLocation.fromNamespaceAndPath("pm_equips", "kcorpsingularityeffect_health_uuid");
+        private static final ResourceLocation ARMOR_UUID = ResourceLocation.fromNamespaceAndPath("pm_equips", "kcorpsingularityeffect_armor_uuid");
 
         public KCorpSingularityEffect() {
             super(MobEffectCategory.BENEFICIAL, 0x88CC88);
-            addAttributeModifier(Attributes.MAX_HEALTH, HEALTH_ID, 20.0D, AttributeModifier.Operation.ADD_VALUE);
-            addAttributeModifier(Attributes.ARMOR, ARMOR_ID, 10.0D, AttributeModifier.Operation.ADD_VALUE);
+            this.addAttributeModifier(Attributes.MAX_HEALTH, HEALTH_UUID, 20.0D, AttributeModifier.Operation.ADD_VALUE);
+            this.addAttributeModifier(Attributes.ARMOR, ARMOR_UUID, 10.0D, AttributeModifier.Operation.ADD_VALUE);
         }
 
         @Override
         public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
+            // every 60 ticks (3 seconds)
             return duration % 60 == 0;
         }
 
         @Override
         public boolean applyEffectTick(LivingEntity entity, int amplifier) {
-            if (entity.level().isClientSide) return false;
+            if (entity.level().isClientSide) return true;
+            // Heal 1 HP and restore hunger for players
             entity.heal(1.0F);
             if (entity instanceof Player player) {
-                player.getFoodData().eat(1, 0.0F);
+                try {
+                    player.getFoodData().eat(1, 0.0F);
+                } catch (Exception ignored) {
+                }
             }
+
             return true;
         }
     }
 
     public static class RCorpSingularityEffect extends MobEffect {
-        private static final ResourceLocation MOVE_ID = id("rcorp_movement");
-        private static final ResourceLocation ATTACK_ID = id("rcorp_attack");
+        private static final ResourceLocation MOVE_UUID = ResourceLocation.fromNamespaceAndPath("pm_equips", "rcorpsingularityeffect_move_uuid");
+        private static final ResourceLocation ATTACK_UUID = ResourceLocation.fromNamespaceAndPath("pm_equips", "rcorpsingularityeffect_attack_uuid");
 
         public RCorpSingularityEffect() {
             super(MobEffectCategory.BENEFICIAL, 0x8899FF);
-            addAttributeModifier(Attributes.MOVEMENT_SPEED, MOVE_ID, 0.50D, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
-            addAttributeModifier(Attributes.ATTACK_DAMAGE, ATTACK_ID, 1.0D, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+            // movement speed +50%
+            this.addAttributeModifier(Attributes.MOVEMENT_SPEED, MOVE_UUID, 0.50D, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+            // attack damage x2 => MULTIPLY_TOTAL with 1.0 (adds +100%)
+            this.addAttributeModifier(Attributes.ATTACK_DAMAGE, ATTACK_UUID, 1.0D, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
         }
     }
 
     public static class WCorpSingularityEffect extends MobEffect {
+
         public WCorpSingularityEffect() {
             super(MobEffectCategory.BENEFICIAL, 0xFFDD88);
         }
 
         @Override
         public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
+            // every 200 ticks (10 seconds)
             return duration % 200 == 0;
         }
 
         @Override
         public boolean applyEffectTick(LivingEntity entity, int amplifier) {
-            if (entity.level().isClientSide) return false;
+            if (entity.level().isClientSide) return true;
             var tag = entity.getPersistentData();
-            tag.putInt("wcorp_evade_charges", tag.getInt("wcorp_evade_charges") + 5);
+            int charges = tag.getInt("wcorp_evade_charges");
+            charges += 5;
+            tag.putInt("wcorp_evade_charges", charges);
+
             return true;
         }
-    }
-
-    private static ResourceLocation id(String path) {
-        return ResourceLocation.fromNamespaceAndPath("pm_equips", path);
     }
 }

@@ -1,16 +1,18 @@
 package net.pm_equips.effects;
 
 import net.minecraft.world.entity.LivingEntity;
-import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.tick.EntityTickEvent;
 
-@net.neoforged.fml.common.EventBusSubscriber(modid = "pm_equips", bus = net.neoforged.fml.common.EventBusSubscriber.Bus.GAME)
+@EventBusSubscriber(modid = "pm_equips", bus = EventBusSubscriber.Bus.GAME)
 public class BlueScarEffectHandler {
 
     @SubscribeEvent
-    public static void onEntityTick(PlayerTickEvent.Post event) {
-        LivingEntity entity = event.getEntity();
-        if (entity.level().isClientSide) return;
+    public static void onEntityTick(EntityTickEvent.Post event) {
+
+
+        if (!(event.getEntity() instanceof LivingEntity entity) || entity.level().isClientSide) return;
 
         var tag = entity.getPersistentData();
         int ticks = tag.getInt("blue_scar_dot_ticks");

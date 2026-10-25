@@ -1,8 +1,5 @@
 package net.pm_equips.entity;
 
-import net.pm_equips.PMERegistryEntity;
-import net.pm_equips.PMERegistryItem;
-import net.pm_equips.config.CommonConfig;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -11,6 +8,9 @@ import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
+import net.pm_equips.EntityInit;
+import net.pm_equips.ItemInit;
+import net.pm_equips.config.CommonConfig;
 
 public class EGOStarP extends ThrowableItemProjectile {
     private static final float BASE_DAMAGE = 12.0f;
@@ -20,12 +20,12 @@ public class EGOStarP extends ThrowableItemProjectile {
     }
 
     public EGOStarP(Level level, LivingEntity thrower) {
-        super(PMERegistryEntity.W5_SOUND_OF_A_STAR_PROJECTILE.get(), thrower, level);
+        super(EntityInit.W5_SOUND_OF_A_STAR_PROJECTILE.get(), thrower, level);
     }
 
     @Override
     protected Item getDefaultItem() {
-        return PMERegistryItem.W5_SOUND_OF_A_STAR.get();
+        return ItemInit.W5_SOUND_OF_A_STAR.get();
     }
 
     @Override

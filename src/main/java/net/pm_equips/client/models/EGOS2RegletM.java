@@ -1,22 +1,22 @@
 package net.pm_equips.client.models;
 
-import net.pm_equips.items.LCorpEGOL2Reglet;
 import net.minecraft.resources.ResourceLocation;
+import net.pm_equips.items.LobEGOSuit2Reglet;
 import software.bernie.geckolib.model.GeoModel;
 
-public class EGOS2RegletM extends GeoModel<LCorpEGOL2Reglet> {
+public class EGOS2RegletM extends GeoModel<LobEGOSuit2Reglet> {
     @Override
-    public ResourceLocation getModelResource(LCorpEGOL2Reglet animatable) {
+    public ResourceLocation getModelResource(LobEGOSuit2Reglet animatable) {
         return ResourceLocation.fromNamespaceAndPath("pm_equips", "geo/ego_armor_type1.geo.json");
     }
 
     @Override
-    public ResourceLocation getTextureResource(LCorpEGOL2Reglet animatable) {
+    public ResourceLocation getTextureResource(LobEGOSuit2Reglet animatable) {
         return ResourceLocation.fromNamespaceAndPath("pm_equips", "textures/armor/ego_s2_reglet.png");
     }
 
     @Override
-    public ResourceLocation getAnimationResource(LCorpEGOL2Reglet animatable) {
-        return ResourceLocation.fromNamespaceAndPath("pm_equips", "animations/ego_armor.animation.json");
+    public ResourceLocation getAnimationResource(LobEGOSuit2Reglet animatable) {
+        return ResourceLocation.fromNamespaceAndPath("pm_equips", "animations/armor.animation.json");
     }
 }

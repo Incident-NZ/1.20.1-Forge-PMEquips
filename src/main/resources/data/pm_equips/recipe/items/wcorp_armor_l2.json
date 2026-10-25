@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABE",
+    "CD "
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:golden_helmet"
+    },
+    "B": {
+      "item": "minecraft:golden_chestplate"
+    },
+    "C": {
+      "item": "minecraft:golden_leggings"
+    },
+    "D": {
+      "item": "minecraft:golden_boots"
+    },
+    "E": {
+      "item": "pm_equips:item_wcorp_battery"
+    }
+  },
+  "result": {
+    "id": "pm_equips:wing_wcorp_armor_l2"
+  }
+}

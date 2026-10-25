@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CBC",
+    "AAA",
+    "AAA"
+  ],
+  "key": {
+    "A": {
+      "item": "alltheores:steel_ingot"
+    },
+    "B": {
+      "item": "minecraft:redstone"
+    },
+    "C": {
+      "item": "alltheores:lead_ingot"
+    }
+  },
+  "result": {
+    "id": "pm_equips:lccb_armor"
+  }
+}

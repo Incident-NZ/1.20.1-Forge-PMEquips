@@ -1,0 +1,6 @@
+{
+  "parent": "bettercombat:staff",
+  "attributes": {
+    "two_handed": false
+  }
+}

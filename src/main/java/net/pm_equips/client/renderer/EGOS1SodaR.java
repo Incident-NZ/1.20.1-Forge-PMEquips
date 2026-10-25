@@ -2,10 +2,10 @@ package net.pm_equips.client.renderer;
 
 import net.minecraft.world.entity.EquipmentSlot;
 import net.pm_equips.client.models.EGOS1SodaM;
-import net.pm_equips.items.LCorpEGOL1Soda;
+import net.pm_equips.items.LobEGOSuit1Soda;
 import software.bernie.geckolib.renderer.GeoArmorRenderer;
 
-public class EGOS1SodaR extends GeoArmorRenderer<LCorpEGOL1Soda> {
+public class EGOS1SodaR extends GeoArmorRenderer<LobEGOSuit1Soda> {
     public EGOS1SodaR() {
         super(new EGOS1SodaM());
     }

@@ -1,18 +1,18 @@
 package net.pm_equips.events;
 
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
 import net.pm_equips.PMEquipsMain;
 
-import java.util.Map;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-
-@net.neoforged.fml.common.EventBusSubscriber(modid = PMEquipsMain.MOD_ID, bus = net.neoforged.fml.common.EventBusSubscriber.Bus.GAME)
+@EventBusSubscriber(modid = PMEquipsMain.MOD_ID, bus = EventBusSubscriber.Bus.GAME)
 public class RolandMookDropHandler {
     private static final Map<UUID, Boolean> EXTRA_DROP_ENTITIES = new ConcurrentHashMap<>();
 
