@@ -34,5 +34,6 @@ public class PMFixersTabs {
             ItemInit.ASC2_WEST_ARMOR_S3.get(),
             ItemInit.ASC2_WEST_ARMOR_S2.get(),
             ItemInit.ASC2_WEST_ARMOR_S1.get(),
+            ItemInit.FINGER2_WEAPON_SP_CADUCEUS.get(),
     };
 }

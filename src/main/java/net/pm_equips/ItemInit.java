@@ -51,6 +51,10 @@ public class ItemInit {
             () -> new ItemAmmoLogicHG(new Item.Properties().stacksTo(64)));
     public static final DeferredHolder<Item, Item> P_BULLET_LASG = ITEMS.register("ammo_logic_sg",
             () -> new ItemAmmoLogicSG(new Item.Properties().stacksTo(64)));
+    public static final DeferredHolder<Item, Item> AMMO_THUMBS_IF = ITEMS.register("ammo_thumbs_if", ItemAmmoThumbsIF::new);
+    public static final DeferredHolder<Item, Item> AMMO_THUMBS_FR = ITEMS.register("ammo_thumbs_fr", ItemAmmoThumbsFR::new);
+    public static final DeferredHolder<Item, Item> AMMO_THUMBS_AP = ITEMS.register("ammo_thumbs_ap", ItemAmmoThumbsAP::new);
+    public static final DeferredHolder<Item, Item> AMMO_THUMBS_KB = ITEMS.register("ammo_thumbs_kb", ItemAmmoThumbsKB::new);
 
     //L社EGO武器
     public static final DeferredHolder<Item, Item> W5_TWILIGHT = ITEMS.register("lobego5_weapon_twilight", LobEGOWeapon5Twilight::new);
@@ -464,6 +468,20 @@ public class ItemInit {
             () -> new WingHCorpYouArmor(ArmorEquips.HCORP_YOU_ARMOR_L5, ArmorItem.Type.LEGGINGS,
                     new Item.Properties().stacksTo(1)));
 
+    //五本指装備
+    public static final DeferredHolder<Item, Item> FINGER1_WEAPON1 = ITEMS.register("finger1_weapon1", Finger1Weapon1::new);
+    public static final DeferredHolder<Item, Item> FINGER1_WEAPON2 = ITEMS.register("finger1_weapon2", Finger1Weapon2::new);
+    public static final DeferredHolder<Item, Item> FINGER1_ARMOR1 = ITEMS.register("finger1_armor1", Finger1Armor1::new);
+    public static final DeferredHolder<Item, Item> FINGER1_ARMOR2 = ITEMS.register("finger1_armor2", Finger1Armor2::new);
+    public static final DeferredHolder<Item, Item> FINGER1_ARMOR3 = ITEMS.register("finger1_armor3", Finger1Armor3::new);
+    public static final DeferredHolder<Item, Item> FINGER2_WEAPON1 = ITEMS.register("finger2_weapon1", Finger2Weapon1::new);
+    public static final DeferredHolder<Item, Item> FINGER2_WEAPON2 = ITEMS.register("finger2_weapon2", Finger2Weapon2::new);
+    public static final DeferredHolder<Item, Item> FINGER2_WEAPON3 = ITEMS.register("finger2_weapon3", Finger2Weapon3::new);
+    public static final DeferredHolder<Item, Item> FINGER2_WEAPON_SP_CADUCEUS = ITEMS.register("finger2_weapon_sp_caduceus", Finger2WeaponSP::new);
+    public static final DeferredHolder<Item, Item> FINGER2_ARMOR1 = ITEMS.register("finger2_armor1", Finger2Armor1::new);
+    public static final DeferredHolder<Item, Item> FINGER2_ARMOR2 = ITEMS.register("finger2_armor2", Finger2Armor2::new);
+    public static final DeferredHolder<Item, Item> FINGER2_ARMOR3 = ITEMS.register("finger2_armor3", Finger2Armor3::new);
+
     //リンバス社装備
     public static final DeferredHolder<Item, Item> LCA_AUTO_RIFLE = ITEMS.register("lca_auto_rifle",
                 () -> new LCAAutoRifle(new Item.Properties().durability(4000)));
@@ -497,4 +515,5 @@ public class ItemInit {
 
     //頭装備
     public static final DeferredHolder<Item, Item> HEAD_CLAW = ITEMS.register("head_claw", HeadCCorpGauntlet::new);
+    public static final DeferredHolder<Item, Item> HEAD_ARBITER_ARMOR = ITEMS.register("head_arbiter_armor", HeadArbiterArmor::new);
 }

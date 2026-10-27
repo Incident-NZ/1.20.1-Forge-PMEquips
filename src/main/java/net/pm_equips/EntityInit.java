@@ -11,6 +11,11 @@ public class EntityInit {
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES =
             DeferredRegister.create(Registries.ENTITY_TYPE, PMEquipsMain.MOD_ID);
 
+    public static final DeferredHolder<EntityType<?>, EntityType<PArbiterPillar>> P_ARBITER_PILLAR =
+            ENTITY_TYPES.register("p_arbiter_pillar", () -> EntityType.Builder.<PArbiterPillar>of(PArbiterPillar::new, MobCategory.MISC)
+                    .sized(0.625F, 0.625F).clientTrackingRange(10).updateInterval(1)
+                    .build("pm_equips:p_arbiter_pillar"));
+
     public static final DeferredHolder<EntityType<?>, EntityType<MobNPC1>> MOB_NPC_1 =
             ENTITY_TYPES.register("mob_npc_1", () -> EntityType.Builder.of(MobNPC1::new, MobCategory.CREATURE)
                     .sized(0.6F, 1.8F).eyeHeight(1.62F).clientTrackingRange(10).updateInterval(3)

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "pm_equips:item/ammo_thumb_ice"
+  }
+}

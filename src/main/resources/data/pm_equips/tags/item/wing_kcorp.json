@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "pm_equips:wing_kcorp_w1",
+    "pm_equips:wing_kcorp_w2",
+    "pm_equips:wing_kcorp_w3",
+    "pm_equips:wing_kcorp_armor_l1",
+    "pm_equips:wing_kcorp_armor_l2",
+    "pm_equips:wing_kcorp_armor_l3",
+    "pm_equips:wing_kcorp_armor_l4",
+    "pm_equips:wing_kcorp_armor_l5"
+  ]
+}

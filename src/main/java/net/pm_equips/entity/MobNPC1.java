@@ -49,6 +49,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.MaceItem;
 import net.minecraft.world.item.ProjectileWeaponItem;
+import net.pm_equips.items.Finger2Weapon1;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.TridentItem;
 import net.minecraft.world.level.Level;
@@ -63,7 +64,7 @@ public class MobNPC1 extends TamableAnimal implements RangedAttackMob {
     public static final int CHILDHOOD_TICKS = 7 * 24000;
     public static final int MAX_LEVEL = 100;
     public static final int MAX_RANK = 5;
-    public static final double MOVEMENT_SPEED = 0.6;
+    public static final double MOVEMENT_SPEED = 0.4;
     public static final int FOLLOW = 0, WAIT = 1, FREE = 2;
     private static final EntityDataAccessor<Integer> NPC_LEVEL = SynchedEntityData.defineId(MobNPC1.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> ORDER = SynchedEntityData.defineId(MobNPC1.class, EntityDataSerializers.INT);
@@ -218,7 +219,8 @@ public class MobNPC1 extends TamableAnimal implements RangedAttackMob {
             ItemStack weapon = getItemInHand(hand);
             if (hit && !level().isClientSide && !weapon.isEmpty()) {
                 weapon.getItem().hurtEnemy(weapon, living, this);
-                if (weapon.isDamageableItem()) weapon.hurtAndBreak(1, this, getSlotForHand(hand));
+                if (weapon.isDamageableItem() && (!(weapon.getItem() instanceof Finger2Weapon1)
+                        || Finger2Weapon1.drawn(weapon))) weapon.hurtAndBreak(1, this, getSlotForHand(hand));
             }
             swing(hand);
             return hit;

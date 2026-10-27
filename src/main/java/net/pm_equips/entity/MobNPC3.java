@@ -83,6 +83,7 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.pm_equips.EntityInit;
 import net.pm_equips.PMEquipsMain;
+import net.pm_equips.util.FingerEquipment;
 import net.pm_equips.config.CommonConfig;
 import net.pm_equips.items.LobEGOWeapon4Aroma;
 import net.pm_equips.items.LobEGOWeapon4Heaven;
@@ -274,7 +275,8 @@ public final class MobNPC3 {
         MobNPC1 npc = sourceNPC(event.getSource());
         if (npc == null) return;
         if (!canFight(npc, event.getEntity())) { event.setCanceled(true); return; }
-        if (event.getSource().getDirectEntity() != npc) event.setAmount(event.getAmount() + npc.getNPCLevel() - 1);
+        if (event.getSource().getDirectEntity() != npc && !FingerEquipment.isPiercingDamage(event.getSource()))
+            event.setAmount(event.getAmount() + npc.getNPCLevel() - 1);
     }
     @SubscribeEvent public static void onDeath(LivingDeathEvent event) {
         if (event.getEntity() instanceof Player || event.getEntity() instanceof MobNPC1) return;
@@ -308,7 +310,7 @@ public final class MobNPC3 {
         user.setXRot((float)(-Math.asin(delta.y) * 180 / Math.PI));
         user.yHeadRot = user.getYRot(); user.yBodyRot = user.getYRot();
         user.getAbilities().instabuild = false;
-        Item ammoItem = weapon.getItem() instanceof ProjectileWeaponItem ranged
+        Item ammoItem = FingerEquipment.isThumbRifle(weapon) ? FingerEquipment.ammoItem(FingerEquipment.ammoMode(weapon)) : weapon.getItem() instanceof ProjectileWeaponItem ranged
                 ? AMMO.computeIfAbsent(weapon.getItem(), item -> BuiltInRegistries.ITEM.stream()
                         .filter(candidate -> ranged.getAllSupportedProjectiles(weapon).test(new ItemStack(candidate))).findFirst().orElse(Items.ARROW)) : Items.ARROW;
         ItemStack ammo = new ItemStack(ammoItem, Math.min(64, ammoItem.getDefaultMaxStackSize()));

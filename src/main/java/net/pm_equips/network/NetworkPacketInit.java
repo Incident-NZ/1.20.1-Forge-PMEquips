@@ -18,7 +18,12 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import net.pm_equips.MobEffectInit;
 import net.pm_equips.PMEquipsMain;
+import net.pm_equips.client.ArbiterArmorClient;
+import net.pm_equips.client.ClientForgeEvents;
+import net.pm_equips.util.FingerEquipment;
+import net.minecraft.world.phys.Vec3;
 import net.pm_equips.items.LobEGOWeapon4Aroma;
+import net.pm_equips.items.Finger2WeaponSP;
 import net.pm_equips.items.WingKCorpAgentArmor;
 import net.pm_equips.items.WingKCorpOfficerArmor;
 import net.pm_equips.items.WingRCorp4thRabbitArmor;
@@ -33,6 +38,13 @@ public final class NetworkPacketInit {
     @SubscribeEvent
     public static void register(RegisterPayloadHandlersEvent event) {
         PayloadRegistrar registrar = event.registrar("1");
+        registrar.playToClient(FingerShotTrail.TYPE, FingerShotTrail.STREAM_CODEC,
+                (packet, context) -> ClientForgeEvents.spawnThumbTrail(packet.start(), packet.end(), packet.mask()));
+        registrar.playToServer(CaduceusMissPacket.TYPE, CaduceusMissPacket.STREAM_CODEC,
+                (packet, context) -> Finger2WeaponSP.resetCombo(context.player()));
+        registrar.playToServer(ArbiterArmorPacket.TYPE, ArbiterArmorPacket.STREAM_CODEC, ArbiterArmorPacket::handle);
+        registrar.playToClient(ArbiterArmorPacket.FairyTrail.TYPE, ArbiterArmorPacket.FairyTrail.STREAM_CODEC,
+                (packet, context) -> ArbiterArmorClient.spawnTrail(packet.start(), packet.end()));
         registrar.playToServer(ReloadPacket.TYPE, ReloadPacket.STREAM_CODEC, ReloadPacket::handle);
         registrar.playToServer(LegArmorAbilityActivatePacket.TYPE, LegArmorAbilityActivatePacket.STREAM_CODEC,
                 LegArmorAbilityActivatePacket::handle);
@@ -48,6 +60,23 @@ public final class NetworkPacketInit {
 
     private static ResourceLocation id(String path) {
         return ResourceLocation.fromNamespaceAndPath(PMEquipsMain.MOD_ID, path);
+    }
+
+    public record FingerShotTrail(Vec3 start, Vec3 end, int mask) implements CustomPacketPayload {
+        public static final Type<FingerShotTrail> TYPE = new Type<>(id("thumb_shot_trail"));
+        public static final StreamCodec<RegistryFriendlyByteBuf, FingerShotTrail> STREAM_CODEC = StreamCodec.of((buffer, packet) -> {
+            buffer.writeDouble(packet.start.x); buffer.writeDouble(packet.start.y); buffer.writeDouble(packet.start.z);
+            buffer.writeDouble(packet.end.x); buffer.writeDouble(packet.end.y); buffer.writeDouble(packet.end.z); buffer.writeByte(packet.mask);
+        }, buffer -> new FingerShotTrail(new Vec3(buffer.readDouble(), buffer.readDouble(), buffer.readDouble()),
+                new Vec3(buffer.readDouble(), buffer.readDouble(), buffer.readDouble()), buffer.readUnsignedByte()));
+        @Override public Type<FingerShotTrail> type() { return TYPE; }
+    }
+
+    /** A client miss can only clear a combo; hits and effect levels are decided on the server. */
+    public record CaduceusMissPacket() implements CustomPacketPayload {
+        public static final Type<CaduceusMissPacket> TYPE = new Type<>(id("caduceus_miss"));
+        public static final StreamCodec<RegistryFriendlyByteBuf, CaduceusMissPacket> STREAM_CODEC = StreamCodec.unit(new CaduceusMissPacket());
+        @Override public Type<CaduceusMissPacket> type() { return TYPE; }
     }
 
     public record ReloadPacket() implements CustomPacketPayload {
@@ -74,6 +103,8 @@ public final class NetworkPacketInit {
 
         private static void handle(LegArmorAbilityActivatePacket packet, IPayloadContext context) {
             if (!(context.player() instanceof ServerPlayer player)) return;
+            if (FingerEquipment.cycleAmmo(player)) return;
+            if (FingerEquipment.distributeBuff(player)) return;
             ItemStack stack = player.getItemBySlot(EquipmentSlot.LEGS);
             if (stack.getItem() instanceof WingWCorpArmor) activateEffect(player, stack, 1000, MobEffectInit.WCORP_SIN);
             else if (stack.getItem() instanceof WingRCorp4thRabbitArmor) activateEffect(player, stack, 2000, MobEffectInit.RCORP_SIN);

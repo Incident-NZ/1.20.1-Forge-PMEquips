@@ -9,6 +9,7 @@ import net.pm_equips.effects.SingularityEffects;
 
 public class MobEffectInit {
     public static final DeferredRegister<MobEffect> MOB_EFFECTS = DeferredRegister.create(Registries.MOB_EFFECT, PMEquipsMain.MOD_ID);
+    public static final DeferredHolder<MobEffect, MobEffect> FREEZE = MOB_EFFECTS.register("effect_freeze", CustomMobEffects.FreezeEffect::new);
 
     public static final DeferredHolder<MobEffect, MobEffect> QUICK = MOB_EFFECTS.register("effect_quick", CustomMobEffects.QuickEffect::new);
     public static final DeferredHolder<MobEffect, MobEffect> BIND = MOB_EFFECTS.register("effect_bind", CustomMobEffects.BindEffect::new);
@@ -20,6 +21,7 @@ public class MobEffectInit {
     public static final DeferredHolder<MobEffect, MobEffect> PARALYSIS = MOB_EFFECTS.register("effect_paralysis", CustomMobEffects.ParalysisEffect::new);
     public static final DeferredHolder<MobEffect, MobEffect> FAIRY = MOB_EFFECTS.register("effect_fairy", CustomMobEffects.FairyEffect::new);
     public static final DeferredHolder<MobEffect, MobEffect> BARRIER = MOB_EFFECTS.register("effect_barrier", CustomMobEffects.BarrierEffect::new);
+    public static final DeferredHolder<MobEffect, MobEffect> UNLOCKED = MOB_EFFECTS.register("effect_unlocked", CustomMobEffects.UnlockedEffect::new);
 
     public static final DeferredHolder<MobEffect, MobEffect> KCORP_SIN = MOB_EFFECTS.register("effect_sin_kcorp", SingularityEffects.KCorpSingularityEffect::new);
     public static final DeferredHolder<MobEffect, MobEffect> RCORP_SIN = MOB_EFFECTS.register("effect_sin_rcorp", SingularityEffects.RCorpSingularityEffect::new);

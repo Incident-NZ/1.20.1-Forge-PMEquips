@@ -15,6 +15,10 @@ public class TagInit {
         public static final TagKey<Item> EGO_T4_WAW = createTag("ego_t4_waw");
         public static final TagKey<Item> EGO_T5_ALEPH = createTag("ego_t5_aleph");
         public static final TagKey<Item> WINGS_MATERIAL = createTag("wings_material");
+        public static final TagKey<Item> WINGS_WCORP = createTag("wings_wcorp");
+        public static final TagKey<Item> WINGS_RCORP = createTag("wings_rcorp");
+        public static final TagKey<Item> WINGS_KCORP = createTag("wings_kcorp");
+        public static final TagKey<Item> WINGS_HCORP = createTag("wings_hcorp");
 
         private static TagKey<Item> createTag(String name) {
             return ItemTags.create(ResourceLocation.fromNamespaceAndPath(PMEquipsMain.MOD_ID, name));

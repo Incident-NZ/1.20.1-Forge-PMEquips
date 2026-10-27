@@ -1,4 +1,20 @@
 {
+  "item.arbiter_fairy": {
+    "subtitle": "subtitles.pm_equips.item.arbiter_fairy",
+    "sounds": ["pm_equips:item/arbiter_fairy"]
+  },
+  "item.arbiter_pillar_start": {
+    "subtitle": "subtitles.pm_equips.item.arbiter_pillar_start",
+    "sounds": ["pm_equips:item/arbiter_pillar_start"]
+  },
+  "item.arbiter_pillar_shot": {
+    "subtitle": "subtitles.pm_equips.item.arbiter_pillar_shot",
+    "sounds": ["pm_equips:item/arbiter_pillar_shot"]
+  },
+  "item.arbiter_pillar_end": {
+    "subtitle": "subtitles.pm_equips.item.arbiter_pillar_end",
+    "sounds": ["pm_equips:item/arbiter_pillar_end"]
+  },
   "item.gun_semi": {
     "subtitle": "subtitles.pm_equips.item.gun_semi",
     "sounds": [

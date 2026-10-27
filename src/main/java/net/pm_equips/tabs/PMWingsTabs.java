@@ -50,5 +50,6 @@ public class PMWingsTabs {
             ItemInit.HCORP_YOU_ARMOR_L4.get(),
             ItemInit.HCORP_YOU_ARMOR_L5.get(),
             ItemInit.HEAD_CLAW.get(),
+            ItemInit.HEAD_ARBITER_ARMOR.get(),
     };
 }

@@ -9,6 +9,7 @@ import net.pm_equips.config.CommonConfig;
 import net.pm_equips.energy.WeaponEnergyProvider;
 import net.pm_equips.entity.MobNPC3;
 import net.pm_equips.items.materials.ArmorEquips;
+import net.pm_equips.items.HeadArbiterArmor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -26,8 +27,10 @@ public class PMEquipsMain {
         ItemInit.ITEMS.register(modEventBus);
         TabInit.CREATIVE_TABS.register(modEventBus);
         EntityInit.ENTITY_TYPES.register(modEventBus);
+        ParticleInit.PARTICLE_TYPES.register(modEventBus);
         MobEffectInit.MOB_EFFECTS.register(modEventBus);
         SoundInit.SOUNDS.register(modEventBus);
+        modEventBus.addListener(HeadArbiterArmor::setup);
         modEventBus.addListener(WeaponEnergyProvider::register);
         modEventBus.addListener(MobNPC3::createAttributes);
         modEventBus.addListener(MobNPC3::registerPayloads);

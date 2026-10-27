@@ -16,7 +16,7 @@ public final class ItemStackEnergyStorage implements IEnergyStorage {
     @Override
     public int receiveEnergy(int maxReceive, boolean simulate) {
         int stored = getEnergyStored();
-        int accepted = Math.min(capacity - stored, Math.max(0, maxReceive));
+        int accepted = Math.clamp(maxReceive, 0, capacity - stored);
         if (!simulate && accepted > 0) ItemStackData.putInt(stack, "Energy", stored + accepted);
         return accepted;
     }
@@ -24,7 +24,7 @@ public final class ItemStackEnergyStorage implements IEnergyStorage {
     @Override
     public int extractEnergy(int maxExtract, boolean simulate) {
         int stored = getEnergyStored();
-        int extracted = Math.min(stored, Math.max(0, maxExtract));
+        int extracted = Math.clamp(maxExtract, 0, stored);
         if (!simulate && extracted > 0) ItemStackData.putInt(stack, "Energy", stored - extracted);
         return extracted;
     }

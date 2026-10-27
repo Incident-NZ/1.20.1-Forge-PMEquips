@@ -9,6 +9,7 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.pm_equips.PMEquipsMain;
 import net.pm_equips.items.WingRCorp4thRabbitWeapon1;
+import net.pm_equips.util.FingerEquipment;
 
 public record RCorpRabbitRiflePacket() implements CustomPacketPayload {
     public static final Type<RCorpRabbitRiflePacket> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(PMEquipsMain.MOD_ID, "rcorp_rifle_special"));
@@ -17,6 +18,9 @@ public record RCorpRabbitRiflePacket() implements CustomPacketPayload {
 
     public static void handle(RCorpRabbitRiflePacket packet, IPayloadContext context) {
         if (!(context.player() instanceof ServerPlayer player)) return;
+        if (FingerEquipment.isThumbRifle(player.getMainHandItem()) || FingerEquipment.isThumbRifle(player.getOffhandItem())) {
+            FingerEquipment.specialShot(player); return;
+        }
         ItemStack stack = player.getMainHandItem();
         if (!(stack.getItem() instanceof WingRCorp4thRabbitWeapon1)) stack = player.getOffhandItem();
         if (stack.getItem() instanceof WingRCorp4thRabbitWeapon1 rifle) rifle.tryActivateSpecial(stack, player);

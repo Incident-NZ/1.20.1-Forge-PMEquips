@@ -1,0 +1,38 @@
+{
+	"format_version": "1.9.0",
+	"parent": "minecraft:item/handheld",
+	"textures": {
+		"layer0": "pm_equips:item/finger2_weapon_sp"
+	},
+	"overrides": [
+		{"predicate": {"custom_model_data": 1}, "model": "pm_equips:item/finger2_weapon_sp_caduceus_1"},
+		{"predicate": {"custom_model_data": 2}, "model": "pm_equips:item/finger2_weapon_sp_caduceus_2"},
+		{"predicate": {"custom_model_data": 3}, "model": "pm_equips:item/finger2_weapon_sp_caduceus_3"},
+		{"predicate": {"custom_model_data": 4}, "model": "pm_equips:item/finger2_weapon_sp_caduceus_4"},
+		{"predicate": {"custom_model_data": 5}, "model": "pm_equips:item/finger2_weapon_sp_caduceus_5"},
+		{"predicate": {"custom_model_data": 6}, "model": "pm_equips:item/finger2_weapon_sp_caduceus_6"},
+		{"predicate": {"custom_model_data": 7}, "model": "pm_equips:item/finger2_weapon_sp_caduceus_7"},
+		{"predicate": {"custom_model_data": 8}, "model": "pm_equips:item/finger2_weapon_sp_caduceus_8"},
+		{"predicate": {"custom_model_data": 9}, "model": "pm_equips:item/finger2_weapon_sp_caduceus_9"}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [0, -90, 45],
+			"translation": [0, -2, 1],
+			"scale": [0.5, 0.5, 1]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [0, 90, -45],
+			"translation": [0, -2, 1],
+			"scale": [0.5, 0.5, 1]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, -90, 45],
+			"translation": [0, 0, 1]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 90, -45],
+			"translation": [0, 0, 1]
+		}
+	}
+}

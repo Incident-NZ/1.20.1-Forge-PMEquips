@@ -1,0 +1,29 @@
+{
+	"format_version": "1.9.0",
+	"parent": "minecraft:item/handheld",
+	"textures": {
+		"layer0": "pm_equips:item/finger2_weapon_sp_7"
+	},
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [0, -90, 45],
+			"translation": [0, 5.5, 1],
+			"scale": [1.2, 1.2, 1.2]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [0, -90, -45],
+			"translation": [0, 5.5, 1],
+			"scale": [1.2, 1.2, 1.2]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, -90, 45],
+			"translation": [0, 5.5, 1],
+			"scale": [1.2, 1.2, 1.2]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, -90, -45],
+			"translation": [0, 5.5, 1],
+			"scale": [1.2, 1.2, 1.2]
+		}
+	}
+}

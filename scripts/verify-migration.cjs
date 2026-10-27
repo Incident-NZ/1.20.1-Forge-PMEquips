@@ -7,8 +7,10 @@ const errors=[],warnings=[];
 const items=new Set(),blocks=new Set(),entities=new Set();
 for(const file of java){
  const s=fs.readFileSync(file,'utf8').replace(/^\uFEFF/,''),rel=path.relative(root,file).replaceAll('\\','/');
- const ids=[...s.matchAll(/\b(?:ITEMS|BLOCKS|BLOCK_ITEMS|ENTITY_TYPES|MOB_EFFECTS|SOUNDS|MENUS|BLOCK_ENTITIES)\.register\(\s*"([^"]+)"/g)].map(m=>m[1]);
- const featureIDs=new Set(['mob_npc_1','mob_npc_1_spawn_egg']);
+ const ids=[...s.matchAll(/\b(?:ITEMS|BLOCKS|BLOCK_ITEMS|ENTITY_TYPES|PARTICLE_TYPES|MOB_EFFECTS|SOUNDS|MENUS|BLOCK_ENTITIES)\.register\(\s*"([^"]+)"/g)].map(m=>m[1]);
+ const featureIDs=new Set(['mob_npc_1','mob_npc_1_spawn_egg','p_arbiter_pillar','head_arbiter_armor','finger2_weapon_sp_caduceus','effect_unlocked','effect_freeze',
+  'ammo_thumbs_if','ammo_thumbs_fr','ammo_thumbs_ap','ammo_thumbs_kb','finger1_weapon1','finger1_weapon2','finger2_weapon1','finger2_weapon2','finger2_weapon3',
+  'finger1_armor1','finger1_armor2','finger1_armor3','finger2_armor1','finger2_armor2','finger2_armor3']);
  if(baseline.registrations[rel]&&JSON.stringify(ids.filter(id=>!featureIDs.has(id)))!==JSON.stringify(baseline.registrations[rel]))errors.push('Changed registration IDs: '+rel);
  for(const id of ids)if(!/^[a-z0-9/._-]+$/.test(id))errors.push('Invalid registry ID: '+id);
  if(file.endsWith('ItemInit.java'))for(const id of ids)items.add(id);
@@ -22,7 +24,14 @@ for(const file of java){
  if(/net\.minecraftforge|ForgeCapabilities|Bus\.FORGE|NetworkHooks|RegistryObject|\.getOrCreateTag\(/.test(code))errors.push('Legacy API: '+rel);
  for(const m of s.matchAll(/\bclass\s+(\w+)(?:<[^\n{]+>)?\s+extends\s+([\w.]+)/g)){
   const previous=baseline.inheritance[m[1]],parent=m[2].split('.').at(-1);
-  const featureParents={MobNPC1:'TamableAnimal',MobNPC2:'HumanoidMobRenderer',NPCActivityGoal:'Goal'};
+  const featureParents={MobNPC1:'TamableAnimal',MobNPC2:'HumanoidMobRenderer',NPCActivityGoal:'Goal',
+   PArbiterPillar:'Projectile',PArbiterPillarM:'GeoModel',PArbiterPillarR:'GeoEntityRenderer',ArbiterParticle:'TextureSheetParticle',
+   HeadArbiterArmor:'ArmorItem',HeadArbiterArmorM:'GeoModel',HeadArbiterArmorR:'GeoArmorRenderer',Finger2WeaponSP:'Item',UnlockedEffect:'MobEffect',FreezeEffect:'MobEffect',
+   ItemAmmoThumbsIF:'Item',ItemAmmoThumbsFR:'Item',ItemAmmoThumbsAP:'Item',ItemAmmoThumbsKB:'Item',Finger1Weapon1:'ProjectileWeaponItem',Finger1Weapon2:'ProjectileWeaponItem',
+   Finger2Weapon1:'SwordItem',Finger2Weapon2:'SwordItem',Finger2Weapon3:'SwordItem',
+   Finger1Armor1M:'GeoModel',Finger1Armor2M:'GeoModel',Finger1Armor3M:'GeoModel',Finger2Armor1M:'GeoModel',Finger2Armor2M:'GeoModel',Finger2Armor3M:'GeoModel',
+   Finger1Armor1R:'GeoArmorRenderer',Finger1Armor2R:'GeoArmorRenderer',Finger1Armor3R:'GeoArmorRenderer',Finger2Armor1R:'GeoArmorRenderer',Finger2Armor2R:'GeoArmorRenderer',Finger2Armor3R:'GeoArmorRenderer',
+   Finger1Armor1:'ArmorItem',Finger1Armor2:'ArmorItem',Finger1Armor3:'ArmorItem',Finger2Armor1:'ArmorItem',Finger2Armor2:'ArmorItem',Finger2Armor3:'ArmorItem'};
   if(!previous&&featureParents[m[1]]!==parent)errors.push('New inherited class: '+m[1]+' extends '+parent);
   else if(previous&&previous.split('.').at(-1)!==parent)errors.push('Changed superclass: '+m[1]+' '+previous+' -> '+parent);
  }
@@ -55,6 +64,10 @@ for(const [file,json] of parsed){
  if(rel.includes('/assets/')&&rel.includes('/models/')){
   if(typeof json.parent==='string'&&json.parent.startsWith('pm_equips:')&&!resourceExists('pm_equips','models/'+json.parent.slice(10)+'.json'))errors.push('Unknown model parent '+json.parent+' in '+rel);
   for(const texture of Object.values(json.textures||{}))if(typeof texture==='string'&&texture.startsWith('pm_equips:')&&!resourceExists('pm_equips','textures/'+texture.slice(10)+'.png'))errors.push('Unknown model texture '+texture+' in '+rel);
+ }
+ if(rel.includes('/assets/')&&rel.includes('/particles/'))for(const texture of json.textures||[]){
+  const [namespace,id]=texture.split(':');
+  if(namespace==='pm_equips'&&!resourceExists(namespace,'textures/particle/'+id+'.png'))errors.push('Missing particle texture '+texture+' in '+rel);
  }
 }
 for(const id of items)if(!resourceExists('pm_equips','models/item/'+id+'.json'))errors.push('Missing item model: '+id);

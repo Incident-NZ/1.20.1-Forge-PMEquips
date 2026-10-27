@@ -77,7 +77,7 @@ public class MobNPC1Tests {
     public static void levelCapAndFixedSpeedSurviveOldSaves(GameTestHelper h) {
         MobNPC1 npc = npc(h);
         Player player = h.makeMockPlayer(GameType.SURVIVAL);
-        h.assertTrue(npc.getAttributeValue(Attributes.MOVEMENT_SPEED) == .6, "Fixed movement speed is 0.6");
+        h.assertTrue(npc.getAttributeValue(Attributes.MOVEMENT_SPEED) == MobNPC1.MOVEMENT_SPEED, "Fixed movement speed matches the configured base");
         npc.gainLevels(98);
         h.assertTrue(npc.getNPCLevel() == 99 && npc.getAttributeValue(Attributes.MOVEMENT_SPEED) == MobNPC1.MOVEMENT_SPEED, "Leveling does not increase speed");
         ItemStack book = new ItemStack(Items.ENCHANTED_BOOK); give(npc, player, book);
@@ -111,7 +111,7 @@ public class MobNPC1Tests {
             h.assertTrue(npc.getRankDisplay().equals(level >= 76 ? "EX" : Integer.toString(numbered)), "Rank display has no six or seven");
             double range = 15 + Math.min(5, (level - 1) / 15) * 5;
             h.assertTrue(npc.getAttributeValue(Attributes.FOLLOW_RANGE) == range, "EX range stays at forty");
-            h.assertTrue(npc.getAttributeValue(Attributes.MOVEMENT_SPEED) == .6, "Every level keeps speed 0.6");
+            h.assertTrue(npc.getAttributeValue(Attributes.MOVEMENT_SPEED) == MobNPC1.MOVEMENT_SPEED, "Every level keeps the fixed base speed");
         }
         h.succeed();
     }

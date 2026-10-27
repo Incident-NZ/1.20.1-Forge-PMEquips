@@ -10,6 +10,36 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 
 public class CustomMobEffects {
 
+    public static class FreezeEffect extends MobEffect {
+        public FreezeEffect() {
+            super(MobEffectCategory.HARMFUL, 0x80D8F0);
+            addAttributeModifier(Attributes.MOVEMENT_SPEED, ResourceLocation.fromNamespaceAndPath("pm_equips", "freeze_speed"), -.1,
+                    AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+            addAttributeModifier(Attributes.ARMOR, ResourceLocation.fromNamespaceAndPath("pm_equips", "freeze_armor"), -1,
+                    AttributeModifier.Operation.ADD_VALUE);
+            addAttributeModifier(Attributes.ATTACK_DAMAGE, ResourceLocation.fromNamespaceAndPath("pm_equips", "freeze_damage"), -3,
+                    AttributeModifier.Operation.ADD_VALUE);
+        }
+    }
+
+    public static class UnlockedEffect extends MobEffect {
+        public UnlockedEffect() {
+            super(MobEffectCategory.BENEFICIAL, 0xD8B971);
+            addAttributeModifier(Attributes.ATTACK_DAMAGE, ResourceLocation.fromNamespaceAndPath("pm_equips", "unlocked_damage"), 2,
+                    AttributeModifier.Operation.ADD_VALUE);
+            addAttributeModifier(Attributes.ARMOR, ResourceLocation.fromNamespaceAndPath("pm_equips", "unlocked_armor"), 2,
+                    AttributeModifier.Operation.ADD_VALUE);
+        }
+
+        @Override public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) { return true; }
+
+        @Override public boolean applyEffectTick(LivingEntity entity, int amplifier) {
+            // A refreshed held-item buff must not reset or accelerate its healing interval.
+            if (!entity.level().isClientSide && entity.tickCount % 60 == 0) entity.heal(amplifier + 1);
+            return true;
+        }
+    }
+
     public static class QuickEffect extends MobEffect {
         private static final ResourceLocation MOD_UUID = ResourceLocation.fromNamespaceAndPath("pm_equips", "quickeffect_mod_uuid");
         public QuickEffect() {
