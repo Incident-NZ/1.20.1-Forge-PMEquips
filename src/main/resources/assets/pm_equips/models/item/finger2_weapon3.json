@@ -1,0 +1,29 @@
+{
+	"format_version": "26.3",
+	"parent": "minecraft:item/handheld",
+	"textures": {
+		"layer0": "pm_equips:item/finger2_weapon3"
+	},
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [0, 90, 45],
+			"translation": [0, 10, 1.5],
+			"scale": [1.5, 1.5, 1.2]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [0, 90, -45],
+			"translation": [0, 10, 1.5],
+			"scale": [1.5, 1.5, 1.2]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 90, 45],
+			"translation": [0, 4, 1.5],
+			"scale": [1.5, 1.5, 1.2]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 90, -45],
+			"translation": [0, 4, 1.5],
+			"scale": [1.5, 1.5, 1.2]
+		}
+	}
+}
