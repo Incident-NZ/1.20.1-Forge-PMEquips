@@ -8,9 +8,29 @@ import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import net.minecraftforge.common.ForgeSpawnEggItem;
 
 public class ItemInit {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, PMEquipsMain.MOD_ID);
+
+    public static final RegistryObject<Item> AMMO_THUMBS_IF = ITEMS.register("ammo_thumbs_if", ItemAmmoThumbsIF::new);
+    public static final RegistryObject<Item> AMMO_THUMBS_FR = ITEMS.register("ammo_thumbs_fr", ItemAmmoThumbsFR::new);
+    public static final RegistryObject<Item> AMMO_THUMBS_AP = ITEMS.register("ammo_thumbs_ap", ItemAmmoThumbsAP::new);
+    public static final RegistryObject<Item> AMMO_THUMBS_KB = ITEMS.register("ammo_thumbs_kb", ItemAmmoThumbsKB::new);
+    public static final RegistryObject<Item> FINGER1_WEAPON1 = ITEMS.register("finger1_weapon1", Finger1Weapon1::new);
+    public static final RegistryObject<Item> FINGER1_WEAPON2 = ITEMS.register("finger1_weapon2", Finger1Weapon2::new);
+    public static final RegistryObject<Item> FINGER1_ARMOR1 = ITEMS.register("finger1_armor1", Finger1Armor1::new);
+    public static final RegistryObject<Item> FINGER1_ARMOR2 = ITEMS.register("finger1_armor2", Finger1Armor2::new);
+    public static final RegistryObject<Item> FINGER1_ARMOR3 = ITEMS.register("finger1_armor3", Finger1Armor3::new);
+    public static final RegistryObject<Item> FINGER2_WEAPON1 = ITEMS.register("finger2_weapon1", Finger2Weapon1::new);
+    public static final RegistryObject<Item> FINGER2_WEAPON2 = ITEMS.register("finger2_weapon2", Finger2Weapon2::new);
+    public static final RegistryObject<Item> FINGER2_WEAPON3 = ITEMS.register("finger2_weapon3", Finger2Weapon3::new);
+    public static final RegistryObject<Item> FINGER2_WEAPON_SP_CADUCEUS = ITEMS.register("finger2_weapon_sp_caduceus", Finger2WeaponSP::new);
+    public static final RegistryObject<Item> FINGER2_ARMOR1 = ITEMS.register("finger2_armor1", Finger2Armor1::new);
+    public static final RegistryObject<Item> FINGER2_ARMOR2 = ITEMS.register("finger2_armor2", Finger2Armor2::new);
+    public static final RegistryObject<Item> FINGER2_ARMOR3 = ITEMS.register("finger2_armor3", Finger2Armor3::new);
+    public static final RegistryObject<Item> HEAD_ARBITER_ARMOR = ITEMS.register("head_arbiter_armor", HeadArbiterArmor::new);
+    public static final RegistryObject<Item> MOB_NPC_1_SPAWN_EGG = ITEMS.register("mob_npc_1_spawn_egg", () -> new ForgeSpawnEggItem(EntityInit.MOB_NPC_1, 0x232831, 0x679eba, new Item.Properties()));
 
     //アイテム
     public static final RegistryObject<Item> ITEM_ENKEPHALIN = ITEMS.register("item_enkephalin",

@@ -11,6 +11,27 @@ import java.util.UUID;
 
 public class CustomMobEffects {
 
+    public static class FreezeEffect extends MobEffect {
+        public FreezeEffect() {
+            super(MobEffectCategory.HARMFUL,0x80D8F0);
+            addAttributeModifier(Attributes.MOVEMENT_SPEED,"28a424a0-940f-43cb-a0f4-36ad386fe101",-.1,AttributeModifier.Operation.MULTIPLY_TOTAL);
+            addAttributeModifier(Attributes.ARMOR,"28a424a0-940f-43cb-a0f4-36ad386fe102",-1,AttributeModifier.Operation.ADDITION);
+            addAttributeModifier(Attributes.ATTACK_DAMAGE,"28a424a0-940f-43cb-a0f4-36ad386fe103",-3,AttributeModifier.Operation.ADDITION);
+        }
+    }
+    public static class UnlockedEffect extends MobEffect {
+        public UnlockedEffect() {
+            super(MobEffectCategory.BENEFICIAL,0xD8B971);
+            addAttributeModifier(Attributes.ATTACK_DAMAGE,"28a424a0-940f-43cb-a0f4-36ad386fe104",2,AttributeModifier.Operation.ADDITION);
+            addAttributeModifier(Attributes.ARMOR,"28a424a0-940f-43cb-a0f4-36ad386fe105",2,AttributeModifier.Operation.ADDITION);
+        }
+        @Override public boolean isDurationEffectTick(int duration,int amplifier) {return true;}
+        @Override public void applyEffectTick(LivingEntity entity,int amplifier) {
+            if(!entity.level().isClientSide && entity.tickCount%60==0)entity.heal(amplifier+1);
+        }
+    }
+
+
     public static class QuickEffect extends MobEffect {
         private static final UUID MOD_UUID = UUID.randomUUID();
         public QuickEffect() {

@@ -1,4 +1,5 @@
 package net.pm_equips.client;
+import net.pm_equips.util.FingerEquipment;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraftforge.client.event.InputEvent;
@@ -145,7 +146,8 @@ public class ClientForgeEvents {
 
             // ライフルを持っているときだけ送信（無駄パケット防止）
             if (main.getItem() instanceof WingRCorp4thRabbitWeapon1
-                    || off.getItem() instanceof WingRCorp4thRabbitWeapon1) {
+                    || off.getItem() instanceof WingRCorp4thRabbitWeapon1
+                    || FingerEquipment.isThumbRifle(main) || FingerEquipment.isThumbRifle(off)) {
                 NetworkPacketInit.INSTANCE.sendToServer(new RCorpRabbitRiflePacket());
             }
         }

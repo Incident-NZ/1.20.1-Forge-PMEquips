@@ -69,8 +69,8 @@ public class LobotomyEGORecipe {
             }
         }
         // オフハンドも見る場合
-        if (inv.offhand.getFirst().is(item)) {
-            total += inv.offhand.getFirst().getCount();
+        if (inv.offhand.get(0).is(item)) {
+            total += inv.offhand.get(0).getCount();
         }
         return total;
     }

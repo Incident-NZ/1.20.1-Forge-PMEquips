@@ -5,6 +5,10 @@
     "pm_equips:ammo_explosion",
     "pm_equips:ammo_magic",
     "pm_equips:ammo_logic_hg",
-    "pm_equips:ammo_logic_sg"
+    "pm_equips:ammo_logic_sg",
+    "pm_equips:ammo_thumbs_if",
+    "pm_equips:ammo_thumbs_fr",
+    "pm_equips:ammo_thumbs_ap",
+    "pm_equips:ammo_thumbs_kb"
   ]
 }

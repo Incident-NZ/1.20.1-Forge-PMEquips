@@ -10,6 +10,10 @@ public class SoundInit {
     public static final DeferredRegister<SoundEvent> SOUNDS =
             DeferredRegister.create(Registries.SOUND_EVENT, PMEquipsMain.MOD_ID);
 
+    public static final RegistryObject<SoundEvent> ARBITER_FAIRY = register("item.arbiter_fairy");
+    public static final RegistryObject<SoundEvent> ARBITER_PILLAR_START = register("item.arbiter_pillar_start");
+    public static final RegistryObject<SoundEvent> ARBITER_PILLAR_SHOT = register("item.arbiter_pillar_shot");
+    public static final RegistryObject<SoundEvent> ARBITER_PILLAR_END = register("item.arbiter_pillar_end");
     public static final RegistryObject<SoundEvent> EGO_LAMENT =
             register("item.ego_lament");
     public static final RegistryObject<SoundEvent> EGO_MAGIC_BULLET =

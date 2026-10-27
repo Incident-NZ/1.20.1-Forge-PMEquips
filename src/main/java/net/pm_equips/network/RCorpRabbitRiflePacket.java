@@ -1,4 +1,5 @@
 package net.pm_equips.network;
+import net.pm_equips.util.FingerEquipment;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
@@ -34,6 +35,9 @@ public class RCorpRabbitRiflePacket {
             }
 
             // メインハンド優先、なければオフハンド
+            if (FingerEquipment.isThumbRifle(player.getMainHandItem()) || FingerEquipment.isThumbRifle(player.getOffhandItem())) {
+                FingerEquipment.specialShot(player); return;
+            }
             ItemStack stack = player.getMainHandItem();
             InteractionHand hand = InteractionHand.MAIN_HAND;
 

@@ -5,15 +5,15 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "pm_equips.refmap.json",
   "mixins": [
-    "PMEquipsMixin"
+    "FeatureArmorAttributeMixin",
+    "FeatureArmorExplosionMixin",
+    "FeatureRestraintMixin"
   ],
   "client": [
     "HumanoidModelMixin",
     "PMEquipsClientMixin"
   ],
-  "server": [
-    "PMEquipsServerMixin"
-  ],
+  "server": [],
   "injectors": {
     "defaultRequire": 1
   }

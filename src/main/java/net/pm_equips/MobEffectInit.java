@@ -10,6 +10,8 @@ import net.pm_equips.effects.SingularityEffects;
 public class MobEffectInit {
     public static final DeferredRegister<MobEffect> MOB_EFFECTS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, PMEquipsMain.MOD_ID);
 
+    public static final RegistryObject<MobEffect> FREEZE = MOB_EFFECTS.register("effect_freeze", CustomMobEffects.FreezeEffect::new);
+    public static final RegistryObject<MobEffect> UNLOCKED = MOB_EFFECTS.register("effect_unlocked", CustomMobEffects.UnlockedEffect::new);
     public static final RegistryObject<MobEffect> QUICK = MOB_EFFECTS.register("effect_quick", CustomMobEffects.QuickEffect::new);
     public static final RegistryObject<MobEffect> BIND = MOB_EFFECTS.register("effect_bind", CustomMobEffects.BindEffect::new);
     public static final RegistryObject<MobEffect> POWER = MOB_EFFECTS.register("effect_power", CustomMobEffects.PowerEffect::new);

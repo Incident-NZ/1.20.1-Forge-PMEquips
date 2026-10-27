@@ -55,7 +55,7 @@ public class LobEGOWeapon5Twilight extends SwordItem {
 
             for (LivingEntity entity : entities) {
                 Vec3 toTarget = entity.position().add(0, 1.0, 0).subtract(origin).normalize();
-                double angle = Math.acos(Math.clamp(look.dot(toTarget), -1.0, 1.0));
+                double angle = Math.acos(Math.max(-1.0, Math.min(1.0, look.dot(toTarget))));
                 if (angle < Math.toRadians(60)) {
                     entity.hurt(entity.damageSources().magic(), 18.0f);
                     entity.hurt(entity.damageSources().playerAttack(player), 18.0f);

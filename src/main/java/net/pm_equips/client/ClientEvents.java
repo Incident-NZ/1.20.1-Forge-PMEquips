@@ -3,6 +3,10 @@ package net.pm_equips.client;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.pm_equips.BlockEntityInit;
 import net.pm_equips.EntityInit;
+import net.pm_equips.ParticleInit;
+import net.pm_equips.entity.MobNPC2;
+import net.pm_equips.client.particle.ArbiterParticle;
+import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.pm_equips.KeyBindInit;
 import net.pm_equips.MenuInit;
 import net.pm_equips.client.renderer.*;
@@ -38,6 +42,8 @@ public class ClientEvents {
     //EntityRenderer
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerEntityRenderer(EntityInit.MOB_NPC_1.get(), MobNPC2::new);
+        event.registerEntityRenderer(EntityInit.P_ARBITER_PILLAR.get(), PArbiterPillarR::new);
         event.registerEntityRenderer(EntityInit.W5_SOUND_OF_A_STAR_PROJECTILE.get(),
                 ctx -> new ThrownItemRenderer<>(ctx, 1.0f, true));
         event.registerEntityRenderer(EntityInit.HEAVEN_PROJECTILE.get(),
@@ -45,6 +51,13 @@ public class ClientEvents {
         event.registerEntityRenderer(EntityInit.WHITENIGHT_PROJECTILE.get(),
                 PWhiteNightR::new);
         event.registerBlockEntityRenderer(BlockEntityInit.EBOX_GEN.get(), EBoxGenR::new);
+    }
+
+    //KeyBind
+    @SubscribeEvent
+    public static void registerParticles(RegisterParticleProvidersEvent event) {
+        event.registerSpriteSet(ParticleInit.ARBITER_TRAIL.get(), sprites ->
+                (options, level, x, y, z, dx, dy, dz) -> new ArbiterParticle(level, x, y, z, sprites));
     }
 
     //KeyBind

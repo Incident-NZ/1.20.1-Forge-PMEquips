@@ -12,6 +12,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.pm_equips.network.NetworkPacketInit;
+import net.pm_equips.entity.MobNPC3;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import software.bernie.geckolib.GeckoLib;
@@ -36,6 +37,10 @@ public class PMEquipsMain {
         EntityInit.ENTITY_TYPES.register(modEventBus);
         MobEffectInit.MOB_EFFECTS.register(modEventBus);
         SoundInit.SOUNDS.register(modEventBus);
+        ParticleInit.PARTICLE_TYPES.register(modEventBus);
+        modEventBus.addListener(MobNPC3::createAttributes);
+        MinecraftForge.EVENT_BUS.register(MobNPC3.class);
+        MobNPC3.prepareSkinDirectory();
 
         modEventBus.addListener(this::setup);
         modEventBus.addListener(this::registerCurioSlot);

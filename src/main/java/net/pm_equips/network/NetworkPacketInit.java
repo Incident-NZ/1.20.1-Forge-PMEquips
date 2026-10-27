@@ -13,12 +13,13 @@ import net.minecraftforge.network.simple.SimpleChannel;
 import net.pm_equips.PMEquipsMain;
 import net.pm_equips.items.*;
 import net.pm_equips.menu.LobotomyEGOExtractionMenu;
+import net.pm_equips.util.FingerEquipment;
 
 import java.util.UUID;
 import java.util.function.Supplier;
 
 public class NetworkPacketInit {
-    private static final String PROTOCOL_VERSION = "1";
+    private static final String PROTOCOL_VERSION = "2";
     public static final SimpleChannel INSTANCE = NetworkRegistry.ChannelBuilder
             .named(new ResourceLocation(PMEquipsMain.MOD_ID, "main"))
             .networkProtocolVersion(() -> PROTOCOL_VERSION)
@@ -27,8 +28,12 @@ public class NetworkPacketInit {
             .simpleChannel();
 
     private static int id = 0;
+    private static boolean registered;
 
     public static void register() {
+        if (registered) return;
+        registered = true;
+        ForgeFeaturePackets.register();
         INSTANCE.messageBuilder(ActivateAbilityPacket.class, id++, NetworkDirection.PLAY_TO_SERVER)
                 .decoder(ActivateAbilityPacket::decode)
                 .encoder(ActivateAbilityPacket::encode)
@@ -149,6 +154,8 @@ public class NetworkPacketInit {
                 if (player == null) {
                     return;
                 }
+                if (FingerEquipment.cycleAmmo(player)) return;
+                if (FingerEquipment.distributeBuff(player)) return;
 
                 ItemStack stack = player.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.LEGS);
                 if (!(stack.getItem() instanceof WingWCorpArmor

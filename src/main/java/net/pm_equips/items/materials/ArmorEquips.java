@@ -12,6 +12,15 @@ import net.minecraft.world.item.crafting.Ingredient;
 import java.util.function.Supplier;
 
 public enum ArmorEquips implements ArmorMaterial {
+    FINGER1_ARMOR1("finger1_armor1", 1000, new int[]{0, 0, 12, 0}, 0, SoundEvents.ARMOR_EQUIP_GENERIC, 12, 0, () -> Ingredient.of(Items.IRON_INGOT)),
+    FINGER1_ARMOR2("finger1_armor2", 2000, new int[]{0, 0, 15, 0}, 0, SoundEvents.ARMOR_EQUIP_GENERIC, 15, 0, () -> Ingredient.of(Items.IRON_INGOT)),
+    FINGER1_ARMOR3("finger1_armor3", 3000, new int[]{0, 0, 20, 0}, 0, SoundEvents.ARMOR_EQUIP_GENERIC, 20, 0, () -> Ingredient.of(Items.IRON_INGOT)),
+    FINGER2_ARMOR1("finger2_armor1", 1000, new int[]{0, 0, 15, 0}, 0, SoundEvents.ARMOR_EQUIP_GENERIC, 15, 0, () -> Ingredient.of(Items.IRON_INGOT)),
+    FINGER2_ARMOR2("finger2_armor2", 2000, new int[]{0, 0, 18, 0}, 0, SoundEvents.ARMOR_EQUIP_GENERIC, 18, 0, () -> Ingredient.of(Items.IRON_INGOT)),
+    FINGER2_ARMOR3("finger2_armor3", 3000, new int[]{0, 0, 20, 0}, 0, SoundEvents.ARMOR_EQUIP_GENERIC, 20, 0, () -> Ingredient.of(Items.IRON_INGOT)),
+    HEAD_ARBITER("head_arbiter", 0, new int[]{0, 0, 50, 0}, 0,
+            SoundEvents.ARMOR_EQUIP_GENERIC, 50.0f, 1.0f, () -> Ingredient.EMPTY),
+
     A5_TWILIGHT("s5_twilight", 4000, new int[]{0, 0, 40, 0}, 0,
             SoundEvents.ARMOR_EQUIP_GENERIC, 40.0f, 0.9f, () -> Ingredient.of(ItemInit.LCORP_EBOX.get())),
 
