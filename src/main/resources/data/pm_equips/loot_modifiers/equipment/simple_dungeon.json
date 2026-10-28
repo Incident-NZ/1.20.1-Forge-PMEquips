@@ -1,0 +1,10 @@
+{
+  "type": "pm_equips:equipment_additions",
+  "table": "pm_equips:chests/underground_dungeon",
+  "conditions": [
+    {
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "minecraft:chests/simple_dungeon"
+    }
+  ]
+}

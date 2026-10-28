@@ -33,6 +33,7 @@ public class ItemInit {
     public static final RegistryObject<Item> MOB_NPC_1_SPAWN_EGG = ITEMS.register("mob_npc_1_spawn_egg", () -> new ForgeSpawnEggItem(EntityInit.MOB_NPC_1, 0x232831, 0x679eba, new Item.Properties()));
 
     //アイテム
+    public static final RegistryObject<Item> FINGER2_CLOTH = ITEMS.register("item_finger2_cloth", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> ITEM_ENKEPHALIN = ITEMS.register("item_enkephalin",
             () -> new ItemEnkephalin(new Item.Properties().stacksTo(64)));
     public static final RegistryObject<Item> BLADE_GEAR = ITEMS.register("item_blade_gear",
@@ -512,5 +513,5 @@ public class ItemInit {
             () -> new LimbusEGOYisangLament(new Item.Properties().durability(2000)));
 
     //頭装備
-    public static final RegistryObject<Item> HEAD_CLAW = ITEMS.register("head_claw", HeadCCorpGauntlet::new);
+    public static final RegistryObject<Item> HEAD_CLAW = ITEMS.register("head_claw", HeadClawGauntlet::new);
 }

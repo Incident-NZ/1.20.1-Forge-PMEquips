@@ -154,7 +154,8 @@ public class NetworkPacketInit {
                 if (player == null) {
                     return;
                 }
-                if (FingerEquipment.cycleAmmo(player)) return;
+                if (HeadClawGauntlet.cycleSerum(player)) return;
+            if (FingerEquipment.cycleAmmo(player)) return;
                 if (FingerEquipment.distributeBuff(player)) return;
 
                 ItemStack stack = player.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.LEGS);

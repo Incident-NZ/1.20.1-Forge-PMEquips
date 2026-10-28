@@ -1,0 +1,249 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "name": "pm_equips_equipment",
+      "rolls": {
+        "type": "minecraft:uniform",
+        "min": 1,
+        "max": 3
+      },
+      "bonus_rolls": 0,
+      "entries": [
+        {
+          "type": "minecraft:tag",
+          "name": "pm_equips:ego_t3_he",
+          "expand": true,
+          "weight": 1
+        },
+        {
+          "type": "minecraft:tag",
+          "name": "pm_equips:ego_t4_waw",
+          "expand": true,
+          "weight": 1
+        },
+        {
+          "type": "minecraft:tag",
+          "name": "pm_equips:ego_t5_aleph",
+          "expand": true,
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:finger1_weapon1",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:finger1_weapon2",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:finger1_armor1",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:finger1_armor2",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:finger1_armor3",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:lca_auto_rifle",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:lca_khopesh",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:lca_udjat_armor",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:lcd_weapon_mook",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:lcd_armor",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:ammo_thumbs_if",
+          "weight": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 4,
+                "max": 16
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:ammo_thumbs_fr",
+          "weight": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 4,
+                "max": 16
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:ammo_thumbs_ap",
+          "weight": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 4,
+                "max": 16
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:ammo_thumbs_kb",
+          "weight": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 4,
+                "max": 16
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:ammo_magic",
+          "weight": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 4,
+                "max": 16
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:ammo_large",
+          "weight": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 4,
+                "max": 16
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:ammo_small",
+          "weight": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 4,
+                "max": 16
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:ammo_shell",
+          "weight": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 4,
+                "max": 16
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:ammo_explosion",
+          "weight": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 4,
+                "max": 16
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:ammo_logic_hg",
+          "weight": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 4,
+                "max": 16
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:ammo_logic_sg",
+          "weight": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 4,
+                "max": 16
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

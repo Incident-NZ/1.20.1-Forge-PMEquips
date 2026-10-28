@@ -1,9 +1,5 @@
 {
-  "itemGroup.pm_lobotomy_ego": "PM Mod Lobotomy E.G.O",
-  "itemGroup.pm_base": "PM Mod Material Items",
-  "itemGroup.pm_fixers": "PM Mod Fixers Equipments",
-  "itemGroup.pm_wcorp": "PM Mod Wings Equipments",
-  "itemGroup.pm_limbus": "PM Mod Limbus Company",
+  "itemGroup.pm_base": "Project Moon Equipments",
   "key.categories.pm_equips": "ProjectMoon Equipments Mod KeyBinds",
   "key.categories.pm_equips.scope": "Gun SCOPE",
   "key.categories.pm_equips.reload": "Gun Reload",
@@ -224,7 +220,7 @@
   "effect.pm_equips.effect_sin_rcorp": "R.Corp Singularity",
   "effect.pm_equips.effect_sin_wcorp": "W.Corp Singularity",
   "item.pm_equips.head_arbiter_armor": "Arbiter Armor",
-  "tooltip.pm_equips.arbiter_controls": "With both hands empty, right-click to shoot. Hold for at least 2 seconds and release to fire a pillar.",
+  "tooltip.pm_equips.arbiter_controls": "With both hands empty, right-click to shoot. Hold for at least 1 second and release to fire a pillar.",
   "tooltip.pm_equips.arbiter_fairy": "Fairy shot: 8 damage / Fairy I for 3 seconds / 128-block range",
   "subtitles.pm_equips.item.arbiter_fairy": "Arbiter fires Fairy",
   "subtitles.pm_equips.item.arbiter_pillar_start": "Arbiter charges Pillar",
@@ -272,5 +268,9 @@
   "effect.pm_equips.effect_freeze": "Freeze",
   "tooltip.pm_equips.thumb_controls": "Right-click to shoot / Shift+V to change ammo / Shift+C for a combined special shot",
   "tooltip.pm_equips.thumb_ammo": "Selected ammunition: %s",
-  "death.attack.thumb_armor_piercing": "%1$s was pierced by %2$s"
+  "death.attack.thumb_armor_piercing": "%1$s was pierced by %2$s",
+  "item.pm_equips.item_finger2_cloth": "The Index -  Presctipt Cloth",
+  "tooltip.pm_equips.claw_controls": "Shift+V: cycle serum / Right-click: use (shared cooldown: 60 seconds)",
+  "tooltip.pm_equips.claw_serum": "Selected: Serum %s",
+  "tooltip.pm_equips.claw_pending": "Next strike: %s attack damage (including Singularity modifiers)"
 }

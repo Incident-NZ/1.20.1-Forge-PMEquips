@@ -1,0 +1,203 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "name": "pm_equips_equipment",
+      "rolls": {
+        "type": "minecraft:uniform",
+        "min": 1,
+        "max": 3
+      },
+      "bonus_rolls": 0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:ammo_magic",
+          "weight": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 4,
+                "max": 16
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:ammo_large",
+          "weight": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 4,
+                "max": 16
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:ammo_small",
+          "weight": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 4,
+                "max": 16
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:ammo_shell",
+          "weight": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 4,
+                "max": 16
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:ammo_explosion",
+          "weight": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 4,
+                "max": 16
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:ammo_logic_hg",
+          "weight": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 4,
+                "max": 16
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:ammo_logic_sg",
+          "weight": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 4,
+                "max": 16
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:tag",
+          "name": "pm_equips:ego_t4_waw",
+          "expand": true,
+          "weight": 1
+        },
+        {
+          "type": "minecraft:tag",
+          "name": "pm_equips:ego_t5_aleph",
+          "expand": true,
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:wing_kcorp_w1",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:wing_kcorp_w2",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:wing_kcorp_w3",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:wing_kcorp_officer_armor_l1",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:wing_kcorp_officer_armor_l2",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:wing_kcorp_agent_armor_l3",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:wing_kcorp_agent_armor_l4",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:wing_kcorp_agent_armor_l5",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:head_arbiter_armor",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:finger2_weapon2",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:finger2_weapon3",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:finger2_armor2",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:finger2_weapon_sp_caduceus",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:finger2_armor3",
+          "weight": 1
+        }
+      ]
+    }
+  ]
+}

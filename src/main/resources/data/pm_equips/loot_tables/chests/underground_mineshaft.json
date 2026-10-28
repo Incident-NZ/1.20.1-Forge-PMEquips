@@ -1,0 +1,304 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "name": "pm_equips_equipment",
+      "rolls": {
+        "type": "minecraft:uniform",
+        "min": 1,
+        "max": 3
+      },
+      "bonus_rolls": 0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:ammo_thumbs_if",
+          "weight": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 4,
+                "max": 16
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:ammo_thumbs_fr",
+          "weight": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 4,
+                "max": 16
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:ammo_thumbs_ap",
+          "weight": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 4,
+                "max": 16
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:ammo_thumbs_kb",
+          "weight": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 4,
+                "max": 16
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:ammo_magic",
+          "weight": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 4,
+                "max": 16
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:ammo_large",
+          "weight": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 4,
+                "max": 16
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:ammo_small",
+          "weight": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 4,
+                "max": 16
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:ammo_shell",
+          "weight": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 4,
+                "max": 16
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:ammo_explosion",
+          "weight": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 4,
+                "max": 16
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:ammo_logic_hg",
+          "weight": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 4,
+                "max": 16
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:ammo_logic_sg",
+          "weight": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 4,
+                "max": 16
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:tag",
+          "name": "pm_equips:wings_material",
+          "expand": true,
+          "weight": 1
+        },
+        {
+          "type": "minecraft:tag",
+          "name": "pm_equips:ego_t2_teth",
+          "expand": true,
+          "weight": 1
+        },
+        {
+          "type": "minecraft:tag",
+          "name": "pm_equips:ego_t3_he",
+          "expand": true,
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:lccb_pistol",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:lccb_shotgun",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:lccb_baton",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:lccb_armor",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:wing_hcorp_mao_weapon",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:wing_hcorp_mao_armor_l1",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:wing_hcorp_mao_armor_l2",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:wing_hcorp_mao_armor_l3",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:wing_hcorp_mao_armor_l4",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:wing_hcorp_si_weapon",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:wing_hcorp_si_armor_l1",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:wing_hcorp_si_armor_l2",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:wing_hcorp_si_armor_l3",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:wing_hcorp_si_armor_l4",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:wing_hcorp_you_weapon",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:wing_hcorp_you_armor_l1",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:wing_hcorp_you_armor_l2",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:wing_hcorp_you_armor_l3",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:wing_hcorp_you_armor_l4",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:finger2_weapon1",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:finger2_armor1",
+          "weight": 1
+        }
+      ]
+    }
+  ]
+}
