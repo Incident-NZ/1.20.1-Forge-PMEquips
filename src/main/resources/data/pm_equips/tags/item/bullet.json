@@ -1,9 +1,11 @@
 {
+  "replace": false,
   "values": [
+    "pm_equips:ammo_magic",
     "pm_equips:ammo_large",
     "pm_equips:ammo_small",
+    "pm_equips:ammo_shell",
     "pm_equips:ammo_explosion",
-    "pm_equips:ammo_magic",
     "pm_equips:ammo_logic_hg",
     "pm_equips:ammo_logic_sg",
     "pm_equips:ammo_thumbs_if",

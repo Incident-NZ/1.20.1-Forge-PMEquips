@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "name": "pm_equips_equipment",
+      "rolls": 1,
+      "bonus_rolls": 0,
+      "entries": [
+        {
+          "type": "minecraft:tag",
+          "name": "pm_equips:ego_t5_aleph",
+          "expand": true,
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:head_claw",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:head_arbiter_armor",
+          "weight": 1
+        }
+      ]
+    }
+  ]
+}

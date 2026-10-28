@@ -13,10 +13,11 @@ import net.pm_equips.items.materials.ArmorEquips;
 public class ItemInit {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(Registries.ITEM, PMEquipsMain.MOD_ID);
 
-    public static final DeferredHolder<Item, Item> MOB_NPC_1_SPAWN_EGG = ITEMS.register("mob_npc_1_spawn_egg",
-            () -> new DeferredSpawnEggItem(EntityInit.MOB_NPC_1, 0x232831, 0x679eba, new Item.Properties()));
 
     //アイテム
+    public static final DeferredHolder<Item, Item> FINGER2_CLOTH = ITEMS.register("item_finger2_cloth", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> MOB_NPC_1_SPAWN_EGG = ITEMS.register("mob_npc_1_spawn_egg",
+            () -> new DeferredSpawnEggItem(EntityInit.MOB_NPC_1, 0x232831, 0x679eba, new Item.Properties()));
     public static final DeferredHolder<Item, Item> ITEM_ENKEPHALIN = ITEMS.register("item_enkephalin",
             () -> new ItemEnkephalin(new Item.Properties().stacksTo(64)));
     public static final DeferredHolder<Item, Item> BLADE_GEAR = ITEMS.register("item_blade_gear",
@@ -514,6 +515,6 @@ public class ItemInit {
             () -> new LimbusEGOYisangLament(new Item.Properties().durability(2000)));
 
     //頭装備
-    public static final DeferredHolder<Item, Item> HEAD_CLAW = ITEMS.register("head_claw", HeadCCorpGauntlet::new);
+    public static final DeferredHolder<Item, Item> HEAD_CLAW = ITEMS.register("head_claw", HeadClawGauntlet::new);
     public static final DeferredHolder<Item, Item> HEAD_ARBITER_ARMOR = ITEMS.register("head_arbiter_armor", HeadArbiterArmor::new);
 }

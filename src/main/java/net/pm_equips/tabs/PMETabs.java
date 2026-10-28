@@ -10,6 +10,7 @@ public class PMETabs {
             BlockInit.BlockItems.PEBOX_GENERATOR.get(),
             BlockInit.BlockItems.EGO_EXTRACTION_TABLE.get(),
             BlockInit.BlockItems.EGO_CRAFT_TABLE.get(),
+            ItemInit.FINGER2_CLOTH.get(),
             ItemInit.ITEM_ENKEPHALIN.get(),
             ItemInit.LCORP_EBOX.get(),
             ItemInit.BLADE_GEAR.get(),

@@ -1,6 +1,6 @@
 {
-  "item.pm_equips.head_arbiter_armor": "Arbiter Armor",
-  "tooltip.pm_equips.arbiter_controls": "With both hands empty, right-click to shoot. Hold for at least 2 seconds and release to fire a pillar.",
+  "item.pm_equips.head_arbiter_armor": "Arbiter Robe",
+  "tooltip.pm_equips.arbiter_controls": "With both hands empty, right-click to shoot. Hold for at least 1 second and release to fire a pillar.",
   "tooltip.pm_equips.arbiter_fairy": "Fairy shot: 8 damage / Fairy I for 3 seconds / 128-block range",
   "subtitles.pm_equips.item.arbiter_fairy": "Arbiter fires Fairy",
   "subtitles.pm_equips.item.arbiter_pillar_start": "Arbiter charges Pillar",
@@ -198,7 +198,7 @@
   "item.pm_equips.wing_hcorp_mao_armor_l5": "H.Corp Heishou Packs - Mao Branch Class.5 Armor",
   "item.pm_equips.wing_hcorp_si_armor_l5": "H.Corp Heishou Packs - Si Branch Class.5 Armor",
   "item.pm_equips.wing_hcorp_you_armor_l5": "H.Corp Heishou Packs - You Branch Class.5 Armor",
-  "item.pm_equips.head_claw": "C.Corp Claw Gauntlet",
+  "item.pm_equips.head_claw": "Head Executioner's Gauntlet",
   "item.pm_equips.lca_auto_rifle": "LCA Auto Rifle",
   "item.pm_equips.lca_khopesh": "LCA Khopesh",
   "item.pm_equips.lca_udjat_armor": "LCA Udjat Vanguard Armor",
@@ -279,5 +279,9 @@
   "effect.pm_equips.effect_freeze": "Freeze",
   "tooltip.pm_equips.thumb_controls": "Right-click to shoot / Shift+V to change ammo / Shift+C for a combined special shot",
   "tooltip.pm_equips.thumb_ammo": "Selected ammunition: %s",
-  "death.attack.thumb_armor_piercing": "%1$s was pierced by %2$s"
+  "death.attack.thumb_armor_piercing": "%1$s was pierced by %2$s",
+  "item.pm_equips.item_finger2_cloth": "The Index -  Presctipt Cloth",
+  "tooltip.pm_equips.claw_controls": "Shift+V: cycle serum / Right-click: use (shared cooldown: 60 seconds)",
+  "tooltip.pm_equips.claw_serum": "Selected: Serum %s",
+  "tooltip.pm_equips.claw_pending": "Next strike: %s attack damage (including Singularity modifiers)"
 }

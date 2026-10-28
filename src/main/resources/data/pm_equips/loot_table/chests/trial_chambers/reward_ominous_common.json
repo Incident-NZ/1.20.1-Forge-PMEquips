@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "name": "pm_equips_equipment",
+      "rolls": 1,
+      "bonus_rolls": 0,
+      "entries": [
+        {
+          "type": "minecraft:tag",
+          "name": "pm_equips:ego_t3_he",
+          "expand": true,
+          "weight": 1
+        }
+      ]
+    }
+  ]
+}

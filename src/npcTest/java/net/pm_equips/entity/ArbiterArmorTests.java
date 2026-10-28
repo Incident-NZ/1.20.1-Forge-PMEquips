@@ -132,20 +132,20 @@ public class ArbiterArmorTests {
     }
 
     @GameTest(template = "npc_empty", timeoutTicks = 80)
-    public static void fortyTicksSwitchFromFairyToOnePillar(GameTestHelper h) {
+    public static void twentyTicksSwitchFromFairyToOnePillar(GameTestHelper h) {
         Player early = wearer(h), charged = wearer(h); charged.setXRot(-90);
         Villager target = target(h, 7);
         ArbiterArmorPacket.process(early, ArbiterArmorPacket.START);
         ArbiterArmorPacket.process(charged, ArbiterArmorPacket.START);
         keepAlive(h, early, charged);
-        h.runAfterDelay(39, () -> {
+        h.runAfterDelay(19, () -> {
             ArbiterArmorPacket.process(early, ArbiterArmorPacket.RELEASE);
-            h.assertTrue(target.getHealth() == 192 && pillars(h, early).isEmpty(), "Releasing at thirty-nine ticks still uses the fairy shot");
+            h.assertTrue(target.getHealth() == 192 && pillars(h, early).isEmpty(), "Releasing at nineteen ticks still uses the fairy shot");
         });
-        h.runAfterDelay(40, () -> {
+        h.runAfterDelay(20, () -> {
             ArbiterArmorPacket.process(charged, ArbiterArmorPacket.RELEASE);
             List<PArbiterPillar> shots = pillars(h, charged);
-            h.assertTrue(shots.size() == 1, "Forty ticks produces exactly one pillar");
+            h.assertTrue(shots.size() == 1, "Twenty ticks produces exactly one pillar");
             PArbiterPillar pillar = shots.getFirst();
             h.assertTrue(pillar.getDeltaMovement().normalize().distanceTo(charged.getLookAngle()) < .00001
                     && Math.abs(pillar.getDeltaMovement().length() - 2) < .00001, "Pillar launches along the current view direction at speed two");

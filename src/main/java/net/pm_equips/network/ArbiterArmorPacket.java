@@ -40,7 +40,7 @@ import net.pm_equips.items.HeadArbiterArmor;
 @EventBusSubscriber(modid = PMEquipsMain.MOD_ID)
 public record ArbiterArmorPacket(byte action) implements CustomPacketPayload {
     public static final byte START = 0, RELEASE = 1, CANCEL = 2, KEEP_ALIVE = 3;
-    public static final int CHARGE_TICKS = 40;
+    public static final int CHARGE_TICKS = 20;
     public static final int FAIRY_COOLDOWN = 10, PILLAR_COOLDOWN = 20;
     public static final float FAIRY_DAMAGE = 8;
     public static final int FAIRY_DURATION = 60;

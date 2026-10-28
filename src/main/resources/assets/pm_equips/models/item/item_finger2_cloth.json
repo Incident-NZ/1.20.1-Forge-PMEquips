@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "pm_equips:item/item_finger2_prescript_cloth"
+  }
+}

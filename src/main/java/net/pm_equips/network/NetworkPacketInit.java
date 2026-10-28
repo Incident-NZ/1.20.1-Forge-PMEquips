@@ -1,4 +1,5 @@
 package net.pm_equips.network;
+import net.pm_equips.items.HeadClawGauntlet;
 
 import net.minecraft.core.Holder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -103,6 +104,7 @@ public final class NetworkPacketInit {
 
         private static void handle(LegArmorAbilityActivatePacket packet, IPayloadContext context) {
             if (!(context.player() instanceof ServerPlayer player)) return;
+            if (HeadClawGauntlet.cycleSerum(player)) return;
             if (FingerEquipment.cycleAmmo(player)) return;
             if (FingerEquipment.distributeBuff(player)) return;
             ItemStack stack = player.getItemBySlot(EquipmentSlot.LEGS);

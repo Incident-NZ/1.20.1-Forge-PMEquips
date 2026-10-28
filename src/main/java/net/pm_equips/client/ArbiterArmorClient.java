@@ -5,6 +5,9 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -37,6 +40,17 @@ public final class ArbiterArmorClient {
             requireRelease = true; // Equipping the item must not become an accidental attack.
         }
         if (requireRelease || !ArbiterArmorPacket.canUse(mc.player)) return;
+        if (chargingPlayer == null && mc.hitResult instanceof BlockHitResult blockHit && blockHit.getType() == HitResult.Type.BLOCK) {
+            if (mc.gameMode == null) return;
+            // Run vanilla interaction once, including modded blocks, before considering an attack.
+            InteractionResult result = mc.gameMode.useItemOn(mc.player, event.getHand(), blockHit);
+            if (result.consumesAction() || result == InteractionResult.FAIL) {
+                event.setCanceled(true);
+                event.setSwingHand(result.shouldSwing());
+                requireRelease = true;
+                return;
+            }
+        }
         event.setCanceled(true);
         event.setSwingHand(false);
         if (event.getHand() == InteractionHand.MAIN_HAND && chargingPlayer == null) {

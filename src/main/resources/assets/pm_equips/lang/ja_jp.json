@@ -1,6 +1,6 @@
 {
-  "item.pm_equips.head_arbiter_armor": "調律者の防具",
-  "tooltip.pm_equips.arbiter_controls": "両手が空のとき、右クリックで射撃。2秒以上押して離すと柱を発射。",
+  "item.pm_equips.head_arbiter_armor": "調律者の装具",
+  "tooltip.pm_equips.arbiter_controls": "両手が空のとき、右クリックで射撃。1秒以上押して離すと柱を発射。",
   "tooltip.pm_equips.arbiter_fairy": "妖精: ダメージ8 / 妖精Ⅰ 3秒 / 射程128ブロック",
   "subtitles.pm_equips.item.arbiter_fairy": "妖精発射",
   "subtitles.pm_equips.item.arbiter_pillar_start": "柱チャージ",
@@ -198,7 +198,7 @@
   "item.pm_equips.wing_hcorp_mao_armor_l5": "H社 黒獣 - 卯 ランク5アーマー",
   "item.pm_equips.wing_hcorp_si_armor_l5": "H社 黒獣 - 巴 ランク5アーマー",
   "item.pm_equips.wing_hcorp_you_armor_l5": "H社 黒獣 - 酉 ランク5アーマー",
-  "item.pm_equips.head_claw": "処刑者の足爪",
+  "item.pm_equips.head_claw": "処刑者のガントレット",
   "item.pm_equips.lca_auto_rifle": "LCA自動小銃",
   "item.pm_equips.lca_khopesh": "LCAケペシュ",
   "item.pm_equips.lca_udjat_armor": "LCAウアジェト制式採用防具",
@@ -279,5 +279,9 @@
   "effect.pm_equips.effect_freeze": "氷結",
   "tooltip.pm_equips.thumb_controls": "右クリックで射撃 / Shift+Vで弾薬変更 / Shift+Cで特殊弾を複合射撃",
   "tooltip.pm_equips.thumb_ammo": "選択弾薬: %s",
-  "death.attack.thumb_armor_piercing": "%1$sは%2$sの徹甲弾に倒された"
+  "death.attack.thumb_armor_piercing": "%1$sは%2$sの徹甲弾に倒された",
+  "item.pm_equips.item_finger2_cloth": "人差し指 - 指令の布",
+  "tooltip.pm_equips.claw_controls": "Shift+V: 血清を切り替え / 右クリック: 使用（共通CT 60秒）",
+  "tooltip.pm_equips.claw_serum": "選択中: 血清%s",
+  "tooltip.pm_equips.claw_pending": "次の一撃: 攻撃力%s（特異点の補正込み）"
 }

@@ -363,7 +363,7 @@ public class MobNPC1Tests {
         h.succeed();
     }
 
-    @GameTest(template = "npc_empty", timeoutTicks = 80)
+    @GameTest(batch = "npc_sleep", template = "npc_empty", timeoutTicks = 80)
     public static void nightSleepAndBareHandWake(GameTestHelper h) {
         buildHouse(h, 1, true);
         MobNPC1 npc = npc(h); npc.moveTo(h.absolutePos(new BlockPos(3, 1, 3)).getCenter()); npc.setNoAi(false);
