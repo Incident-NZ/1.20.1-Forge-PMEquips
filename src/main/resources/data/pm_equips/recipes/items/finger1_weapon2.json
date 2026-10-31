@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AAB",
+    "BAC"
+  ],
+  "key": {
+    "A": {
+      "tag": "minecraft:planks"
+    },
+    "B": {
+      "item": "minecraft:iron_ingot"
+    },
+    "C": {
+      "tag": "minecraft:swords"
+    }
+  },
+  "result": {
+    "item": "pm_equips:finger1_weapon2"
+  }
+}

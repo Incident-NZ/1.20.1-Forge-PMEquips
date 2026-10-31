@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABC",
+    "ABC",
+    "ABC"
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:gold_ingot"
+    },
+    "B": {
+      "tag": "minecraft:wool"
+    },
+    "C": {
+      "item": "minecraft:string"
+    }
+  },
+  "result": {
+    "item": "pm_equips:item_finger2_cloth"
+  }
+}

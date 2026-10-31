@@ -9,10 +9,13 @@
     },
     {
       "item": "minecraft:copper_ingot"
+    },
+    {
+      "item": "minecraft:copper_ingot"
     }
   ],
   "result": {
-    "item": "pm_equips:ammo_explosion",
-    "count": 2
+    "count": 2,
+    "item": "pm_equips:ammo_explosion"
   }
 }

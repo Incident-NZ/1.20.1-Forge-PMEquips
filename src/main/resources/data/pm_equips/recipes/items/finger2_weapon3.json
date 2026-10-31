@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "ABC"
+  ],
+  "key": {
+    "A": {
+      "item": "pm_equips:finger2_weapon1"
+    },
+    "B": {
+      "item": "minecraft:gold_ingot"
+    },
+    "C": {
+      "item": "pm_equips:item_finger2_cloth"
+    }
+  },
+  "result": {
+    "item": "pm_equips:finger2_weapon3"
+  }
+}

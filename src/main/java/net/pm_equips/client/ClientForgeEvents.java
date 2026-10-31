@@ -59,7 +59,9 @@ public class ClientForgeEvents {
             ItemInit.LAMENT_YISANG,
             ItemInit.LCA_AUTO_RIFLE,
             ItemInit.LCCB_PISTOL,
-            ItemInit.LCCB_SHOTGUN
+            ItemInit.LCCB_SHOTGUN,
+            ItemInit.FINGER1_WEAPON1,
+            ItemInit.FINGER1_WEAPON2
     );
 
     @SubscribeEvent

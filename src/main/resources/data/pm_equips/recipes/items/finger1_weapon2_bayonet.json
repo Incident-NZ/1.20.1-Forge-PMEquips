@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "minecraft:swords"
+    },
+    {
+      "item": "pm_equips:finger1_weapon1"
+    }
+  ],
+  "result": {
+    "item": "pm_equips:finger1_weapon2"
+  }
+}

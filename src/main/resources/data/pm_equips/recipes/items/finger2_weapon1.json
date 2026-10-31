@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AB"
+  ],
+  "key": {
+    "A": {
+      "tag": "minecraft:swords"
+    },
+    "B": {
+      "item": "pm_equips:item_finger2_cloth"
+    }
+  },
+  "result": {
+    "item": "pm_equips:finger2_weapon1"
+  }
+}
