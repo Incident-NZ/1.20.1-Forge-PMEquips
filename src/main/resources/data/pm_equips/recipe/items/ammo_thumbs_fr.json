@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "pm_equips:ammo_large"
+    },
+    [
+      {
+        "item": "minecraft:snowball"
+      },
+      {
+        "item": "minecraft:ice"
+      },
+      {
+        "item": "minecraft:packed_ice"
+      },
+      {
+        "item": "minecraft:blue_ice"
+      }
+    ]
+  ],
+  "result": {
+    "id": "pm_equips:ammo_thumbs_fr"
+  }
+}

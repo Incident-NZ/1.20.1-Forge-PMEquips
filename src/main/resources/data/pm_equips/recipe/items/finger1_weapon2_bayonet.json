@@ -1,16 +1,14 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "category": "equipment",
   "ingredients": [
     {
       "tag": "minecraft:swords"
     },
     {
-      "item": "pm_equips:item_finger2_cloth"
+      "item": "pm_equips:finger1_weapon1"
     }
   ],
   "result": {
-    "id": "pm_equips:finger2_weapon1",
-    "count": 1
+    "id": "pm_equips:finger1_weapon2"
   }
 }

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABC"
+  ],
+  "key": {
+    "A": {
+      "item": "pm_equips:finger2_weapon1"
+    },
+    "B": {
+      "item": "minecraft:trial_key"
+    },
+    "C": {
+      "item": "pm_equips:item_finger2_cloth"
+    }
+  },
+  "result": {
+    "id": "pm_equips:finger2_weapon3"
+  }
+}

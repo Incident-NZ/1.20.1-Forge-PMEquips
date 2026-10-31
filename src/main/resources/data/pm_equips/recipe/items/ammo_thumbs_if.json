@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "pm_equips:ammo_large"
+    },
+    [
+      {
+        "item": "minecraft:fire_charge"
+      },
+      {
+        "item": "minecraft:flint"
+      },
+      {
+        "item": "minecraft:blaze_powder"
+      },
+      {
+        "item": "minecraft:flint_and_steel"
+      }
+    ]
+  ],
+  "result": {
+    "id": "pm_equips:ammo_thumbs_if"
+  }
+}

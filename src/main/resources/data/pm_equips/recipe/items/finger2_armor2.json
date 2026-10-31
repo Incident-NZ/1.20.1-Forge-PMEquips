@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABA",
+    "ADA",
+    "ACA"
+  ],
+  "key": {
+    "A": {
+      "item": "pm_equips:item_finger2_cloth"
+    },
+    "B": {
+      "item": "minecraft:gold_ingot"
+    },
+    "C": {
+      "item": "minecraft:leather"
+    },
+    "D": {
+      "item": "pm_equips:finger2_armor1"
+    }
+  },
+  "result": {
+    "id": "pm_equips:finger2_armor2"
+  }
+}
