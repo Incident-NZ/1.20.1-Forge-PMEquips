@@ -13,26 +13,10 @@ import net.minecraftforge.common.ForgeSpawnEggItem;
 public class ItemInit {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, PMEquipsMain.MOD_ID);
 
-    public static final RegistryObject<Item> AMMO_THUMBS_IF = ITEMS.register("ammo_thumbs_if", ItemAmmoThumbsIF::new);
-    public static final RegistryObject<Item> AMMO_THUMBS_FR = ITEMS.register("ammo_thumbs_fr", ItemAmmoThumbsFR::new);
-    public static final RegistryObject<Item> AMMO_THUMBS_AP = ITEMS.register("ammo_thumbs_ap", ItemAmmoThumbsAP::new);
-    public static final RegistryObject<Item> AMMO_THUMBS_KB = ITEMS.register("ammo_thumbs_kb", ItemAmmoThumbsKB::new);
-    public static final RegistryObject<Item> FINGER1_WEAPON1 = ITEMS.register("finger1_weapon1", Finger1Weapon1::new);
-    public static final RegistryObject<Item> FINGER1_WEAPON2 = ITEMS.register("finger1_weapon2", Finger1Weapon2::new);
-    public static final RegistryObject<Item> FINGER1_ARMOR1 = ITEMS.register("finger1_armor1", Finger1Armor1::new);
-    public static final RegistryObject<Item> FINGER1_ARMOR2 = ITEMS.register("finger1_armor2", Finger1Armor2::new);
-    public static final RegistryObject<Item> FINGER1_ARMOR3 = ITEMS.register("finger1_armor3", Finger1Armor3::new);
-    public static final RegistryObject<Item> FINGER2_WEAPON1 = ITEMS.register("finger2_weapon1", Finger2Weapon1::new);
-    public static final RegistryObject<Item> FINGER2_WEAPON2 = ITEMS.register("finger2_weapon2", Finger2Weapon2::new);
-    public static final RegistryObject<Item> FINGER2_WEAPON3 = ITEMS.register("finger2_weapon3", Finger2Weapon3::new);
-    public static final RegistryObject<Item> FINGER2_WEAPON_SP_CADUCEUS = ITEMS.register("finger2_weapon_sp_caduceus", Finger2WeaponSP::new);
-    public static final RegistryObject<Item> FINGER2_ARMOR1 = ITEMS.register("finger2_armor1", Finger2Armor1::new);
-    public static final RegistryObject<Item> FINGER2_ARMOR2 = ITEMS.register("finger2_armor2", Finger2Armor2::new);
-    public static final RegistryObject<Item> FINGER2_ARMOR3 = ITEMS.register("finger2_armor3", Finger2Armor3::new);
-    public static final RegistryObject<Item> HEAD_ARBITER_ARMOR = ITEMS.register("head_arbiter_armor", HeadArbiterArmor::new);
-    public static final RegistryObject<Item> MOB_NPC_1_SPAWN_EGG = ITEMS.register("mob_npc_1_spawn_egg", () -> new ForgeSpawnEggItem(EntityInit.MOB_NPC_1, 0x232831, 0x679eba, new Item.Properties()));
 
     //アイテム
+    public static final RegistryObject<Item> MOB_NPC_1_SPAWN_EGG = ITEMS.register("mob_npc_1_spawn_egg",
+            () -> new ForgeSpawnEggItem(EntityInit.MOB_NPC_1, 0x232831, 0x679eba, new Item.Properties()));
     public static final RegistryObject<Item> FINGER2_CLOTH = ITEMS.register("item_finger2_cloth", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> ITEM_ENKEPHALIN = ITEMS.register("item_enkephalin",
             () -> new ItemEnkephalin(new Item.Properties().stacksTo(64)));
@@ -53,6 +37,7 @@ public class ItemInit {
     public static final RegistryObject<Item> HCORP_BOLUS_YOU = ITEMS.register("item_hcorp_bolus_you",
             () -> new Item(new Item.Properties().stacksTo(64)));
 
+
     //弾薬アイテム
     public static final RegistryObject<Item> MAGIC_BULLET_AMMO = ITEMS.register("ammo_magic",
             () -> new ItemAmmoLobEGOMagic(new Item.Properties().stacksTo(64)));
@@ -68,6 +53,10 @@ public class ItemInit {
             () -> new ItemAmmoLogicHG(new Item.Properties().stacksTo(64)));
     public static final RegistryObject<Item> P_BULLET_LASG = ITEMS.register("ammo_logic_sg",
             () -> new ItemAmmoLogicSG(new Item.Properties().stacksTo(64)));
+    public static final RegistryObject<Item> AMMO_THUMBS_IF = ITEMS.register("ammo_thumbs_if", ItemAmmoThumbsIF::new);
+    public static final RegistryObject<Item> AMMO_THUMBS_FR = ITEMS.register("ammo_thumbs_fr", ItemAmmoThumbsFR::new);
+    public static final RegistryObject<Item> AMMO_THUMBS_AP = ITEMS.register("ammo_thumbs_ap", ItemAmmoThumbsAP::new);
+    public static final RegistryObject<Item> AMMO_THUMBS_KB = ITEMS.register("ammo_thumbs_kb", ItemAmmoThumbsKB::new);
 
     //L社EGO武器
     public static final RegistryObject<Item> W5_TWILIGHT = ITEMS.register("lobego5_weapon_twilight", LobEGOWeapon5Twilight::new);
@@ -512,6 +501,21 @@ public class ItemInit {
     public static final RegistryObject<Item> LAMENT_YISANG = ITEMS.register("item_lament_yisang",
             () -> new LimbusEGOYisangLament(new Item.Properties().durability(2000)));
 
+    //五本指装備
+    public static final RegistryObject<Item> FINGER1_WEAPON1 = ITEMS.register("finger1_weapon1", Finger1Weapon1::new);
+    public static final RegistryObject<Item> FINGER1_WEAPON2 = ITEMS.register("finger1_weapon2", Finger1Weapon2::new);
+    public static final RegistryObject<Item> FINGER1_ARMOR1 = ITEMS.register("finger1_armor1", Finger1Armor1::new);
+    public static final RegistryObject<Item> FINGER1_ARMOR2 = ITEMS.register("finger1_armor2", Finger1Armor2::new);
+    public static final RegistryObject<Item> FINGER1_ARMOR3 = ITEMS.register("finger1_armor3", Finger1Armor3::new);
+    public static final RegistryObject<Item> FINGER2_WEAPON1 = ITEMS.register("finger2_weapon1", Finger2Weapon1::new);
+    public static final RegistryObject<Item> FINGER2_WEAPON2 = ITEMS.register("finger2_weapon2", Finger2Weapon2::new);
+    public static final RegistryObject<Item> FINGER2_WEAPON3 = ITEMS.register("finger2_weapon3", Finger2Weapon3::new);
+    public static final RegistryObject<Item> FINGER2_WEAPON_SP_CADUCEUS = ITEMS.register("finger2_weapon_sp_caduceus", Finger2WeaponSP::new);
+    public static final RegistryObject<Item> FINGER2_ARMOR1 = ITEMS.register("finger2_armor1", Finger2Armor1::new);
+    public static final RegistryObject<Item> FINGER2_ARMOR2 = ITEMS.register("finger2_armor2", Finger2Armor2::new);
+    public static final RegistryObject<Item> FINGER2_ARMOR3 = ITEMS.register("finger2_armor3", Finger2Armor3::new);
+
     //頭装備
     public static final RegistryObject<Item> HEAD_CLAW = ITEMS.register("head_claw", HeadClawGauntlet::new);
+    public static final RegistryObject<Item> HEAD_ARBITER_ARMOR = ITEMS.register("head_arbiter_armor", HeadArbiterArmor::new);
 }
