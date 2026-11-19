@@ -3,6 +3,8 @@ package net.pm_equips.items;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.*;
+import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.ToolActions;
 import net.pm_equips.ItemInit;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -42,6 +44,11 @@ public class LobEGOWeapon5Mimicry extends SwordItem {
     @Override
     public UseAnim getUseAnimation(ItemStack stack) {
         return UseAnim.BLOCK;
+    }
+
+    @Override
+    public boolean canPerformAction(ItemStack stack, ToolAction action) {
+        return action == ToolActions.SHIELD_BLOCK || super.canPerformAction(stack, action);
     }
 
     @Override
