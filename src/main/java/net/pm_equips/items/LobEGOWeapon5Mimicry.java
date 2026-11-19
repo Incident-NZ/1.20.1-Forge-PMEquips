@@ -15,6 +15,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
+import net.neoforged.neoforge.common.ItemAbility;
+import net.neoforged.neoforge.common.ItemAbilities;
 import net.pm_equips.ItemInit;
 import net.pm_equips.client.screen.TooltipLines;
 
@@ -43,6 +45,11 @@ public class LobEGOWeapon5Mimicry extends SwordItem {
     @Override
     public UseAnim getUseAnimation(ItemStack stack) {
         return UseAnim.BLOCK;
+    }
+
+    @Override
+    public boolean canPerformAction(ItemStack stack, ItemAbility action) {
+        return action == ItemAbilities.SHIELD_BLOCK || super.canPerformAction(stack, action);
     }
 
     @Override
