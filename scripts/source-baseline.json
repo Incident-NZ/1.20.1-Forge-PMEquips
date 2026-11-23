@@ -205,7 +205,7 @@
       "lce_ego_dimension_shredder_weapon",
       "lce_ego_dimension_shredder_armor",
       "item_lament_yisang",
-      "head_claw"
+      "head_executioner"
     ],
     "src/main/java/net/pm_equips/MenuInit.java": [
       "lobotomy_ego_extraction_table",

@@ -1,5 +1,8 @@
 package net.pm_equips.entity;
 
+import net.pm_equips.items.WingRCorpWeapon4;
+import net.pm_equips.items.HeadExecutioner;
+
 import java.util.EnumSet;
 import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
@@ -215,6 +218,9 @@ public class MobNPC1 extends TamableAnimal implements RangedAttackMob {
         InteractionHand previous = attackingHand;
         attackingHand = hand;
         try {
+            if (HeadExecutioner.unarmed(this) && !HeadExecutioner.equipped(this).isEmpty()) {
+                living.hurtTime = 0; living.invulnerableTime = 0;
+            }
             boolean hit = super.doHurtTarget(target);
             ItemStack weapon = getItemInHand(hand);
             if (hit && !level().isClientSide && !weapon.isEmpty()) {
@@ -360,6 +366,8 @@ public class MobNPC1 extends TamableAnimal implements RangedAttackMob {
         }
         if (tickCount % 200 == getId() % 200 || getSkinName().isEmpty()) MobNPC3.ensureSkin(this);
         if (getTarget() != null && (!getTarget().isAlive() || !canAttack(getTarget()))) setTarget(null);
+        WingRCorpWeapon4.prioritizeTarget(this);
+        MobNPC3.tickRCorpLaser(this);
         if (isResting() && (!level().isNight() || isInWaterOrBubble() || getTarget() != null || (tickCount % 20 == 0 && !safeToRest()))) wakeUp();
         if (tickCount >= restSearchAt && !isResting() && wantsToRest()) {
             restSearchAt = tickCount + 200 + getRandom().nextInt(40);

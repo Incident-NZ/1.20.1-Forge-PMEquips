@@ -6,6 +6,7 @@
     "pm_equips:item_lcorp_pebox",
     "pm_equips:item_hcorp_bolus_mao",
     "pm_equips:item_hcorp_bolus_si",
-    "pm_equips:item_hcorp_bolus_you"
+    "pm_equips:item_hcorp_bolus_you",
+    "pm_equips:item_tcorp_clock"
   ]
 }

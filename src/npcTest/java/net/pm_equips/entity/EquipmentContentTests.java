@@ -27,6 +27,23 @@ import net.pm_equips.events.TrialLootEvents;
 @GameTestHolder("pm_equips")
 @PrefixGameTestTemplate(false)
 public class EquipmentContentTests {
+    @GameTest(template = "npc_empty", timeoutTicks = 60)
+    public static void everyModRecipeLoadsAndProducesARegisteredItem(GameTestHelper h) {
+        var server = h.getLevel().getServer();
+        var resources = server.getResourceManager().listResources("recipe", location ->
+                location.getNamespace().equals("pm_equips") && location.getPath().endsWith(".json"));
+        h.assertTrue(!resources.isEmpty(), "Mod recipe resources are present");
+        for (ResourceLocation resource : resources.keySet()) {
+            String name = resource.getPath();
+            ResourceLocation recipeId = ResourceLocation.fromNamespaceAndPath(resource.getNamespace(), name.substring("recipe/".length(), name.length() - 5));
+            var recipe = server.getRecipeManager().byKey(recipeId);
+            h.assertTrue(recipe.isPresent(), "Recipe parsed successfully: " + recipeId);
+            h.assertTrue(!recipe.orElseThrow().value().getResultItem(h.getLevel().registryAccess()).isEmpty(), "Recipe produces an item: " + recipeId);
+        }
+        h.succeed();
+    }
+
+
     private static ResourceLocation id(String name) { return ResourceLocation.parse(name); }
     private static List<ItemStack> slots(Object... values) {
         List<ItemStack> result = new ArrayList<>();
@@ -41,18 +58,19 @@ public class EquipmentContentTests {
         expected.put("finger1_weapon1", slots(Items.OAK_PLANKS,3,Items.IRON_INGOT,2));
         expected.put("finger1_weapon2", slots(Items.OAK_PLANKS,3,Items.IRON_INGOT,2,Items.IRON_SWORD,1));
         expected.put("finger1_armor1", slots(Items.LEATHER,6,Items.GOLD_INGOT,2,ItemInit.RIFLE_BULLET_AMMO.get(),1));
-        expected.put("finger1_armor2", slots(ItemInit.FINGER1_ARMOR1.get(),1,Items.GOLD_INGOT,8));
-        expected.put("finger1_armor3", slots(ItemInit.FINGER1_ARMOR2.get(),1,Items.GOLD_INGOT,8));
+        expected.put("finger1_armor2", slots(ItemInit.FINGER1_ARMOR1.get(),1,Items.GOLD_INGOT,6,ItemInit.RIFLE_BULLET_AMMO.get(),2));
+        expected.put("finger1_armor3", slots(ItemInit.FINGER1_ARMOR2.get(),1,Items.GOLD_INGOT,6,ItemInit.RIFLE_BULLET_AMMO.get(),2));
         expected.put("finger2_weapon1", slots(Items.IRON_SWORD,1,cloth,1));
-        expected.put("finger2_weapon2", slots(Items.IRON_SWORD,1,Items.CHAIN,1,cloth,1));
-        expected.put("finger2_weapon3", slots(Items.IRON_SWORD,1,Items.TRIAL_KEY,1,cloth,1));
+        expected.put("finger2_weapon2", slots(ItemInit.FINGER2_WEAPON1.get(),1,Items.CHAIN,1,cloth,1));
+        expected.put("finger2_weapon3", slots(ItemInit.FINGER2_WEAPON1.get(),1,Items.TRIAL_KEY,1,cloth,1));
         expected.put("finger2_armor1", slots(cloth,4,Items.LEATHER,2,Items.GOLD_INGOT,3));
         expected.put("finger2_armor2", slots(ItemInit.FINGER2_ARMOR1.get(),1,cloth,6,Items.LEATHER,1,Items.GOLD_INGOT,1));
         for (var entry : expected.entrySet()) {
-            var recipe = h.getLevel().getRecipeManager().byKey(id("pm_equips:equipment/" + entry.getKey())).orElseThrow().value();
+            var recipe = h.getLevel().getRecipeManager().byKey(id("pm_equips:items/" + entry.getKey())).orElseThrow().value();
             List<ItemStack> remaining = new ArrayList<>(entry.getValue());
-            h.assertTrue(recipe.getIngredients().size() == remaining.size(), "Exact slot count: " + entry.getKey());
+            h.assertTrue(recipe.getIngredients().stream().filter(ingredient -> !ingredient.isEmpty()).count() == remaining.size(), "Exact slot count: " + entry.getKey());
             for (Ingredient ingredient : recipe.getIngredients()) {
+                if (ingredient.isEmpty()) continue;
                 int found = -1;
                 for (int i = 0; i < remaining.size(); i++) if (ingredient.test(remaining.get(i))) { found = i; break; }
                 h.assertTrue(found >= 0, "Every ingredient matches the requested multiset: " + entry.getKey());
@@ -91,6 +109,38 @@ public class EquipmentContentTests {
         long modCount = table(h, "chests/trial_chambers/reward").getRandomItems(params, 42).stream()
                 .filter(stack -> BuiltInRegistries.ITEM.getKey(stack.getItem()).getNamespace().equals("pm_equips")).count();
         h.assertTrue(modCount >= 2, "A vault reward includes both the parent addition and the selected rarity's nested addition");
+        h.succeed();
+    }
+
+    @GameTest(template = "npc_empty", timeoutTicks = 100)
+    public static void wingEquipmentLootRespectsFactionRarityAndArmorRanks(GameTestHelper h) {
+        String[] names = {"trial_chambers/reward", "trial_chambers/reward_common", "trial_chambers/reward_rare", "trial_chambers/reward_unique",
+                "trial_chambers/reward_ominous_common", "trial_chambers/reward_ominous_rare", "trial_chambers/reward_ominous_unique"};
+        int[] expected = {0, 0, 1, 2, 0, 4, 0};
+        int[] tRanks = {0, 0, 5, 0, 0, 0, 0}, rRanks = {0, 0, 0, 5, 0, 0, 0};
+        LootParams params = new LootParams.Builder(h.getLevel()).withParameter(LootContextParams.ORIGIN, h.absoluteVec(new Vec3(5, 2, 5)))
+                .create(LootContextParamSets.CHEST);
+        for (int index = 0; index < names.length; index++) {
+            String name = names[index];
+            LootTable table = h.getLevel().getServer().reloadableRegistries().getLootTable(ResourceKey.create(Registries.LOOT_TABLE, id("pm_equips:chests/" + name)));
+            h.assertTrue(table.getPool("pm_equips_equipment") != null, "Addition table parsed: " + name);
+            int found = 0;
+            for (int seed = 1; seed <= 1024; seed++) for (ItemStack stack : table.getRandomItems(params, seed)) {
+                ResourceLocation item = BuiltInRegistries.ITEM.getKey(stack.getItem());
+                if (!item.getNamespace().equals("pm_equips")) continue;
+                String value = item.getPath();
+                int group = value.startsWith("wing_tcorp_") ? 1
+                        : value.equals("wing_rcorp_armor3") || value.equals("wing_rcorp_weapon4") ? 4
+                        : value.startsWith("wing_rcorp") ? 2 : 0;
+                h.assertTrue((group & expected[index]) == group, "Unexpected faction or commander drop: " + name + "/" + value);
+                found |= group;
+                if (group == 1 && value.matches(".*_armor_l[1-5]"))
+                    h.assertTrue(Character.digit(value.charAt(value.length() - 1), 10) <= tRanks[index], "T armor rank restriction: " + name + "/" + value);
+                if (group == 2 && value.matches(".*armor(?:2)?_l[1-5]"))
+                    h.assertTrue(Character.digit(value.charAt(value.length() - 1), 10) <= rRanks[index], "R armor rank restriction: " + name + "/" + value);
+            }
+            h.assertTrue(found == expected[index], "The actual rolls include every intended new equipment group: " + name);
+        }
         h.succeed();
     }
 }

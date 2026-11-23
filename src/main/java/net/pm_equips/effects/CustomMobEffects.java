@@ -9,6 +9,9 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 
 public class CustomMobEffects {
+    public static class TargetEffect extends MobEffect {
+        public TargetEffect() { super(MobEffectCategory.HARMFUL, 0xBB302B); }
+    }
 
     public static class FreezeEffect extends MobEffect {
         public FreezeEffect() {

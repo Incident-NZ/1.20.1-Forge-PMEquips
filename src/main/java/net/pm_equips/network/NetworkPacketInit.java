@@ -1,35 +1,25 @@
 package net.pm_equips.network;
-import net.pm_equips.items.HeadClawGauntlet;
+import net.pm_equips.items.HeadExecutioner;
 
-import net.minecraft.core.Holder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
-import net.pm_equips.MobEffectInit;
 import net.pm_equips.PMEquipsMain;
 import net.pm_equips.client.ArbiterArmorClient;
 import net.pm_equips.client.ClientForgeEvents;
 import net.pm_equips.util.FingerEquipment;
+import net.pm_equips.events.CombatEvents;
 import net.minecraft.world.phys.Vec3;
-import net.pm_equips.items.LobEGOWeapon4Aroma;
 import net.pm_equips.items.Finger2WeaponSP;
-import net.pm_equips.items.WingKCorpAgentArmor;
-import net.pm_equips.items.WingKCorpOfficerArmor;
-import net.pm_equips.items.WingRCorp4thRabbitArmor;
-import net.pm_equips.items.WingRCorp4thRabbitWeapon1;
-import net.pm_equips.items.WingWCorpArmor;
+import net.pm_equips.items.WingRCorpWeapon1;
 import net.pm_equips.menu.LobotomyEGOExtractionMenu;
 
 @EventBusSubscriber(modid = PMEquipsMain.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
@@ -39,6 +29,8 @@ public final class NetworkPacketInit {
     @SubscribeEvent
     public static void register(RegisterPayloadHandlersEvent event) {
         PayloadRegistrar registrar = event.registrar("1");
+        registrar.playToServer(ExecutionerUsePacket.TYPE, ExecutionerUsePacket.STREAM_CODEC,
+                (packet, context) -> { if (context.player() instanceof ServerPlayer player) HeadExecutioner.activate(player); });
         registrar.playToClient(FingerShotTrail.TYPE, FingerShotTrail.STREAM_CODEC,
                 (packet, context) -> ClientForgeEvents.spawnThumbTrail(packet.start(), packet.end(), packet.mask()));
         registrar.playToServer(CaduceusMissPacket.TYPE, CaduceusMissPacket.STREAM_CODEC,
@@ -63,6 +55,11 @@ public final class NetworkPacketInit {
         return ResourceLocation.fromNamespaceAndPath(PMEquipsMain.MOD_ID, path);
     }
 
+    public record ExecutionerUsePacket() implements CustomPacketPayload {
+        public static final Type<ExecutionerUsePacket> TYPE = new Type<>(id("executioner_use"));
+        public static final StreamCodec<RegistryFriendlyByteBuf, ExecutionerUsePacket> STREAM_CODEC = StreamCodec.unit(new ExecutionerUsePacket());
+        @Override public Type<ExecutionerUsePacket> type() { return TYPE; }
+    }
     public record FingerShotTrail(Vec3 start, Vec3 end, int mask) implements CustomPacketPayload {
         public static final Type<FingerShotTrail> TYPE = new Type<>(id("thumb_shot_trail"));
         public static final StreamCodec<RegistryFriendlyByteBuf, FingerShotTrail> STREAM_CODEC = StreamCodec.of((buffer, packet) -> {
@@ -92,8 +89,7 @@ public final class NetworkPacketInit {
         }
 
         private static void tryStartReload(ServerPlayer player, ItemStack stack) {
-            if (stack.getItem() instanceof LobEGOWeapon4Aroma aroma) aroma.startReload(stack, player);
-            else if (stack.getItem() instanceof WingRCorp4thRabbitWeapon1 rifle) rifle.startReload(stack, player);
+            if (stack.getItem() instanceof WingRCorpWeapon1 rifle) rifle.startReload(stack, player);
         }
     }
 
@@ -104,22 +100,12 @@ public final class NetworkPacketInit {
 
         private static void handle(LegArmorAbilityActivatePacket packet, IPayloadContext context) {
             if (!(context.player() instanceof ServerPlayer player)) return;
-            if (HeadClawGauntlet.cycleSerum(player)) return;
+            if (HeadExecutioner.cycleSerum(player)) return;
             if (FingerEquipment.cycleAmmo(player)) return;
             if (FingerEquipment.distributeBuff(player)) return;
-            ItemStack stack = player.getItemBySlot(EquipmentSlot.LEGS);
-            if (stack.getItem() instanceof WingWCorpArmor) activateEffect(player, stack, 1000, MobEffectInit.WCORP_SIN);
-            else if (stack.getItem() instanceof WingRCorp4thRabbitArmor) activateEffect(player, stack, 2000, MobEffectInit.RCORP_SIN);
-            else if (stack.getItem() instanceof WingKCorpAgentArmor || stack.getItem() instanceof WingKCorpOfficerArmor)
-                activateEffect(player, stack, 1500, MobEffectInit.KCORP_SIN);
+            CombatEvents.activateArmor(player);
         }
 
-        private static void activateEffect(ServerPlayer player, ItemStack stack, int cost, Holder<MobEffect> effect) {
-            var energy = stack.getCapability(Capabilities.EnergyStorage.ITEM);
-            if (energy == null || energy.extractEnergy(cost, true) != cost) return;
-            energy.extractEnergy(cost, false);
-            player.addEffect(new MobEffectInstance(effect, 12000, 0));
-        }
     }
 
     public record LobotomyEGOExtractPacket() implements CustomPacketPayload {

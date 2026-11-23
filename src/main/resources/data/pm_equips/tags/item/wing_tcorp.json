@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "pm_equips:wing_tcorp_weapon_1",
+    "pm_equips:wing_tcorp_weapon_2",
+    "pm_equips:wing_tcorp_weapon_3",
+    "pm_equips:wing_tcorp_weapon_4",
+    "pm_equips:wing_tcorp_armor_l1",
+    "pm_equips:wing_tcorp_armor_l2",
+    "pm_equips:wing_tcorp_armor_l3",
+    "pm_equips:wing_tcorp_armor_l4",
+    "pm_equips:wing_tcorp_armor_l5"
+  ]
+}

@@ -11,6 +11,9 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 sourceSets.main.resources.srcDir 'src/generated/resources'
 sourceSets {
     npcTest {
+        if (project.hasProperty('npcTestFilter')) {
+            project.property('npcTestFilter').toString().split(',').each { testName -> java.include "**/${testName.trim()}.java" }
+        }
         compileClasspath += sourceSets.main.output
         runtimeClasspath += sourceSets.main.output
     }

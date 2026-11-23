@@ -34,7 +34,7 @@ import net.pm_equips.SoundInit;
 import net.pm_equips.entity.MobNPC1;
 import net.pm_equips.entity.MobNPC3;
 import net.pm_equips.entity.PArbiterPillar;
-import net.pm_equips.items.HeadArbiterArmor;
+import net.pm_equips.items.HeadArbiter;
 
 /** Only input edges/heartbeats cross the network; the server measures charge time and chooses the hit. */
 @EventBusSubscriber(modid = PMEquipsMain.MOD_ID)
@@ -71,7 +71,7 @@ public record ArbiterArmorPacket(byte action) implements CustomPacketPayload {
     public static boolean canUse(Player player) {
         return player.isAlive() && !player.isSpectator() && !player.isSleeping()
                 && player.getMainHandItem().isEmpty() && player.getOffhandItem().isEmpty()
-                && player.getItemBySlot(EquipmentSlot.LEGS).getItem() instanceof HeadArbiterArmor;
+                && player.getItemBySlot(EquipmentSlot.LEGS).getItem() instanceof HeadArbiter;
     }
 
     public static void handle(ArbiterArmorPacket packet, IPayloadContext context) {

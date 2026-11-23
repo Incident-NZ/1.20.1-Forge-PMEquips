@@ -56,6 +56,9 @@
     "pm_equips:lca_khopesh",
     "pm_equips:lccb_baton",
     "pm_equips:lce_ego_dimension_shredder_weapon",
-    "pm_equips:head_claw"
+    "pm_equips:wing_tcorp_weapon_1",
+    "pm_equips:wing_tcorp_weapon_2",
+    "pm_equips:wing_tcorp_weapon_4",
+    "pm_equips:wing_rcorp_weapon4"
   ]
 }

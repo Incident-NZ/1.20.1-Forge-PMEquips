@@ -1,6 +1,6 @@
 # 調律者の防具 / Arbiter Armor
 
-NeoForge 1.21.1向けの脚防具。アイテムIDは `pm_equips:head_arbiter_armor`、クラスは `HeadArbiterArmor`。クリエイティブタブから取得できる。
+NeoForge 1.21.1向けの脚防具。アイテムIDは `pm_equips:head_arbiter_armor`、クラスは `HeadArbiter`。クリエイティブタブから取得できる。
 
 ```mcfunction
 /give @s pm_equips:head_arbiter_armor

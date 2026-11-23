@@ -9,6 +9,8 @@ import net.pm_equips.effects.SingularityEffects;
 
 public class MobEffectInit {
     public static final DeferredRegister<MobEffect> MOB_EFFECTS = DeferredRegister.create(Registries.MOB_EFFECT, PMEquipsMain.MOD_ID);
+    public static final DeferredHolder<MobEffect, MobEffect> TCORP_SIN = MOB_EFFECTS.register("effect_sin_tcorp", SingularityEffects.TCorpSingularityEffect::new);
+    public static final DeferredHolder<MobEffect, MobEffect> TARGET = MOB_EFFECTS.register("effect_target", CustomMobEffects.TargetEffect::new);
     public static final DeferredHolder<MobEffect, MobEffect> FREEZE = MOB_EFFECTS.register("effect_freeze", CustomMobEffects.FreezeEffect::new);
 
     public static final DeferredHolder<MobEffect, MobEffect> QUICK = MOB_EFFECTS.register("effect_quick", CustomMobEffects.QuickEffect::new);

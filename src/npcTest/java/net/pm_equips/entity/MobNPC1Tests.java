@@ -1,5 +1,7 @@
 package net.pm_equips.entity;
 
+import net.pm_equips.items.ClassEnergySupport;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.nio.file.Files;
@@ -324,6 +326,10 @@ public class MobNPC1Tests {
             float beforeHealth = target.getHealth();
             npc.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY); npc.setItemSlot(EquipmentSlot.OFFHAND, ItemStack.EMPTY);
             npc.setItemSlot(MobNPC1.getSlotForHand(hand), new ItemStack(item)); npc.setWeaponUser(hand, null);
+            if (item == ItemInit.RCORP_WEAPON_3.get()) {
+                npc.setItemSlot(EquipmentSlot.LEGS,new ItemStack(ItemInit.RCORP_ARMOR2_L1.get()));
+                ClassEnergySupport.energy(npc.getItemBySlot(EquipmentSlot.LEGS)).orElseThrow().receiveEnergy(4000,false);
+            } else npc.setItemSlot(EquipmentSlot.LEGS,ItemStack.EMPTY);
             npc.performRangedAttack(target, 1);
             int afterProjectiles = h.getLevel().getEntitiesOfClass(Projectile.class, npc.getBoundingBox().inflate(32)).size();
             h.assertTrue(target.getHealth() < beforeHealth || afterProjectiles > beforeProjectiles, "Weapon must damage target or emit a projectile: " + item + " in " + hand);

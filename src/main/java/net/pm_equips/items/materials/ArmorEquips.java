@@ -18,6 +18,27 @@ import net.pm_equips.ItemInit;
 import net.pm_equips.PMEquipsMain;
 
 public enum ArmorEquips {
+    HEAD_EXECUTIONER("head_executioner", 0, new int[]{0, 0, 30, 0}, 0,
+            SoundEvents.ARMOR_EQUIP_GENERIC, 30, 1, () -> Ingredient.EMPTY),
+    TCORP_ARMOR_L1("tcorp_armor_class1", 300, new int[]{0, 0, 12, 0}, 0,
+            SoundEvents.ARMOR_EQUIP_GENERIC, 4.0f, 0.1f, () -> Ingredient.of(ItemInit.TCORP_CLOCK.get())),
+
+    TCORP_ARMOR_L2("tcorp_armor_class2", 500, new int[]{0, 0, 14, 0}, 0,
+            SoundEvents.ARMOR_EQUIP_GENERIC, 8.0f, 0.2f, () -> Ingredient.of(ItemInit.TCORP_CLOCK.get())),
+
+    TCORP_ARMOR_L3("tcorp_armor_class3", 700, new int[]{0, 0, 16, 0}, 0,
+            SoundEvents.ARMOR_EQUIP_GENERIC, 10.0f, 0.3f, () -> Ingredient.of(ItemInit.TCORP_CLOCK.get())),
+
+    TCORP_ARMOR_L4("tcorp_armor_class4", 850, new int[]{0, 0, 18, 0}, 0,
+            SoundEvents.ARMOR_EQUIP_GENERIC, 12.0f, 0.4f, () -> Ingredient.of(ItemInit.TCORP_CLOCK.get())),
+
+    TCORP_ARMOR_L5("tcorp_armor_class5", 1000, new int[]{0, 0, 20, 0}, 0,
+            SoundEvents.ARMOR_EQUIP_GENERIC, 15.0f, 0.5f, () -> Ingredient.of(ItemInit.TCORP_CLOCK.get())),
+
+    RCORP_ARMOR3("rcorp_armor_nikolai", 4000, new int[]{0, 0, 30, 0}, 0,
+            SoundEvents.ARMOR_EQUIP_GENERIC, 20.0f, 1.0f, () -> Ingredient.of(ItemInit.RCORP_BATTERY.get())),
+
+
     FINGER1_ARMOR1("finger1_armor1", 1000, new int[]{0, 12, 0, 0}, 0, SoundEvents.ARMOR_EQUIP_GENERIC, 12, 0, () -> Ingredient.of(Items.IRON_INGOT)),
     FINGER1_ARMOR2("finger1_armor2", 2000, new int[]{0, 15, 0, 0}, 0, SoundEvents.ARMOR_EQUIP_GENERIC, 15, 0, () -> Ingredient.of(Items.IRON_INGOT)),
     FINGER1_ARMOR3("finger1_armor3", 3000, new int[]{0, 20, 0, 0}, 0, SoundEvents.ARMOR_EQUIP_GENERIC, 20, 0, () -> Ingredient.of(Items.IRON_INGOT)),

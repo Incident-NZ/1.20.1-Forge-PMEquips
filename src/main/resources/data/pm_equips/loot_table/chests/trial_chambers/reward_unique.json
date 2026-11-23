@@ -28,12 +28,6 @@
         },
         {
           "type": "minecraft:tag",
-          "name": "pm_equips:wing_rcorp",
-          "expand": true,
-          "weight": 1
-        },
-        {
-          "type": "minecraft:tag",
           "name": "pm_equips:wing_wcorp",
           "expand": true,
           "weight": 1
@@ -41,6 +35,12 @@
         {
           "type": "minecraft:tag",
           "name": "pm_equips:ego_t3_he",
+          "expand": true,
+          "weight": 1
+        },
+        {
+          "type": "minecraft:tag",
+          "name": "pm_equips:loot/wing_rcorp_regular",
           "expand": true,
           "weight": 1
         }

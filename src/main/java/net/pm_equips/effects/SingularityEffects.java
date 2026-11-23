@@ -9,6 +9,17 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 
 public class SingularityEffects {
+    public static class TCorpSingularityEffect extends MobEffect {
+        public TCorpSingularityEffect() {
+            super(MobEffectCategory.BENEFICIAL, 0xC9A35F);
+            addAttributeModifier(Attributes.ATTACK_DAMAGE, ResourceLocation.fromNamespaceAndPath("pm_equips", "tcorp_attack"), .10,
+                    AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+            addAttributeModifier(Attributes.MOVEMENT_SPEED, ResourceLocation.fromNamespaceAndPath("pm_equips", "tcorp_speed"), .20,
+                    AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+        }
+    }
+
+
 
     public static class KCorpSingularityEffect extends MobEffect {
         private static final ResourceLocation HEALTH_UUID = ResourceLocation.fromNamespaceAndPath("pm_equips", "kcorpsingularityeffect_health_uuid");

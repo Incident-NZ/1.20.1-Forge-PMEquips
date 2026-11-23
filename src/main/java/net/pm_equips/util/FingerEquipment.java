@@ -237,7 +237,7 @@ public final class FingerEquipment {
         return true;
     }
 
-    private static boolean isAlly(Player player, LivingEntity target) {
+    public static boolean isAlly(Player player, LivingEntity target) {
         return player.isAlliedTo(target) || target instanceof TamableAnimal pet && pet.isOwnedBy(player)
                 || target instanceof Player && !player.getServer().isPvpAllowed();
     }

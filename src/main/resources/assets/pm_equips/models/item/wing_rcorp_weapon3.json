@@ -1,0 +1,29 @@
+{
+	"format_version": "1.9.0",
+	"parent": "minecraft:item/generated",
+	"textures": {
+		"layer0": "pm_equips:item/wing_rcorp_w3"
+	},
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [45, 90, 0],
+			"translation": [0, 0, 1.5],
+			"scale": [1.5, 1.5, 1.5]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [-45, 90, 0],
+			"translation": [0, 0, 1.5],
+			"scale": [1.5, 1.5, 1.5]
+		},
+		"firstperson_righthand": {
+			"rotation": [45, 90, 0],
+			"translation": [0, 0, 1.5],
+			"scale": [1.5, 1.5, 1.5]
+		},
+		"firstperson_lefthand": {
+			"rotation": [-45, 90, 0],
+			"translation": [0, 0, 1.5],
+			"scale": [1.5, 1.5, 1.5]
+		}
+	}
+}

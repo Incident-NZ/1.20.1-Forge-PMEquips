@@ -14,9 +14,10 @@ public final class ClassEnergySupport {
     public static int getMaxEnergy(Item item) {
         if (item instanceof WingWCorpArmor || item instanceof WingWCorpWeapon1
                 || item instanceof WingWCorpWeapon2 || item instanceof WingWCorpWeapon3) return 5000;
-        if (item instanceof WingRCorp4thRabbitArmor || item instanceof WingRCorp4thRabbitWeapon1
-                || item instanceof WingRCorp4thRabbitWeapon2) return 10000;
-        if (item instanceof WingKCorpAgentArmor || item instanceof WingKCorpOfficerArmor
+        if (item instanceof WingRCorpArmor3) return 20000;
+        if (item instanceof WingRCorpArmor2 || item instanceof WingRCorpArmor1 || item instanceof WingRCorpWeapon1
+                || item instanceof WingRCorpWeapon2) return 10000;
+        if (item instanceof WingKCorpArmor2 || item instanceof WingKCorpArmor1
                 || item instanceof WingKCorpWeapon1 || item instanceof WingKCorpWeapon2
                 || item instanceof WingKCorpWeapon3) return 7500;
         return 0;
