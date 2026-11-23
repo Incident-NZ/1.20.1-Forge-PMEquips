@@ -1,7 +1,7 @@
 package net.pm_equips.client.models;
 
-import net.pm_equips.items.LobEGOSuit2Reglet;
 import net.minecraft.resources.ResourceLocation;
+import net.pm_equips.items.LobEGOSuit2Reglet;
 import software.bernie.geckolib.model.GeoModel;
 
 public class EGOS2RegletM extends GeoModel<LobEGOSuit2Reglet> {

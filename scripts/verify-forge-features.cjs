@@ -35,7 +35,7 @@ for (const lang of languages) {
 }
 const bullet = JSON.parse(fs.readFileSync(path.join(resources, 'data/pm_equips/tags/items/bullet.json')));
 for (const id of itemIDs.filter(id => id.startsWith('ammo_'))) assert(bullet.values.includes('pm_equips:' + id));
-const featureFiles = walk(java).filter(file => /(?:MobNPC[123]|PArbiterPillar[MR]?|Finger[12](?:Armor|Weapon).*|ItemAmmoThumbs.*|HeadArbiterArmor[MR]?|Arbiter.*|ForgeFeature.*|Feature.*Mixin|ItemStackData|ParticleInit)\.java$/.test(path.basename(file)));
+const featureFiles = walk(java).filter(file => /(?:MobNPC[123]|PArbiterPillar[MR]?|Finger[12](?:Armor|Weapon).*|ItemAmmoThumbs.*|HeadArbiter[MR]?|Arbiter.*|ForgeFeature.*|Feature.*Mixin|ItemStackData|ParticleInit)\.java$/.test(path.basename(file)));
 for (const file of featureFiles) {
     const text = fs.readFileSync(file, 'utf8');
     assert(!/net\.neoforged|DataComponents|EquipmentSlotGroup|ItemAttributeModifiers/.test(text), `Newer API: ${file}`);
@@ -58,7 +58,7 @@ for (const [name, entry] of Object.entries(sounds).filter(([name]) => name.inclu
 }
 const packets = fs.readFileSync(path.join(java, 'network/ForgeFeaturePackets.java'), 'utf8');
 const ids = [...packets.matchAll(/register\([^,]+,(\d+),NetworkDirection/g)].map(match => Number(match[1]));
-assert.equal(ids.length, 5);
+assert.deepEqual([...ids].sort((a,b) => a-b), [32,33,34,35,36,37]);
 assert.equal(new Set(ids).size, ids.length);
 assert(ids.every(id => id > 6 && id < 256), 'Forge packet discriminators must fit in one byte');
-console.log(`Verified ${jsonFiles.length} JSON files, ${itemIDs.length} items, ${featureFiles.length} feature Java files, localization, assets, ammo tags, sounds and five packet IDs.`);
+console.log(`Verified ${jsonFiles.length} JSON files, ${itemIDs.length} items, ${featureFiles.length} feature Java files, localization, assets, ammo tags, sounds and six packet IDs.`);

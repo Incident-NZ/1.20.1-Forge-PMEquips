@@ -5,15 +5,23 @@ import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.InputEvent;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.pm_equips.PMEquipsMain;
 import net.pm_equips.items.Finger2WeaponSP;
-import net.pm_equips.network.NetworkPacketInit;
+import net.pm_equips.items.HeadExecutioner;
 import net.pm_equips.network.ForgeFeaturePackets;
+import net.pm_equips.network.NetworkPacketInit;
 import org.joml.Vector3f;
 
 @Mod.EventBusSubscriber(modid=PMEquipsMain.MOD_ID,value=Dist.CLIENT)
@@ -21,6 +29,32 @@ public final class ForgeFeatureClient {
     private ForgeFeatureClient() {}
     @SubscribeEvent public static void onMiss(PlayerInteractEvent.LeftClickEmpty event){
         if(Finger2WeaponSP.form(event.getItemStack())!=0)NetworkPacketInit.INSTANCE.sendToServer(new ForgeFeaturePackets.CaduceusMissPacket());
+    }
+    private static boolean executionerRequireRelease;
+    @SubscribeEvent public static void onExecutionerUse(InputEvent.InteractionKeyMappingTriggered event) {
+        if (!event.isUseItem()) return;
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.player == null || mc.screen != null || mc.gameMode == null) return;
+        if (mc.player.getMainHandItem().getItem() instanceof HeadExecutioner
+                || mc.player.getOffhandItem().getItem() instanceof HeadExecutioner) executionerRequireRelease = true;
+        if (executionerRequireRelease || !HeadExecutioner.unarmed(mc.player) || HeadExecutioner.equipped(mc.player).isEmpty()
+                || mc.player.getCooldowns().isOnCooldown(HeadExecutioner.equipped(mc.player).getItem())) return;
+        InteractionResult result = InteractionResult.PASS;
+        if (mc.hitResult instanceof BlockHitResult block && block.getType() == HitResult.Type.BLOCK)
+            result = mc.gameMode.useItemOn(mc.player, event.getHand(), block);
+        else if (mc.hitResult instanceof EntityHitResult hit) {
+            result = mc.gameMode.interactAt(mc.player, hit.getEntity(), hit, event.getHand());
+            if (!result.consumesAction()) result = mc.gameMode.interact(mc.player, hit.getEntity(), event.getHand());
+        }
+        event.setCanceled(true);
+        event.setSwingHand(result.shouldSwing());
+        if (!result.consumesAction() && result != InteractionResult.FAIL && event.getHand() == InteractionHand.MAIN_HAND) {
+            NetworkPacketInit.INSTANCE.sendToServer(new ForgeFeaturePackets.ExecutionerUsePacket());
+        }
+    }
+    @SubscribeEvent public static void onExecutionerTick(TickEvent.ClientTickEvent event) {
+        if (event.phase != TickEvent.Phase.END) return;
+        if (!Minecraft.getInstance().options.keyUse.isDown()) executionerRequireRelease = false;
     }
     public static void spawnThumbTrail(Vec3 start,Vec3 end,int mask){
         var level=Minecraft.getInstance().level;double distance=start.distanceTo(end);

@@ -1,21 +1,22 @@
 package net.pm_equips.items;
 
+import java.util.function.Consumer;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.pm_equips.client.renderer.ASC2SouthArmorR;
 import org.jetbrains.annotations.NotNull;
+import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 
-import java.util.function.Consumer;
-
-public class FixerASC2SouthArmor extends net.minecraft.world.item.ArmorItem implements software.bernie.geckolib.animatable.GeoItem {
+public class FixerASC2SouthArmor extends ArmorItem implements GeoItem {
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
     public FixerASC2SouthArmor(ArmorMaterial material, Type type, Properties props) {

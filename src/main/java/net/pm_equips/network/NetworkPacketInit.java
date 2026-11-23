@@ -1,22 +1,20 @@
 package net.pm_equips.network;
 
+import java.util.UUID;
+import java.util.function.Supplier;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
 import net.pm_equips.PMEquipsMain;
+import net.pm_equips.events.CombatEvents;
 import net.pm_equips.items.*;
 import net.pm_equips.menu.LobotomyEGOExtractionMenu;
 import net.pm_equips.util.FingerEquipment;
-
-import java.util.UUID;
-import java.util.function.Supplier;
 
 public class NetworkPacketInit {
     private static final String PROTOCOL_VERSION = "2";
@@ -94,9 +92,9 @@ public class NetworkPacketInit {
 
         public static void handle(ActivateAbilityPacket msg, Supplier<NetworkEvent.Context> ctx) {
             ctx.get().enqueueWork(() -> {
-                net.minecraft.server.level.ServerPlayer player = ctx.get().getSender();
+                ServerPlayer player = ctx.get().getSender();
                 if (player != null) {
-                    net.minecraft.world.item.ItemStack gun = player.getMainHandItem();
+                    ItemStack gun = player.getMainHandItem();
                     if (gun.getItem() instanceof LobEGOWeapon4MagicBullet && gun.getOrCreateTag().getInt("abilityCharges") > 0) {
                         gun.getOrCreateTag().putBoolean("abilityActive", true);
                         gun.getOrCreateTag().putUUID("targetUUID", msg.targetUUID);
@@ -116,7 +114,7 @@ public class NetworkPacketInit {
 
         public static void handle(ReloadPacket msg, Supplier<NetworkEvent.Context> ctx) {
             ctx.get().enqueueWork(() -> {
-                net.minecraft.server.level.ServerPlayer player = ctx.get().getSender();
+                ServerPlayer player = ctx.get().getSender();
                 if (player != null) {
                     tryStartReload(player, player.getMainHandItem());
                     tryStartReload(player, player.getOffhandItem());
@@ -125,16 +123,13 @@ public class NetworkPacketInit {
             ctx.get().setPacketHandled(true);
         }
 
-        private static void tryStartReload(net.minecraft.server.level.ServerPlayer player, ItemStack stack) {
+        private static void tryStartReload(ServerPlayer player, ItemStack stack) {
             if (stack.isEmpty()) {
                 return;
             }
 
-            if (stack.getItem() instanceof LobEGOWeapon4Aroma) {
-                ((LobEGOWeapon4Aroma) stack.getItem()).startReload(stack, player);
-
-            } else if (stack.getItem() instanceof WingRCorp4thRabbitWeapon1) {
-                ((WingRCorp4thRabbitWeapon1) stack.getItem()).startReload(stack, player);
+            if (stack.getItem() instanceof WingRCorpWeapon1) {
+                ((WingRCorpWeapon1) stack.getItem()).startReload(stack, player);
             }
         }
     }
@@ -150,50 +145,19 @@ public class NetworkPacketInit {
 
         public static void handle(LegArmorAbilityActivatePacket msg, Supplier<NetworkEvent.Context> ctx) {
             ctx.get().enqueueWork(() -> {
-                net.minecraft.server.level.ServerPlayer player = ctx.get().getSender();
+                ServerPlayer player = ctx.get().getSender();
                 if (player == null) {
                     return;
                 }
-                if (HeadClawGauntlet.cycleSerum(player)) return;
+                if (HeadExecutioner.cycleSerum(player)) return;
             if (FingerEquipment.cycleAmmo(player)) return;
                 if (FingerEquipment.distributeBuff(player)) return;
 
-                ItemStack stack = player.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.LEGS);
-                if (!(stack.getItem() instanceof WingWCorpArmor
-                        || stack.getItem() instanceof WingRCorp4thRabbitArmor
-                        || stack.getItem() instanceof WingKCorpAgentArmor
-                        || stack.getItem() instanceof WingKCorpOfficerArmor)) {
-                    return;
-                }
-
-                if (stack.getItem() instanceof WingWCorpArmor) {
-                    activateEffect(player, stack, 1000, net.pm_equips.MobEffectInit.WCORP_SIN.get());
-                } else if (stack.getItem() instanceof WingRCorp4thRabbitArmor) {
-                    activateEffect(player, stack, 2000, net.pm_equips.MobEffectInit.RCORP_SIN.get());
-                } else if (stack.getItem() instanceof WingKCorpAgentArmor
-                        || stack.getItem() instanceof WingKCorpOfficerArmor) {
-                    activateEffect(player, stack, 1500, net.pm_equips.MobEffectInit.KCORP_SIN.get());
-                }
+                CombatEvents.activateArmor(player);
             });
             ctx.get().setPacketHandled(true);
         }
 
-        private static void activateEffect(
-                ServerPlayer player,
-                ItemStack stack,
-                int cost,
-                MobEffect effect
-        ) {
-            stack.getCapability(ForgeCapabilities.ENERGY)
-                    .map(storage -> {
-                        if (storage.getEnergyStored() < cost) {
-                            return false;
-                        }
-                        storage.extractEnergy(cost, false);
-                        player.addEffect(new net.minecraft.world.effect.MobEffectInstance(effect, 12000, 0));
-                        return true;
-                    });
-        }
     }
 
     public static class LobotomyEGOExtractPacket {
@@ -207,7 +171,7 @@ public class NetworkPacketInit {
 
         public static void handle(LobotomyEGOExtractPacket msg, Supplier<NetworkEvent.Context> ctx) {
             ctx.get().enqueueWork(() -> {
-                net.minecraft.server.level.ServerPlayer player = ctx.get().getSender();
+                ServerPlayer player = ctx.get().getSender();
                 if (player != null && player.containerMenu instanceof LobotomyEGOExtractionMenu menu) {
                     menu.craft(player);
                 }

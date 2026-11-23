@@ -1,5 +1,6 @@
 package net.pm_equips.compat;
 
+import java.util.List;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
@@ -11,8 +12,6 @@ import net.minecraft.world.item.ItemStack;
 import net.pm_equips.BlockInit;
 import net.pm_equips.PMEquipsMain;
 import net.pm_equips.recipe.LobotomyEGORecipeManager;
-
-import java.util.List;
 
 @JeiPlugin
 public class JEIPMEPlugin implements IModPlugin {

@@ -12,7 +12,7 @@
     }
   ],
   "result": {
-    "item": "pm_equips:ammo_shell",
-    "count": 8
+    "count": 8,
+    "item": "pm_equips:ammo_shell"
   }
 }

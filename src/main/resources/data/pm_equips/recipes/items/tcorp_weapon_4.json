@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABC"
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:stick"
+    },
+    "B": {
+      "item": "pm_equips:item_blade_gear"
+    },
+    "C": {
+      "item": "pm_equips:item_tcorp_clock"
+    }
+  },
+  "result": {
+    "item": "pm_equips:wing_tcorp_weapon_4"
+  }
+}

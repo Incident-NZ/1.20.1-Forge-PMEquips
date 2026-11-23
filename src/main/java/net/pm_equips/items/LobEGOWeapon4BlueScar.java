@@ -1,5 +1,7 @@
 package net.pm_equips.items;
 
+import java.util.List;
+import java.util.UUID;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -17,14 +19,10 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.pm_equips.ItemInit;
-import net.pm_equips.ItemInit;
 import net.pm_equips.PMEquipsMain;
 import net.pm_equips.client.screen.TooltipLines;
 import net.pm_equips.config.CommonConfig;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.List;
-import java.util.UUID;
 
 public class LobEGOWeapon4BlueScar extends SwordItem {
     private static final UUID REACH_UUID = UUID.randomUUID();

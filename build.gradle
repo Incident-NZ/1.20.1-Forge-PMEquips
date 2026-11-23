@@ -31,6 +31,12 @@ sourceSets {
     featureTest {
         compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
         runtimeClasspath += sourceSets.main.output + sourceSets.main.runtimeClasspath
+        if (project.hasProperty('featureTestFilter')) {
+            java.include '**/ForgeTestPlayers.java'
+            project.property('featureTestFilter').toString().split(',').each { testName ->
+                java.include "**/${testName.trim()}.java"
+            }
+        }
     }
 }
 

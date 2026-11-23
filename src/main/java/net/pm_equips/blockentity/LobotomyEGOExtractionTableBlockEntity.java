@@ -1,7 +1,11 @@
 package net.pm_equips.blockentity;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
@@ -24,10 +28,6 @@ import net.pm_equips.ItemInit;
 import net.pm_equips.TagInit;
 import net.pm_equips.menu.LobotomyEGOExtractionMenu;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 public class LobotomyEGOExtractionTableBlockEntity extends BlockEntity implements MenuProvider, Container {
     public static final int INPUT_SLOT_START = 0;
@@ -84,7 +84,7 @@ public class LobotomyEGOExtractionTableBlockEntity extends BlockEntity implement
     }
 
     private static List<Item> getTaggedItems(Level level, TagKey<Item> tagKey) {
-        Optional<net.minecraft.core.HolderSet.Named<Item>> tag = level.registryAccess()
+        Optional<HolderSet.Named<Item>> tag = level.registryAccess()
                 .registryOrThrow(Registries.ITEM)
                 .getTag(tagKey);
         if (tag.isEmpty()) {
@@ -144,7 +144,7 @@ public class LobotomyEGOExtractionTableBlockEntity extends BlockEntity implement
     public void load(CompoundTag tag) {
         super.load(tag);
         items.clear();
-        net.minecraft.world.ContainerHelper.loadAllItems(tag, items);
+        ContainerHelper.loadAllItems(tag, items);
     }
 
     @Override

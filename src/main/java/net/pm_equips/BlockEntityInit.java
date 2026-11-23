@@ -1,11 +1,11 @@
 package net.pm_equips;
 
-import net.pm_equips.blockentity.LobotomyEGOExtractionTableBlockEntity;
-import net.pm_equips.blockentity.PEBoxGeneratorBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import net.pm_equips.blockentity.LobotomyEGOExtractionTableBlockEntity;
+import net.pm_equips.blockentity.PEBoxGeneratorBlockEntity;
 
 public class BlockEntityInit {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, PMEquipsMain.MOD_ID);

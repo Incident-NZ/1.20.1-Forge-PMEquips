@@ -1,19 +1,18 @@
 package net.pm_equips.items;
 
+import java.util.List;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
-import net.pm_equips.ItemInit;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.Level;
+import net.pm_equips.ItemInit;
 import net.pm_equips.client.screen.TooltipLines;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.List;
 
 public class LobEGOWeapon1Penitence extends SwordItem {
 
@@ -80,4 +79,3 @@ public class LobEGOWeapon1Penitence extends SwordItem {
         super.appendHoverText(stack, level, tooltip, flag);
     }
 }
-

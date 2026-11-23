@@ -1,5 +1,7 @@
 package net.pm_equips.items;
 
+import java.util.List;
+import java.util.UUID;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -19,9 +21,6 @@ import net.pm_equips.ItemInit;
 import net.pm_equips.client.screen.TooltipLines;
 import net.pm_equips.entity.EGOHeavenP;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.List;
-import java.util.UUID;
 
 public class LobEGOWeapon4Heaven extends SwordItem {
     private static final int MIN_THROW_CHARGE_TICKS = 10;

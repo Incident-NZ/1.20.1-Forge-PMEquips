@@ -14,12 +14,12 @@
 			"translation": [0, 4.5, 1]
 		},
 		"firstperson_righthand": {
-			"rotation": [45, 90, 0],
-			"translation": [0, 3, 0]
+			"rotation": [-45, -90, 0],
+			"translation": [0, 4.5, 1]
 		},
 		"firstperson_lefthand": {
-			"rotation": [45, -90, 0],
-			"translation": [0, 3, 0]
+			"rotation": [-45, 90, 0],
+			"translation": [0, 4.5, 1]
 		},
 		"on_shelf": {
 			"rotation": [0, 0, 45],

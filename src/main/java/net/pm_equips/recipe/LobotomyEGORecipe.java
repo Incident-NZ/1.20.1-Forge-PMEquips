@@ -1,10 +1,10 @@
 package net.pm_equips.recipe;
 
+import java.util.List;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-
-import java.util.List;
 
 public class LobotomyEGORecipe {
 
@@ -37,7 +37,7 @@ public class LobotomyEGORecipe {
     }
 
     /** プレイヤーインベントリに材料が足りるか */
-    public boolean matchesInventory(net.minecraft.world.entity.player.Inventory inv) {
+    public boolean matchesInventory(Inventory inv) {
         for (IngredientEntry entry : ingredients) {
             if (countItem(inv, entry.item()) < entry.count()) {
                 return false;
@@ -47,7 +47,7 @@ public class LobotomyEGORecipe {
     }
 
     /** 材料を消費（足りる前提で呼ぶ） */
-    public void consume(net.minecraft.world.entity.player.Inventory inv) {
+    public void consume(Inventory inv) {
         for (IngredientEntry entry : ingredients) {
             int need = entry.count();
             for (int i = 0; i < inv.items.size() && need > 0; i++) {
@@ -61,7 +61,7 @@ public class LobotomyEGORecipe {
         }
     }
 
-    private static int countItem(net.minecraft.world.entity.player.Inventory inv, Item item) {
+    private static int countItem(Inventory inv, Item item) {
         int total = 0;
         for (ItemStack stack : inv.items) {
             if (stack.is(item)) {

@@ -1,14 +1,14 @@
 package net.pm_equips.network;
 
+import java.util.function.Supplier;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.NetworkEvent;
-import net.pm_equips.recipe.LobotomyEGORecipeManager;
 import net.pm_equips.recipe.LobotomyEGORecipe;
-
-import java.util.function.Supplier;
+import net.pm_equips.recipe.LobotomyEGORecipeManager;
 
 public class LobotomyEGOCraftRecipePacket {
 
@@ -38,7 +38,7 @@ public class LobotomyEGOCraftRecipePacket {
             // インベントリ参照
             if (!recipe.matchesInventory(player.getInventory())) {
                 player.displayClientMessage(
-                        net.minecraft.network.chat.Component.literal("材料不足 / Missing materials"),
+                        Component.literal("材料不足 / Missing materials"),
                         true
                 );
                 return;

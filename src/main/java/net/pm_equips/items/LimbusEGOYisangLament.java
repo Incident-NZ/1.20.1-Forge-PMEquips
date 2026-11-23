@@ -1,9 +1,14 @@
 package net.pm_equips.items;
 
+import java.util.Comparator;
+import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -27,11 +32,6 @@ import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
-
-import java.util.Comparator;
-import java.util.List;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
 
 /**
  * Limbus E.G.O - Yi Sang Lament（ガトリング）
@@ -69,7 +69,7 @@ public class LimbusEGOYisangLament extends ProjectileWeaponItem implements GeoIt
         if (hasAmmo(player)) {
             if (!level.isClientSide) {
                 level.playSound(null, player.blockPosition(),
-                        net.minecraft.sounds.SoundEvents.DISPENSER_FAIL,
+                        SoundEvents.DISPENSER_FAIL,
                         SoundSource.PLAYERS, 1.0F, 1.2F);
             }
             return InteractionResultHolder.fail(stack);

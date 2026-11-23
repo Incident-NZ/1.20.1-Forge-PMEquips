@@ -169,7 +169,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "pm_equips:head_claw",
+          "name": "pm_equips:head_executioner",
           "weight": 1
         },
         {
@@ -195,6 +195,16 @@
         {
           "type": "minecraft:item",
           "name": "pm_equips:finger2_armor3",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:wing_rcorp_armor3",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:wing_rcorp_weapon4",
           "weight": 1
         }
       ]

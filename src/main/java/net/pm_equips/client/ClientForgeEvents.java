@@ -1,28 +1,27 @@
 package net.pm_equips.client;
-import net.pm_equips.util.FingerEquipment;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraftforge.client.event.InputEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.pm_equips.ItemInit;
-import net.minecraft.world.item.Item;
-import net.minecraftforge.client.event.RenderGuiOverlayEvent;
-import net.minecraft.resources.ResourceLocation;
-import net.pm_equips.PMEquipsMain;
+import java.util.List;
 import net.minecraft.client.Minecraft;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.InputEvent;
+import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.client.event.ViewportEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.RegistryObject;
+import net.pm_equips.ItemInit;
 import net.pm_equips.KeyBindInit;
-import net.pm_equips.items.WingRCorp4thRabbitWeapon1;
+import net.pm_equips.PMEquipsMain;
+import net.pm_equips.items.WingRCorpWeapon1;
 import net.pm_equips.network.NetworkPacketInit;
 import net.pm_equips.network.RCorpRabbitRiflePacket;
-
-import java.util.List;
+import net.pm_equips.util.FingerEquipment;
 
 @Mod.EventBusSubscriber(
         modid = PMEquipsMain.MOD_ID,
@@ -73,7 +72,7 @@ public class ClientForgeEvents {
         ItemStack stack = player.getMainHandItem();
         if (stack.isEmpty()) return;
         if (!isScopeItem(stack.getItem())) return;
-        if (!net.pm_equips.client.ClientForgeEvents.isScopeActive) return;
+        if (!ClientForgeEvents.isScopeActive) return;
 
         RenderSystem.disableDepthTest();
         RenderSystem.depthMask(false);
@@ -147,8 +146,8 @@ public class ClientForgeEvents {
             ItemStack off = player.getOffhandItem();
 
             // ライフルを持っているときだけ送信（無駄パケット防止）
-            if (main.getItem() instanceof WingRCorp4thRabbitWeapon1
-                    || off.getItem() instanceof WingRCorp4thRabbitWeapon1
+            if (main.getItem() instanceof WingRCorpWeapon1
+                    || off.getItem() instanceof WingRCorpWeapon1
                     || FingerEquipment.isThumbRifle(main) || FingerEquipment.isThumbRifle(off)) {
                 NetworkPacketInit.INSTANCE.sendToServer(new RCorpRabbitRiflePacket());
             }

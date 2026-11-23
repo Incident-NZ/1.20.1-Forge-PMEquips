@@ -1,9 +1,12 @@
 package net.pm_equips.items;
 
+import java.util.List;
+import java.util.UUID;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.Stats;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -13,6 +16,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.SwordItem;
@@ -24,17 +28,14 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
-import net.pm_equips.ItemInit;
 import net.pm_equips.EntityInit;
+import net.pm_equips.ItemInit;
 import net.pm_equips.MobEffectInit;
 import net.pm_equips.SoundInit;
 import net.pm_equips.client.screen.TooltipLines;
 import net.pm_equips.config.CommonConfig;
 import net.pm_equips.entity.PWhiteNight;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.List;
-import java.util.UUID;
 
 public class LobEGOWeapon5WhiteNight extends SwordItem {
 
@@ -101,7 +102,7 @@ public class LobEGOWeapon5WhiteNight extends SwordItem {
 
             AABB box = player.getBoundingBox().expandTowards(lookDir.scale(64.0D)).inflate(1.0D);
 
-            EntityHitResult entityHit = net.minecraft.world.entity.projectile.ProjectileUtil.getEntityHitResult(
+            EntityHitResult entityHit = ProjectileUtil.getEntityHitResult(
                     level,
                     player,
                     eyePos,
@@ -116,7 +117,7 @@ public class LobEGOWeapon5WhiteNight extends SwordItem {
             if (entityHit != null && entityHit.getEntity() instanceof LivingEntity target) {
                 player.getCooldowns().addCooldown(this, 40);
                 fireRangedAttack(level, player, target, itemStack);
-                player.awardStat(net.minecraft.stats.Stats.ITEM_USED.get(this));
+                player.awardStat(Stats.ITEM_USED.get(this));
                 return InteractionResultHolder.success(itemStack);
             }
         }
@@ -213,6 +214,3 @@ public class LobEGOWeapon5WhiteNight extends SwordItem {
         super.appendHoverText(stack, level, tooltip, flag);
     }
 }
-
-
-

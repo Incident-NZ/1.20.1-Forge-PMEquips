@@ -7,4 +7,3 @@ public class ItemAmmoLobEGOMagic extends Item {
         super(properties);
     }
 }
-

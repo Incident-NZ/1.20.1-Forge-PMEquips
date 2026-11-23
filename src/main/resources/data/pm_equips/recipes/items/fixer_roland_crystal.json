@@ -1,8 +1,7 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "AAB",
-    "BAA"
+    "AAB"
   ],
   "key": {
     "A": {
@@ -13,7 +12,7 @@
     }
   },
   "result": {
-    "item": "pm_equips:fixer_color_roland_9",
-    "count": 2
+    "count": 1,
+    "item": "pm_equips:fixer_color_roland_9"
   }
 }

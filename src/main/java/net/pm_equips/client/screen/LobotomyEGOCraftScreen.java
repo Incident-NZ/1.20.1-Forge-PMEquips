@@ -1,5 +1,8 @@
 package net.pm_equips.client.screen;
 
+import java.util.ArrayList;
+import java.util.List;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -13,9 +16,6 @@ import net.pm_equips.network.LobotomyEGOCraftRecipePacket;
 import net.pm_equips.network.NetworkPacketInit;
 import net.pm_equips.recipe.LobotomyEGORecipe;
 import net.pm_equips.recipe.LobotomyEGORecipeManager;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * テクスチャ table_lcorp_extract_recipe.png 準拠
@@ -146,8 +146,8 @@ public class LobotomyEGOCraftScreen extends AbstractContainerScreen<LobotomyEGOC
                 tip.add(Component.literal(
                         ing.asStack().getHoverName().getString() + " " + have + "/" + ing.count()
                 ).withStyle(have >= ing.count()
-                        ? net.minecraft.ChatFormatting.GREEN
-                        : net.minecraft.ChatFormatting.RED));
+                        ? ChatFormatting.GREEN
+                        : ChatFormatting.RED));
             }
             g.renderComponentTooltip(font, tip, mouseX, mouseY);
         }

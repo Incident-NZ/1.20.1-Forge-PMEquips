@@ -1,5 +1,7 @@
 package net.pm_equips.items;
 
+import java.util.List;
+import java.util.UUID;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
@@ -22,9 +24,6 @@ import net.pm_equips.ItemInit;
 import net.pm_equips.PMEquipsMain;
 import net.pm_equips.client.screen.TooltipLines;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.List;
-import java.util.UUID;
 
 public class LobEGOWeapon4Swan extends SwordItem {
     private static final float REFLECTION_CHANCE = 0.1F;

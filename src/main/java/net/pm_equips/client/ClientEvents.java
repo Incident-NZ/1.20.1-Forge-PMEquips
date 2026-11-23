@@ -1,25 +1,25 @@
 package net.pm_equips.client;
 
-import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
-import net.pm_equips.BlockEntityInit;
-import net.pm_equips.EntityInit;
-import net.pm_equips.ParticleInit;
-import net.pm_equips.entity.MobNPC2;
-import net.pm_equips.client.particle.ArbiterParticle;
-import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
-import net.pm_equips.KeyBindInit;
-import net.pm_equips.MenuInit;
-import net.pm_equips.client.renderer.*;
-import net.pm_equips.client.screen.LobotomyEGOCraftScreen;
-import net.pm_equips.client.screen.LobotomyEGOExtractionScreen;
-import net.pm_equips.PMEquipsMain;
-import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
+import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.pm_equips.BlockEntityInit;
+import net.pm_equips.EntityInit;
+import net.pm_equips.KeyBindInit;
+import net.pm_equips.MenuInit;
+import net.pm_equips.PMEquipsMain;
+import net.pm_equips.ParticleInit;
+import net.pm_equips.client.particle.ArbiterParticle;
+import net.pm_equips.client.renderer.*;
+import net.pm_equips.client.screen.LobotomyEGOCraftScreen;
+import net.pm_equips.client.screen.LobotomyEGOExtractionScreen;
+import net.pm_equips.entity.MobNPC2;
 
 @Mod.EventBusSubscriber(
         modid = PMEquipsMain.MOD_ID,

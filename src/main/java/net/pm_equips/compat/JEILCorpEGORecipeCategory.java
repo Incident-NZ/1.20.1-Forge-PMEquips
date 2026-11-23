@@ -10,7 +10,7 @@ import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
-import net.pm_equips.BlockInit; // 作業台ブロックの Item に合わせて変更
+import net.pm_equips.BlockInit;
 import net.pm_equips.PMEquipsMain;
 import net.pm_equips.recipe.LobotomyEGORecipe;
 import org.jetbrains.annotations.Nullable;

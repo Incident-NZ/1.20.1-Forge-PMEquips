@@ -7,4 +7,3 @@ public class ItemAmmoExplosive extends Item {
         super(properties);
     }
 }
-

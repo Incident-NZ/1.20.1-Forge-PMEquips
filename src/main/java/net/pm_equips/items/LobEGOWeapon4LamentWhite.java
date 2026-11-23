@@ -1,5 +1,7 @@
 package net.pm_equips.items;
 
+import java.util.List;
+import java.util.function.Predicate;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -24,9 +26,6 @@ import net.pm_equips.ItemInit;
 import net.pm_equips.SoundInit;
 import net.pm_equips.client.screen.TooltipLines;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.List;
-import java.util.function.Predicate;
 
 /**
  * 単発・二丁両対応ピストル

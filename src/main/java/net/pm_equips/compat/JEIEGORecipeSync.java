@@ -1,10 +1,9 @@
 package net.pm_equips.compat;
 
-import mezz.jei.api.runtime.IJeiRuntime;
-import net.pm_equips.recipe.LobotomyEGORecipeManager;
-import net.minecraftforge.fml.ModList;
-
 import java.util.List;
+import mezz.jei.api.runtime.IJeiRuntime;
+import net.minecraftforge.fml.ModList;
+import net.pm_equips.recipe.LobotomyEGORecipeManager;
 
 public class JEIEGORecipeSync {
     private static IJeiRuntime runtime;

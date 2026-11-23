@@ -1,7 +1,7 @@
 package net.pm_equips.client.models;
 
-import net.pm_equips.items.LobEGOSuit5Smile;
 import net.minecraft.resources.ResourceLocation;
+import net.pm_equips.items.LobEGOSuit5Smile;
 import software.bernie.geckolib.model.GeoModel;
 
 public class EGOS5SmileM extends GeoModel<LobEGOSuit5Smile> {

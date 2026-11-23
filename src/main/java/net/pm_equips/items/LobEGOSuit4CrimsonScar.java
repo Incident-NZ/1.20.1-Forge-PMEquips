@@ -1,5 +1,8 @@
 package net.pm_equips.items;
 
+import java.util.List;
+import java.util.UUID;
+import java.util.function.Consumer;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -18,22 +21,19 @@ import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.pm_equips.PMEquipsMain;
 import net.pm_equips.client.renderer.EGOS4CrimsonScarR;
 import net.pm_equips.client.screen.TooltipLines;
-import net.pm_equips.PMEquipsMain;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 
-import java.util.List;
-import java.util.UUID;
-import java.util.function.Consumer;
-
 @Mod.EventBusSubscriber(modid = PMEquipsMain.MOD_ID)
-public class LobEGOSuit4CrimsonScar extends net.minecraft.world.item.ArmorItem implements software.bernie.geckolib.animatable.GeoItem {
+public class LobEGOSuit4CrimsonScar extends ArmorItem implements GeoItem {
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     private static final UUID SPEED_MODIFIER_UUID = UUID.fromString("9dff473f-e3f0-43df-9bde-87ccb2829d4a");
     private static final AttributeModifier SPEED_MODIFIER = new AttributeModifier(

@@ -1,3 +1,4 @@
+// Use --loot-only to preserve hand-edited recipes, translations, models and general equipment tags.
 const fs = require('node:fs');
 const path = require('node:path');
 const root = path.resolve(__dirname, '..');
@@ -8,8 +9,25 @@ const java = path.join(root, 'src/main/java/net/pm_equips');
 const tableDir = neo ? 'loot_table' : 'loot_tables';
 const tagDir = neo ? 'tags/item' : 'tags/items';
 const recipeDir = neo ? 'recipe' : 'recipes';
+const lootOnly = process.argv.includes('--loot-only');
 const readJSON = file => JSON.parse(fs.readFileSync(file, 'utf8'));
 function writeJSON(file, value) {
+    if (lootOnly && !file.startsWith(path.join(data, tableDir) + path.sep)
+            && !file.startsWith(path.join(data, 'loot_modifiers') + path.sep)
+            && file !== path.join(data, tagDir, 'loot/wing_rcorp_regular.json')
+            && file !== path.join(resources, 'data/forge/loot_modifiers/global_loot_modifiers.json')
+            && file !== path.join(root, 'build/equipment-content-manifest.json')) return;
+    if (lootOnly && value.pools && fs.existsSync(file)) {
+        const previous = readJSON(file);
+        value.pools = value.pools.map((pool, index) => {
+            const original = previous.pools[index];
+            if (!original) return pool;
+            const key = entry => entry.type + ':' + entry.name;
+            const wanted = new Map(pool.entries.map(entry => [key(entry), entry]));
+            const ordered = original.entries.filter(entry => wanted.delete(key(entry)));
+            return {...original, entries: [...ordered, ...wanted.values()]};
+        });
+    }
     fs.mkdirSync(path.dirname(file), {recursive: true});
     fs.writeFileSync(file, JSON.stringify(value, null, 2) + '\n');
 }
@@ -47,11 +65,11 @@ for (const locale of ['ja_jp', 'en_us']) {
     const file = path.join(resources, 'assets/pm_equips/lang', locale + '.json');
     const lang = readJSON(file);
     lang['item.pm_equips.item_finger2_cloth'] = locale === 'ja_jp' ? '人差し指 - 指令の布' : 'The Index -  Presctipt Cloth';
-    lang['tooltip.pm_equips.claw_controls'] = locale === 'ja_jp'
-        ? 'Shift+V: 血清を切り替え / 右クリック: 使用（共通CT 60秒）'
-        : 'Shift+V: cycle serum / Right-click: use (shared cooldown: 60 seconds)';
-    lang['tooltip.pm_equips.claw_serum'] = locale === 'ja_jp' ? '選択中: 血清%s' : 'Selected: Serum %s';
-    lang['tooltip.pm_equips.claw_pending'] = locale === 'ja_jp' ? '次の一撃: 攻撃力%s（特異点の補正込み）' : 'Next strike: %s attack damage (including Singularity modifiers)';
+    lang['tooltip.pm_equips.executioner_controls'] = locale === 'ja_jp'
+        ? 'Shift+V: 血清を切り替え / 両手が空で右クリック: 使用（共通CT 60秒）'
+        : 'Shift+V: cycle serum / Empty hands + right-click: use (shared cooldown: 60 seconds)';
+    lang['tooltip.pm_equips.executioner_serum'] = locale === 'ja_jp' ? '選択中: 血清%s' : 'Selected: Serum %s';
+    lang['tooltip.pm_equips.executioner_pending'] = locale === 'ja_jp' ? '次の一撃: 攻撃力%s（特異点の補正込み）' : 'Next strike: %s attack damage (including Singularity modifiers)';
     writeJSON(file, lang);
 }
 // Bring all registered ammunition into the shared bullet tag, including shotgun shells.
@@ -82,7 +100,7 @@ for (const match of registry.matchAll(/ITEMS\.register\("([a-z0-9_]+)",\s*(?:\(\
 }
 const swordTagFile = path.join(resources, neo ? 'data/minecraft/tags/item/swords.json' : 'data/minecraft/tags/items/swords.json');
 const previousSwords = fs.existsSync(swordTagFile) ? readJSON(swordTagFile).values : [];
-writeJSON(swordTagFile, {replace: false, values: [...new Set([...previousSwords, ...swords])]});
+writeJSON(swordTagFile, {replace: false, values: [...new Set([...previousSwords.filter(id => !id.startsWith("pm_equips:") || swords.includes(id)), ...swords])]});
 const entryItem = id => ({type: 'minecraft:item', name: id.includes(':') ? id : 'pm_equips:' + id, weight: 1});
 const entryTag = id => ({type: 'minecraft:tag', name: 'pm_equips:' + id, expand: true, weight: 1});
 const entries = (...groups) => groups.flat();
@@ -95,6 +113,9 @@ const tiers = (...numbers) => numbers.map(number => entryTag(['', 'ego_t1_zayin'
 const thumb = upper => equipment(['finger1_weapon1', 'finger1_weapon2', 'finger1_armor1', 'finger1_armor2', ...(upper ? ['finger1_armor3'] : [])]);
 const index = upper => equipment(['finger2_weapon1', 'finger2_armor1', ...(upper ? ['finger2_weapon2', 'finger2_weapon3', 'finger2_armor2'] : [])]);
 const wing = prefix => ids.filter(id => id.startsWith('wing_' + prefix));
+const commanders = ['wing_rcorp_armor3', 'wing_rcorp_weapon4'];
+const regularR = wing('rcorp').filter(id => !commanders.includes(id)).sort();
+writeJSON(path.join(data, tagDir, 'loot/wing_rcorp_regular.json'), {replace: false, values: regularR.map(id => 'pm_equips:' + id)});
 const additions = {};
 const bindings = {};
 function group(name, tables, content) { additions[name] = content; for (const table of tables) bindings[table] = name; }
@@ -102,30 +123,31 @@ if (neo) {
     const trial = 'chests/trial_chambers/';
     group('trial_chambers/reward', [trial + 'reward'], entries([entryTag('bullet'), entryTag('wings_material'), entryItem('item_enkephalin')]));
     group('trial_chambers/reward_common', [trial + 'reward_common'], entries(equipment(['finger1_weapon1','finger1_armor1','finger1_weapon2','finger1_armor2','finger2_weapon1','finger2_armor1']), tiers(1)));
-    group('trial_chambers/reward_rare', [trial + 'reward_rare'], entries([entryTag('wing_hcorp'),entryTag('wing_kcorp')], tiers(2)));
-    group('trial_chambers/reward_unique', [trial + 'reward_unique'], entries(equipment(['finger2_weapon2','finger2_weapon3','finger2_armor2','finger1_armor3']), [entryTag('wing_rcorp'),entryTag('wing_wcorp')], tiers(3)));
+    group('trial_chambers/reward_rare', [trial + 'reward_rare'], entries([entryTag('wing_hcorp'),entryTag('wing_kcorp'),entryTag('wing_tcorp')], tiers(2)));
+    group('trial_chambers/reward_unique', [trial + 'reward_unique'], entries(equipment(['finger2_weapon2','finger2_weapon3','finger2_armor2','finger1_armor3']), [entryTag('loot/wing_rcorp_regular'),entryTag('wing_wcorp')], tiers(3)));
     group('trial_chambers/reward_ominous_common', [trial + 'reward_ominous_common'], tiers(3));
-    group('trial_chambers/reward_ominous_rare', [trial + 'reward_ominous_rare'], entries(tiers(4), equipment(['finger2_weapon_sp_caduceus','finger2_armor3'])));
-    group('trial_chambers/reward_ominous_unique', [trial + 'reward_ominous_unique'], entries(tiers(5), equipment(['head_claw','head_arbiter_armor'])));
+    group('trial_chambers/reward_ominous_rare', [trial + 'reward_ominous_rare'], entries(tiers(4), equipment(['finger2_weapon_sp_caduceus','finger2_armor3',...commanders])));
+    group('trial_chambers/reward_ominous_unique', [trial + 'reward_ominous_unique'], entries(tiers(5), equipment(['head_executioner','head_arbiter_armor'])));
 } else {
     const enkephalin = entryItem('item_enkephalin');
     const materials = entryTag('wings_material');
-    group('illager_outpost', ['chests/pillager_outpost'], entries(thumb(false), tiers(2,3), ammoEntries(allAmmo), equipment(wing('rcorp').filter(id => !/armor_l[45]$/.test(id))), [enkephalin]));
-    group('illager_mansion', ['chests/woodland_mansion'], entries(thumb(true), tiers(2,3,4), ammoEntries(allAmmo), equipment(wing('rcorp')), [enkephalin]));
+    group('illager_outpost', ['chests/pillager_outpost'], entries(thumb(false), tiers(2,3), ammoEntries(allAmmo), equipment(regularR.filter(id => !/armor(?:2)?_l[45]$/.test(id))), [enkephalin]));
+    group('illager_mansion', ['chests/woodland_mansion'], entries(thumb(true), tiers(2,3,4), ammoEntries(allAmmo), equipment(regularR), [enkephalin]));
     group('village_smith', ['chests/village/village_armorer','chests/village/village_toolsmith','chests/village/village_weaponsmith'], entries(tiers(1,2,3), equipment(ids.filter(id => id.startsWith('asc2_'))), ammoEntries(allAmmo), [materials]));
     const houses = ['butcher','cartographer','desert_house','fisher','fletcher','mason','plains_house','savanna_house','shepherd','snowy_house','tannery','taiga_house','temple'];
     group('village_house', houses.map(id => 'chests/village/village_' + id), entries(tiers(1), ammoEntries(allAmmo), equipment(wing('lcorp')), [enkephalin]));
     const lccb = equipment(ids.filter(id => id.startsWith('lccb_')));
     const hcorp = maximumRank => equipment(wing('hcorp').filter(id => !/armor_l[1-5]$/.test(id) || Number(id.at(-1)) <= maximumRank));
-    group('underground_dungeon', ['chests/simple_dungeon'], entries(ammoEntries(allAmmo), [materials], tiers(2,3), lccb, hcorp(2), index(false)));
-    group('underground_mineshaft', ['chests/abandoned_mineshaft'], entries(ammoEntries(allAmmo), [materials], tiers(2,3), lccb, hcorp(4), index(false)));
-    group('underground_stronghold', ['chests/stronghold_corridor','chests/stronghold_crossing','chests/stronghold_library'], entries(ammoEntries(allAmmo), [materials], tiers(3,4), lccb, hcorp(5), equipment(ids.filter(id => id.startsWith('lce_ego_dimension_shredder'))), index(true)));
+    const tcorp = maximumRank => equipment(wing('tcorp').filter(id => !/_armor_l[1-5]$/.test(id) || Number(id.at(-1)) <= maximumRank));
+    group('underground_dungeon', ['chests/simple_dungeon'], entries(ammoEntries(allAmmo), [materials], tiers(2,3), lccb, hcorp(2), tcorp(2), index(false)));
+    group('underground_mineshaft', ['chests/abandoned_mineshaft'], entries(ammoEntries(allAmmo), [materials], tiers(2,3), lccb, hcorp(4), tcorp(4), index(false)));
+    group('underground_stronghold', ['chests/stronghold_corridor','chests/stronghold_crossing','chests/stronghold_library'], entries(ammoEntries(allAmmo), [materials], tiers(3,4), lccb, hcorp(5), tcorp(5), equipment(ids.filter(id => id.startsWith('lce_ego_dimension_shredder'))), index(true)));
     const lcaLCD = equipment(ids.filter(id => id.startsWith('lca_') || id.startsWith('lcd_')));
     group('nether_fortress', ['chests/nether_bridge'], entries(tiers(3,4), thumb(true), lcaLCD, ammoEntries(allAmmo)));
     group('nether_bastion', ['chests/bastion_bridge','chests/bastion_hoglin_stable','chests/bastion_other','chests/bastion_treasure'], entries(tiers(3,4,5), thumb(true), lcaLCD, ammoEntries(allAmmo)));
-    const highIndex = equipment(['finger2_weapon2','finger2_weapon3','finger2_armor2','finger2_weapon_sp_caduceus','finger2_armor3']);
+    const highIndex = equipment(['finger2_weapon2','finger2_weapon3','finger2_armor2','finger2_weapon_sp_caduceus','finger2_armor3',...commanders]);
     group('ancient_city', ['chests/ancient_city'], entries(ammoEntries(normalAmmo), tiers(4,5), equipment(wing('kcorp')), [entryItem('head_arbiter_armor')], highIndex));
-    group('end_city', ['chests/end_city_treasure'], entries(ammoEntries(normalAmmo), tiers(4,5), equipment(wing('wcorp')), [entryItem('head_claw')], highIndex));
+    group('end_city', ['chests/end_city_treasure'], entries(ammoEntries(normalAmmo), tiers(4,5), equipment(wing('wcorp')), [entryItem('head_executioner')], highIndex));
 }
 for (const [name, content] of Object.entries(additions)) {
     for (const entry of content) if (entry.type === 'minecraft:item' && entry.name.startsWith('pm_equips:') && !ids.includes(entry.name.slice(10))) throw Error('Unknown item: ' + entry.name);
@@ -157,5 +179,5 @@ for (const table of Object.keys(bindings)) {
     if (!fs.existsSync(backup)) fs.copyFileSync(file, backup);
     fs.unlinkSync(file);
 }
-writeJSON(path.join(root, 'build/equipment-content-manifest.json'), {neo, recipes, bindings, additions});
-console.log(`Generated ${Object.keys(recipes).length} recipes and ${Object.keys(additions).length} addition tables for ${Object.keys(bindings).length} vanilla tables (${neo ? 'NeoForge' : 'Forge'}).`);
+writeJSON(path.join(root, 'build/equipment-content-manifest.json'), {neo, recipes: lootOnly ? {} : recipes, bindings, additions});
+console.log(`Generated ${lootOnly ? 0 : Object.keys(recipes).length} recipes and ${Object.keys(additions).length} addition tables for ${Object.keys(bindings).length} vanilla tables (${neo ? 'NeoForge' : 'Forge'}).`);

@@ -9,7 +9,9 @@ import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.pm_equips.items.HeadArbiterArmor;
+import net.pm_equips.items.HeadArbiter;
+import net.pm_equips.items.HeadExecutioner;
+import net.pm_equips.items.WingRCorpArmor3;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -30,7 +32,9 @@ public abstract class FeatureArmorExplosionMixin {
     @Inject(method="explode",at=@At("HEAD"))
     private void pmEquips$rememberMotion(CallbackInfo ci){
         for(LivingEntity wearer:level.getEntitiesOfClass(LivingEntity.class,new AABB(x,y,z,x,y,z).inflate(radius*2+1),
-                p->p.getItemBySlot(EquipmentSlot.LEGS).getItem() instanceof HeadArbiterArmor))
+                p->p.getItemBySlot(EquipmentSlot.LEGS).getItem() instanceof HeadArbiter
+                        || p.getItemBySlot(EquipmentSlot.LEGS).getItem() instanceof HeadExecutioner
+                        || p.getItemBySlot(EquipmentSlot.LEGS).getItem() instanceof WingRCorpArmor3))
             pmEquips$protectedMotion.put(wearer,wearer.getDeltaMovement());
     }
     @Inject(method="explode",at=@At("TAIL"))

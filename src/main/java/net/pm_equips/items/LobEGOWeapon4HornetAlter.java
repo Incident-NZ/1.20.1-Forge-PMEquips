@@ -1,5 +1,9 @@
 package net.pm_equips.items;
 
+import java.util.Comparator;
+import java.util.List;
+import java.util.function.Predicate;
+import javax.swing.*;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -19,11 +23,6 @@ import net.minecraft.world.phys.Vec3;
 import net.pm_equips.ItemInit;
 import net.pm_equips.SoundInit;
 import net.pm_equips.client.screen.TooltipLines;
-
-import javax.swing.*;
-import java.util.Comparator;
-import java.util.List;
-import java.util.function.Predicate;
 
 /**
  * Roland Logic SG

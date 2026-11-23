@@ -22,7 +22,7 @@ public class ItemStackEnergyStorage implements IEnergyStorage {
     }
 
     private int getStored() {
-        return tag().getInt("Energy");
+        return Math.max(0, Math.min(capacity, tag().getInt("Energy")));
     }
 
     private void setStored(int amount) {
@@ -46,7 +46,7 @@ public class ItemStackEnergyStorage implements IEnergyStorage {
 
         int accepted = Math.min(
                 capacity - stored,
-                maxReceive
+                Math.max(0, maxReceive)
         );
 
         if(!simulate) {
@@ -66,7 +66,7 @@ public class ItemStackEnergyStorage implements IEnergyStorage {
 
         int extracted = Math.min(
                 stored,
-                maxExtract
+                Math.max(0, maxExtract)
         );
 
         if(!simulate) {

@@ -337,6 +337,51 @@
           "type": "minecraft:item",
           "name": "pm_equips:finger2_armor2",
           "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:wing_tcorp_weapon_1",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:wing_tcorp_weapon_2",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:wing_tcorp_weapon_3",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:wing_tcorp_weapon_4",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:wing_tcorp_armor_l1",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:wing_tcorp_armor_l2",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:wing_tcorp_armor_l3",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:wing_tcorp_armor_l4",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:wing_tcorp_armor_l5",
+          "weight": 1
         }
       ]
     }

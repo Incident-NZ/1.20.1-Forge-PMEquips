@@ -1,5 +1,7 @@
 package net.pm_equips.events;
 
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -9,9 +11,6 @@ import net.pm_equips.network.NetworkPacketInit;
 import net.pm_equips.network.SyncEGORecipesPacket;
 import net.pm_equips.recipe.LobotomyEGORecipe;
 import net.pm_equips.recipe.LobotomyEGORecipeManager;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Mod.EventBusSubscriber(modid = "pm_equips", bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ForgeCommonEvents {

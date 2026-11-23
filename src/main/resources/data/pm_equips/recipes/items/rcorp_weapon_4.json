@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABC"
+  ],
+  "key": {
+    "A": {
+      "tag": "minecraft:swords"
+    },
+    "B": {
+      "item": "pm_equips:item_rcorp_battery"
+    },
+    "C": {
+      "item": "pm_equips:item_rcorp_battery"
+    }
+  },
+  "result": {
+    "item": "pm_equips:wing_rcorp_weapon4"
+  }
+}

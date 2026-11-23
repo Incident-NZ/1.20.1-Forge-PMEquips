@@ -1,5 +1,7 @@
 package net.pm_equips.items;
 
+import java.util.List;
+import java.util.function.Predicate;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -16,15 +18,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.pm_equips.ItemInit;
 import net.pm_equips.SoundInit;
-
-import java.util.List;
-import java.util.function.Predicate;
 
 public class LCCBPistol extends ProjectileWeaponItem {
     private static final float DAMAGE = 3.0f;
@@ -100,10 +100,10 @@ public class LCCBPistol extends ProjectileWeaponItem {
             }
         } else {
             // ブロックヒット判定（ブロックに当たった場合の位置を取得）
-            HitResult blockHit = level.clip(new net.minecraft.world.level.ClipContext(
+            HitResult blockHit = level.clip(new ClipContext(
                     eyePos, endPos,
-                    net.minecraft.world.level.ClipContext.Block.COLLIDER,
-                    net.minecraft.world.level.ClipContext.Fluid.NONE,
+                    ClipContext.Block.COLLIDER,
+                    ClipContext.Fluid.NONE,
                     player
             ));
             hitPos = blockHit.getLocation();

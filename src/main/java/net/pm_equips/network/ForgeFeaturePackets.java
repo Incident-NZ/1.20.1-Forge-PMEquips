@@ -19,6 +19,7 @@ import net.pm_equips.client.ForgeFeatureClient;
 import net.pm_equips.entity.MobNPC2;
 import net.pm_equips.entity.MobNPC3;
 import net.pm_equips.items.Finger2WeaponSP;
+import net.pm_equips.items.HeadExecutioner;
 
 /** Forge 1.20.1 transport for feature data; all gameplay handlers run on the server thread. */
 public final class ForgeFeaturePackets {
@@ -27,6 +28,8 @@ public final class ForgeFeaturePackets {
 
     public static void register() {
         if(registered)return; registered=true;
+        register(ExecutionerUsePacket.class,37,NetworkDirection.PLAY_TO_SERVER,(p,b)->{},b->new ExecutionerUsePacket(),
+                (p,c)->{if(c.get().getSender()!=null)HeadExecutioner.activate(c.get().getSender());});
         register(ArbiterArmorPacket.class,32,NetworkDirection.PLAY_TO_SERVER,
                 (p,b)->b.writeByte(p.action()),b->new ArbiterArmorPacket(b.readByte()),(p,c)->{
                     if(c.get().getSender()!=null)ArbiterArmorPacket.process(c.get().getSender(),p.action());
@@ -66,4 +69,5 @@ public final class ForgeFeaturePackets {
     }
     public record FingerShotTrail(Vec3 start,Vec3 end,int mask) {}
     public record CaduceusMissPacket() {}
+    public record ExecutionerUsePacket() {}
 }

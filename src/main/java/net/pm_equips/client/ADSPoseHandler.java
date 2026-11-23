@@ -1,13 +1,12 @@
 package net.pm_equips.client;
 
+import java.util.List;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.RegistryObject;
 import net.pm_equips.ItemInit;
-
-import java.util.List;
 
 public class ADSPoseHandler
 {

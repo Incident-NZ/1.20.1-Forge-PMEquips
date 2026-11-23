@@ -1,5 +1,7 @@
 package net.pm_equips.items;
 
+import java.util.Comparator;
+import java.util.List;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -23,9 +25,6 @@ import net.minecraft.world.phys.Vec3;
 import net.pm_equips.ItemInit;
 import net.pm_equips.client.screen.TooltipLines;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Comparator;
-import java.util.List;
 
 /**
  * - 近接: 攻撃力8 / 速度1.2 / 耐久3000

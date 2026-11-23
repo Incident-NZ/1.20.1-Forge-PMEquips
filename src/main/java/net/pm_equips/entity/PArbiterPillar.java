@@ -28,19 +28,19 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.event.ForgeEventFactory;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fluids.FluidType;
+import net.minecraftforge.fml.common.Mod;
 import net.pm_equips.EntityInit;
 import net.pm_equips.MobEffectInit;
 import net.pm_equips.PMEquipsMain;
 import net.pm_equips.ParticleInit;
 import net.pm_equips.SoundInit;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 @Mod.EventBusSubscriber(modid = PMEquipsMain.MOD_ID)

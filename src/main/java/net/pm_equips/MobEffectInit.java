@@ -9,6 +9,8 @@ import net.pm_equips.effects.SingularityEffects;
 
 public class MobEffectInit {
     public static final DeferredRegister<MobEffect> MOB_EFFECTS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, PMEquipsMain.MOD_ID);
+    public static final RegistryObject<MobEffect> TCORP_SIN = MOB_EFFECTS.register("effect_sin_tcorp", SingularityEffects.TCorpSingularityEffect::new);
+    public static final RegistryObject<MobEffect> TARGET = MOB_EFFECTS.register("effect_target", CustomMobEffects.TargetEffect::new);
 
     public static final RegistryObject<MobEffect> FREEZE = MOB_EFFECTS.register("effect_freeze", CustomMobEffects.FreezeEffect::new);
     public static final RegistryObject<MobEffect> UNLOCKED = MOB_EFFECTS.register("effect_unlocked", CustomMobEffects.UnlockedEffect::new);

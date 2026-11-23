@@ -36,7 +36,7 @@ import net.minecraftforge.common.ForgeMod;
 import net.minecraft.nbt.CompoundTag;
 import net.pm_equips.MobEffectInit;
 import net.pm_equips.SoundInit;
-import net.pm_equips.items.HeadArbiterArmor;
+import net.pm_equips.items.HeadArbiter;
 import net.pm_equips.network.ArbiterArmorPacket;
 import net.pm_equips.network.SyncEGORecipesPacket;
 import net.pm_equips.network.NetworkPacketInit;
@@ -83,7 +83,7 @@ public class ArbiterArmorTests {
     @GameTest(template = "npc_empty", timeoutTicks = 60)
     public static void armorHasRealFiftyStatsAndNeverBreaks(GameTestHelper h) {
         Player player = wearer(h); ItemStack armor = player.getItemBySlot(EquipmentSlot.LEGS);
-        HeadArbiterArmor item = (HeadArbiterArmor) armor.getItem();
+        HeadArbiter item = (HeadArbiter) armor.getItem();
         h.assertTrue(item.getEquipmentSlot() == EquipmentSlot.LEGS && item.getDefense() == 50 && item.getToughness() == 50,
                 "Armor declares the leg slot and fifty defense/toughness");
         player.tick();

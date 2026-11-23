@@ -1,9 +1,8 @@
 package net.pm_equips.client.screen;
 
+import java.util.List;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-
-import java.util.List;
 
 public final class TooltipLines {
 

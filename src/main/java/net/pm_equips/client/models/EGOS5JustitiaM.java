@@ -1,7 +1,7 @@
 package net.pm_equips.client.models;
 
-import net.pm_equips.items.LobEGOSuit5Justitia;
 import net.minecraft.resources.ResourceLocation;
+import net.pm_equips.items.LobEGOSuit5Justitia;
 import software.bernie.geckolib.model.GeoModel;
 
 public class EGOS5JustitiaM extends GeoModel<LobEGOSuit5Justitia> {

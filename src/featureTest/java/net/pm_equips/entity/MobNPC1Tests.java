@@ -1,5 +1,7 @@
 package net.pm_equips.entity;
 
+import net.pm_equips.items.ClassEnergySupport;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.nio.file.Files;
@@ -14,6 +16,8 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.npc.VillagerProfession;
@@ -344,6 +348,10 @@ public class MobNPC1Tests {
             float beforeHealth = target.getHealth();
             npc.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY); npc.setItemSlot(EquipmentSlot.OFFHAND, ItemStack.EMPTY);
             npc.setItemSlot(MobNPC1.getSlotForHand(hand), new ItemStack(item)); npc.setWeaponUser(hand, null);
+            if (item == ItemInit.RCORP_WEAPON_3.get()) {
+                npc.setItemSlot(EquipmentSlot.LEGS,new ItemStack(ItemInit.RCORP_ARMOR2_L1.get()));
+                ClassEnergySupport.energy(npc.getItemBySlot(EquipmentSlot.LEGS)).orElseThrow().receiveEnergy(4000,false);
+            } else npc.setItemSlot(EquipmentSlot.LEGS,ItemStack.EMPTY);
             npc.performRangedAttack(target, 1);
             int afterProjectiles = h.getLevel().getEntitiesOfClass(Projectile.class, npc.getBoundingBox().inflate(32)).size();
             h.assertTrue(target.getHealth() < beforeHealth || afterProjectiles > beforeProjectiles, "Weapon must damage target or emit a projectile: " + item + " in " + hand);
@@ -386,17 +394,25 @@ public class MobNPC1Tests {
     @GameTest(batch = "npc_sleep", template = "npc_empty", timeoutTicks = 80)
     public static void nightSleepAndBareHandWake(GameTestHelper h) {
         buildHouse(h, 1, true);
-        MobNPC1 npc = npc(h); npc.moveTo(h.absolutePos(new BlockPos(3, 1, 3)).getCenter()); npc.setNoAi(false);
+        MobNPC1 npc = npc(h); npc.moveTo(h.absolutePos(new BlockPos(3, 1, 3)).getCenter());
+        // Earlier combat tests can leave enemies nearby; sleep requires a safe room.
+        h.getLevel().getEntitiesOfClass(LivingEntity.class, npc.getBoundingBox().inflate(15), entity -> entity instanceof Enemy)
+                .forEach(LivingEntity::discard);
         Player player = ForgeTestPlayers.makeMockPlayer(h,GameType.SURVIVAL);
         give(npc, player, new ItemStack(Items.IRON_HELMET));
-        long time = h.getLevel().getDayTime(); h.getLevel().setDayTime(18000);
-        h.runAfterDelay(15, () -> {
-            try {
-                h.assertTrue(npc.isResting() && npc.isSleeping(), "Wild NPC actually enters a bed at night");
-                give(npc, player, ItemStack.EMPTY);
-                h.assertTrue(!npc.isResting() && npc.getItemBySlot(EquipmentSlot.HEAD).is(Items.IRON_HELMET), "A sleeping NPC wakes without dropping armor");
-                h.succeed();
-            } finally { h.getLevel().setDayTime(time); }
+        // Allow queued bed POI updates to finish before the first AI rest search.
+        h.runAfterDelay(2, () -> {
+            h.assertTrue(MobNPC3.findRestPlace(npc).equals(h.absolutePos(new BlockPos(3, 1, 3))), "The room's bed is registered before starting sleep AI");
+            npc.setNoAi(false);
+            long time = h.getLevel().getDayTime(); h.getLevel().setDayTime(18000);
+            h.runAfterDelay(15, () -> {
+                try {
+                    h.assertTrue(npc.isResting() && npc.isSleeping(), "Wild NPC actually enters a bed at night");
+                    give(npc, player, ItemStack.EMPTY);
+                    h.assertTrue(!npc.isResting() && npc.getItemBySlot(EquipmentSlot.HEAD).is(Items.IRON_HELMET), "A sleeping NPC wakes without dropping armor");
+                    h.succeed();
+                } finally { h.getLevel().setDayTime(time); }
+            });
         });
     }
 

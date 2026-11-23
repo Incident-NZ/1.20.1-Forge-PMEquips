@@ -26,19 +26,23 @@ function expandTag(name) {
     }
     return result;
 }
-for (const name of ['ego_t1_zayin','ego_t2_teth','ego_t3_he','ego_t4_waw','ego_t5_aleph','wings_material','bullet',...(neo ? ['wing_hcorp','wing_kcorp','wing_rcorp','wing_wcorp'] : [])]) expandTag(name);
+for (const name of ['ego_t1_zayin','ego_t2_teth','ego_t3_he','ego_t4_waw','ego_t5_aleph','wings_material','bullet','wing_tcorp','loot/wing_rcorp_regular',...(neo ? ['wing_hcorp','wing_kcorp','wing_rcorp','wing_wcorp'] : [])]) expandTag(name);
 const recipes = [
     ['finger1_weapon1',5],['finger1_weapon2',6],['finger1_armor1',9],['finger1_armor2',9],['finger1_armor3',9],
     ['finger2_weapon1',2],['finger2_weapon2',3],['finger2_weapon3',3],['finger2_armor1',9],['finger2_armor2',9]
 ];
+function ingredients(recipe) {
+    if (recipe.type === 'minecraft:crafting_shaped') return recipe.pattern.join('').split('').filter(key => key !== ' ').map(key => recipe.key[key]);
+    assert.equal(recipe.type, 'minecraft:crafting_shapeless');
+    return recipe.ingredients;
+}
 for (const [id, count] of recipes) {
-    const recipe = json(path.join(data,recipeDir,'equipment',id+'.json'));
-    assert.equal(recipe.type,'minecraft:crafting_shapeless');
-    assert.equal(recipe.ingredients.length,count,id+' material count');
+    const recipe = json(path.join(data,recipeDir,'items',id+'.json'));
+    assert.equal(ingredients(recipe).length,count,id+' material count');
     assert.equal(recipe.result[neo?'id':'item'],'pm_equips:'+id);
 }
-const messenger = json(path.join(data,recipeDir,'equipment/finger2_weapon3.json'));
-assert(messenger.ingredients.some(i => i.item === (neo?'minecraft:trial_key':'minecraft:gold_ingot')));
+const messenger = json(path.join(data,recipeDir,'items/finger2_weapon3.json'));
+assert(ingredients(messenger).some(i => i.item === (neo?'minecraft:trial_key':'minecraft:gold_ingot')));
 function names(name) {
     const pools = json(path.join(data,tableDir,'chests',name+'.json')).pools;
     const result = new Set();
@@ -55,25 +59,29 @@ const prefix = p => [...ids].filter(id => id.startsWith('pm_equips:'+p));
 const ego = (...levels) => combine(...levels.map(level => expandTag(['','ego_t1_zayin','ego_t2_teth','ego_t3_he','ego_t4_waw','ego_t5_aleph'][level])));
 const bullet = expandTag('bullet'), materials = expandTag('wings_material');
 const thumb = boss => combine('finger1_weapon1','finger1_weapon2','finger1_armor1','finger1_armor2',...(boss?['finger1_armor3']:[]));
+const commanders = ['pm_equips:wing_rcorp_armor3','pm_equips:wing_rcorp_weapon4'];
+const regularR = expandTag('loot/wing_rcorp_regular');
+assert.deepEqual([...regularR].sort(), prefix('wing_rcorp').filter(id => !commanders.includes(id)).sort(), 'Regular R loot excludes commander gear only');
 const index = proxy => combine('finger2_weapon1','finger2_armor1',...(proxy?['finger2_weapon2','finger2_weapon3','finger2_armor2']:[]));
 if (neo) {
     exact('trial_chambers/reward',combine(bullet,materials,'item_enkephalin'));
     exact('trial_chambers/reward_common',combine(thumb(false),index(false),ego(1)));
-    exact('trial_chambers/reward_rare',combine(expandTag('wing_hcorp'),expandTag('wing_kcorp'),ego(2)));
-    exact('trial_chambers/reward_unique',combine('finger2_weapon2','finger2_weapon3','finger2_armor2','finger1_armor3',expandTag('wing_rcorp'),expandTag('wing_wcorp'),ego(3)));
+    exact('trial_chambers/reward_rare',combine(expandTag('wing_hcorp'),expandTag('wing_kcorp'),expandTag('wing_tcorp'),ego(2)));
+    exact('trial_chambers/reward_unique',combine('finger2_weapon2','finger2_weapon3','finger2_armor2','finger1_armor3',regularR,expandTag('wing_wcorp'),ego(3)));
     exact('trial_chambers/reward_ominous_common',ego(3));
-    exact('trial_chambers/reward_ominous_rare',combine(ego(4),'finger2_weapon_sp_caduceus','finger2_armor3'));
-    exact('trial_chambers/reward_ominous_unique',combine(ego(5),'head_claw','head_arbiter_armor'));
+    exact('trial_chambers/reward_ominous_rare',combine(ego(4),'finger2_weapon_sp_caduceus','finger2_armor3',commanders));
+    exact('trial_chambers/reward_ominous_unique',combine(ego(5),'head_executioner','head_arbiter_armor'));
     for (const name of ['reward','reward_common','reward_rare','reward_unique','reward_ominous_common','reward_ominous_rare','reward_ominous_unique'])
         assert(!fs.existsSync(path.join(res,'data/minecraft/loot_table/chests/trial_chambers',name+'.json')), 'Vanilla override remains: '+name);
 } else {
-    exact('illager_outpost',combine(thumb(false),ego(2,3),bullet,prefix('wing_rcorp').filter(id=>!/_armor_l[45]$/.test(id)),'item_enkephalin'));
-    exact('illager_mansion',combine(thumb(true),ego(2,3,4),bullet,prefix('wing_rcorp'),'item_enkephalin'));
+    exact('illager_outpost',combine(thumb(false),ego(2,3),bullet,[...regularR].filter(id=>!/armor(?:2)?_l[45]$/.test(id)),'item_enkephalin'));
+    exact('illager_mansion',combine(thumb(true),ego(2,3,4),bullet,regularR,'item_enkephalin'));
     exact('village_smith',combine(ego(1,2,3),prefix('asc2_'),bullet,materials));
     exact('village_house',combine(ego(1),bullet,prefix('wing_lcorp'),'item_enkephalin'));
     for (const [name, maximumRank] of [['underground_dungeon',2],['underground_mineshaft',4],['underground_stronghold',5]]) {
+        const tcorp = prefix('wing_tcorp').filter(id=>!/_armor_l[1-5]$/.test(id)||Number(id.at(-1))<=maximumRank);
         const hcorp = prefix('wing_hcorp').filter(id=>!/_armor_l[1-5]$/.test(id)||Number(id.at(-1))<=maximumRank);
-        exact(name,combine(bullet,materials,name.endsWith('stronghold')?ego(3,4):ego(2,3),prefix('lccb_'),hcorp,
+        exact(name,combine(bullet,materials,name.endsWith('stronghold')?ego(3,4):ego(2,3),prefix('lccb_'),hcorp,tcorp,
             index(name.endsWith('stronghold')),name.endsWith('stronghold')?prefix('lce_ego_dimension_shredder'):[]));
         for(const branch of ['mao','si','you']) for(let rank=1;rank<=5;rank++)
             assert.equal(names(name).has('pm_equips:wing_hcorp_'+branch+'_armor_l'+rank),rank<=maximumRank,name+' H armor rank');
@@ -82,9 +90,9 @@ if (neo) {
     exact('nether_fortress',combine(ego(3,4),thumb(true),la,bullet));
     exact('nether_bastion',combine(ego(3,4,5),thumb(true),la,bullet));
     const regularAmmo = [...bullet].filter(id=>!id.startsWith('pm_equips:ammo_thumbs_'));
-    const highIndex = combine('finger2_weapon2','finger2_weapon3','finger2_armor2','finger2_weapon_sp_caduceus','finger2_armor3');
+    const highIndex = combine('finger2_weapon2','finger2_weapon3','finger2_armor2','finger2_weapon_sp_caduceus','finger2_armor3',commanders);
     exact('ancient_city',combine(regularAmmo,ego(4,5),prefix('wing_kcorp'),'head_arbiter_armor',highIndex));
-    exact('end_city',combine(regularAmmo,ego(4,5),prefix('wing_wcorp'),'head_claw',highIndex));
+    exact('end_city',combine(regularAmmo,ego(4,5),prefix('wing_wcorp'),'head_executioner',highIndex));
     const modifiers = json(path.join(res,'data/forge/loot_modifiers/global_loot_modifiers.json'));
     assert.equal(modifiers.replace,false);
     const equipmentModifiers = modifiers.entries.filter(id=>id.startsWith('pm_equips:equipment/'));

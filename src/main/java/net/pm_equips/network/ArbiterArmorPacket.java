@@ -15,11 +15,11 @@ import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.server.ServerStoppedEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.pm_equips.ItemInit;
 import net.pm_equips.MobEffectInit;
 import net.pm_equips.PMEquipsMain;
@@ -27,7 +27,7 @@ import net.pm_equips.SoundInit;
 import net.pm_equips.entity.MobNPC1;
 import net.pm_equips.entity.MobNPC3;
 import net.pm_equips.entity.PArbiterPillar;
-import net.pm_equips.items.HeadArbiterArmor;
+import net.pm_equips.items.HeadArbiter;
 
 /** Only input edges/heartbeats cross the network; the server measures charge time and chooses the hit. */
 @Mod.EventBusSubscriber(modid = PMEquipsMain.MOD_ID)
@@ -57,7 +57,7 @@ public record ArbiterArmorPacket(byte action)  {
 public static boolean canUse(Player player) {
         return player.isAlive() && !player.isSpectator() && !player.isSleeping()
                 && player.getMainHandItem().isEmpty() && player.getOffhandItem().isEmpty()
-                && player.getItemBySlot(EquipmentSlot.LEGS).getItem() instanceof HeadArbiterArmor;
+                && player.getItemBySlot(EquipmentSlot.LEGS).getItem() instanceof HeadArbiter;
     }
 
 

@@ -233,7 +233,13 @@ let items = 0;
 for (const [, item, reference, constructor] of readJava('ItemInit.java').matchAll(
     /ITEMS\.register\("([^"]+)",\s*(?:(\w+)::new|\(\)\s*->\s*new\s+(\w+)\()/g)) {
     const itemClass = reference ?? constructor;
-    const model = armor.get(itemClass);
+    let rendererClass = itemClass;
+    while (!armor.has(rendererClass) && fs.existsSync(path.join(java, rendererClass + '.java'))) {
+        const parent = /class\s+\w+\s+extends\s+(\w+)/.exec(readJava(rendererClass + '.java'))?.[1];
+        if (!parent || parent === rendererClass) break;
+        rendererClass = parent;
+    }
+    const model = armor.get(rendererClass);
     if (!model) continue;
     const meshName = path.basename(model.geometry, '.geo.json');
     if (!geometries.has(meshName)) {
@@ -244,7 +250,7 @@ for (const [, item, reference, constructor] of readJava('ItemInit.java').matchAl
         parent: 'pm_equips:pm_equips_armor/' + meshName,
         render_properties: { texture_path: 'pm_equips:' + model.texture }
     });
-    used.add(itemClass);
+    used.add(rendererClass);
     items++;
 }
 assert.equal(used.size, armor.size, 'A GeoArmorRenderer has no registered item');

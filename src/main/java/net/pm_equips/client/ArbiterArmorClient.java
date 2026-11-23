@@ -10,16 +10,16 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.minecraftforge.client.event.InputEvent;
-import net.pm_equips.network.NetworkPacketInit;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.pm_equips.PMEquipsMain;
 import net.pm_equips.ParticleInit;
-import net.pm_equips.items.HeadArbiterArmor;
+import net.pm_equips.items.HeadArbiter;
 import net.pm_equips.network.ArbiterArmorPacket;
+import net.pm_equips.network.NetworkPacketInit;
 
 @Mod.EventBusSubscriber(modid = PMEquipsMain.MOD_ID, value = Dist.CLIENT)
 public final class ArbiterArmorClient {
@@ -35,8 +35,8 @@ public final class ArbiterArmorClient {
         if (!event.isUseItem()) return;
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null || mc.screen != null) return;
-        if (mc.player.getMainHandItem().getItem() instanceof HeadArbiterArmor
-                || mc.player.getOffhandItem().getItem() instanceof HeadArbiterArmor) {
+        if (mc.player.getMainHandItem().getItem() instanceof HeadArbiter
+                || mc.player.getOffhandItem().getItem() instanceof HeadArbiter) {
             requireRelease = true; // Equipping the item must not become an accidental attack.
         }
         if (requireRelease || !ArbiterArmorPacket.canUse(mc.player)) return;

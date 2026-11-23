@@ -9,7 +9,7 @@
     }
   ],
   "result": {
-    "item": "pm_equips:ammo_small",
-    "count": 16
+    "count": 16,
+    "item": "pm_equips:ammo_small"
   }
 }

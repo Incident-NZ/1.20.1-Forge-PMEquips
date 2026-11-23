@@ -7,7 +7,7 @@ import software.bernie.geckolib.model.GeoModel;
 public class Finger2Armor1M extends GeoModel<Finger2Armor1> {
     @Override
     public ResourceLocation getModelResource(Finger2Armor1 animatable) {
-        return new ResourceLocation("pm_equips", "geo/finger2_armor1.geo.json");
+        return new ResourceLocation("pm_equips", "geo/armor_finger2_1.geo.json");
     }
 
     @Override

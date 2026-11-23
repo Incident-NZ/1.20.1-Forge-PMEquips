@@ -6,8 +6,8 @@ import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.pm_equips.items.LobEGOWeapon4Lamp;
 import net.pm_equips.items.FixerColorRolandWeapon10;
+import net.pm_equips.items.LobEGOWeapon4Lamp;
 
 @Mod.EventBusSubscriber(modid = "pm_equips")
 public class ModCommonEvents {

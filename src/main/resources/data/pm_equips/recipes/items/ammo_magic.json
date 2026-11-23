@@ -12,7 +12,7 @@
     }
   ],
   "result": {
-    "item": "pm_equips:ammo_magic",
-    "count": 7
+    "count": 7,
+    "item": "pm_equips:ammo_magic"
   }
 }

@@ -1,17 +1,18 @@
 package net.pm_equips;
 
-import net.pm_equips.config.CommonConfig;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.pm_equips.network.NetworkPacketInit;
-import net.pm_equips.loot.EquipmentLootModifier;
+import net.pm_equips.config.CommonConfig;
 import net.pm_equips.entity.MobNPC3;
+import net.pm_equips.loot.EquipmentLootModifier;
+import net.pm_equips.network.NetworkPacketInit;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import software.bernie.geckolib.GeckoLib;
@@ -40,7 +41,7 @@ public class PMEquipsMain {
         MobNPC3.prepareSkinDirectory();
 
         modEventBus.addListener(this::setup);
-        ModLoadingContext.get().registerConfig(net.minecraftforge.fml.config.ModConfig.Type.COMMON,
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON,
                 CommonConfig.COMMON_CONFIG, MOD_ID + "-common.toml");
 
         MinecraftForge.EVENT_BUS.register(this);

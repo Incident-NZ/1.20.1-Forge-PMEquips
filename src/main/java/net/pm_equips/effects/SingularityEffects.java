@@ -1,5 +1,6 @@
 package net.pm_equips.effects;
 
+import java.util.UUID;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
@@ -8,9 +9,17 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 
-import java.util.UUID;
-
 public class SingularityEffects {
+
+    public static class TCorpSingularityEffect extends MobEffect {
+        public TCorpSingularityEffect() {
+            super(MobEffectCategory.BENEFICIAL, 0xC9A35F);
+            addAttributeModifier(Attributes.ATTACK_DAMAGE, "5d990a30-d11e-4d29-9381-a7c50954c101", .10,
+                    AttributeModifier.Operation.MULTIPLY_TOTAL);
+            addAttributeModifier(Attributes.MOVEMENT_SPEED, "5d990a30-d11e-4d29-9381-a7c50954c102", .20,
+                    AttributeModifier.Operation.MULTIPLY_TOTAL);
+        }
+    }
 
     public static class KCorpSingularityEffect extends MobEffect {
         private static final UUID HEALTH_UUID = UUID.randomUUID();

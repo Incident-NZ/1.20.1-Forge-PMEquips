@@ -10,8 +10,7 @@
     "FeatureRestraintMixin"
   ],
   "client": [
-    "HumanoidModelMixin",
-    "PMEquipsClientMixin"
+    "HumanoidModelMixin"
   ],
   "server": [],
   "injectors": {

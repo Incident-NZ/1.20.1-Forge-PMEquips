@@ -22,9 +22,9 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.pm_equips.PMEquipsMain;
 
 /** Vanilla PlayerModel, including skin layers, walking, swimming and held-item animations. */

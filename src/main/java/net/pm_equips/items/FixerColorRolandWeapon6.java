@@ -1,5 +1,7 @@
 package net.pm_equips.items;
 
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundSource;
@@ -20,9 +22,6 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.pm_equips.SoundInit;
 import net.pm_equips.events.RolandMookDropHandler;
-
-import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class FixerColorRolandWeapon6 extends SwordItem {
     private static final String TAG_DRAWN = "roland_mook_drawn";

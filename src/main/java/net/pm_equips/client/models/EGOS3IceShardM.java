@@ -1,7 +1,7 @@
 package net.pm_equips.client.models;
 
-import net.pm_equips.items.LobEGOSuit3IceShard;
 import net.minecraft.resources.ResourceLocation;
+import net.pm_equips.items.LobEGOSuit3IceShard;
 import software.bernie.geckolib.model.GeoModel;
 
 public class EGOS3IceShardM extends GeoModel<LobEGOSuit3IceShard> {

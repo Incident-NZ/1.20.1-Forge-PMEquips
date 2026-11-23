@@ -1,5 +1,6 @@
 package net.pm_equips.items;
 
+import java.util.List;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
@@ -14,8 +15,6 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.pm_equips.ItemInit;
 import net.pm_equips.energy.WeaponEnergyProvider;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.List;
 
 public class WingKCorpWeapon3 extends SwordItem {
     public static final int MAX_FE = 7500;

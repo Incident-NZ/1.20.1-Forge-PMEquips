@@ -1,24 +1,25 @@
 package net.pm_equips.items.materials;
 
-import net.minecraft.world.item.Items;
-import net.pm_equips.ItemInit;
-import net.pm_equips.PMEquipsMain;
+import java.util.function.Supplier;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
-
-import java.util.function.Supplier;
+import net.pm_equips.ItemInit;
+import net.pm_equips.PMEquipsMain;
 
 public enum ArmorEquips implements ArmorMaterial {
-    FINGER1_ARMOR1("finger1_armor1", 1000, new int[]{0, 0, 12, 0}, 0, SoundEvents.ARMOR_EQUIP_GENERIC, 12, 0, () -> Ingredient.of(Items.IRON_INGOT)),
-    FINGER1_ARMOR2("finger1_armor2", 2000, new int[]{0, 0, 15, 0}, 0, SoundEvents.ARMOR_EQUIP_GENERIC, 15, 0, () -> Ingredient.of(Items.IRON_INGOT)),
-    FINGER1_ARMOR3("finger1_armor3", 3000, new int[]{0, 0, 20, 0}, 0, SoundEvents.ARMOR_EQUIP_GENERIC, 20, 0, () -> Ingredient.of(Items.IRON_INGOT)),
-    FINGER2_ARMOR1("finger2_armor1", 1000, new int[]{0, 0, 15, 0}, 0, SoundEvents.ARMOR_EQUIP_GENERIC, 15, 0, () -> Ingredient.of(Items.IRON_INGOT)),
-    FINGER2_ARMOR2("finger2_armor2", 2000, new int[]{0, 0, 18, 0}, 0, SoundEvents.ARMOR_EQUIP_GENERIC, 18, 0, () -> Ingredient.of(Items.IRON_INGOT)),
-    FINGER2_ARMOR3("finger2_armor3", 3000, new int[]{0, 0, 20, 0}, 0, SoundEvents.ARMOR_EQUIP_GENERIC, 20, 0, () -> Ingredient.of(Items.IRON_INGOT)),
-    HEAD_ARBITER("head_arbiter", 0, new int[]{0, 0, 50, 0}, 0,
+    HEAD_EXECUTIONER("head_executioner", 0, new int[]{0, 0, 30, 0}, 0,
+            SoundEvents.ARMOR_EQUIP_GENERIC, 30, 1, () -> Ingredient.EMPTY),
+    FINGER1_ARMOR1("finger1_armor1", 1000, new int[]{0, 12, 0, 0}, 0, SoundEvents.ARMOR_EQUIP_GENERIC, 12, 0, () -> Ingredient.of(Items.IRON_INGOT)),
+    FINGER1_ARMOR2("finger1_armor2", 2000, new int[]{0, 15, 0, 0}, 0, SoundEvents.ARMOR_EQUIP_GENERIC, 15, 0, () -> Ingredient.of(Items.IRON_INGOT)),
+    FINGER1_ARMOR3("finger1_armor3", 3000, new int[]{0, 20, 0, 0}, 0, SoundEvents.ARMOR_EQUIP_GENERIC, 20, 0, () -> Ingredient.of(Items.IRON_INGOT)),
+    FINGER2_ARMOR1("finger2_armor1", 1000, new int[]{0, 15, 0, 0}, 0, SoundEvents.ARMOR_EQUIP_GENERIC, 15, 0, () -> Ingredient.of(Items.IRON_INGOT)),
+    FINGER2_ARMOR2("finger2_armor2", 2000, new int[]{0, 18, 0, 0}, 0, SoundEvents.ARMOR_EQUIP_GENERIC, 18, 0, () -> Ingredient.of(Items.IRON_INGOT)),
+    FINGER2_ARMOR3("finger2_armor3", 3000, new int[]{0, 20, 0, 0}, 0, SoundEvents.ARMOR_EQUIP_GENERIC, 20, 0, () -> Ingredient.of(Items.IRON_INGOT)),
+    HEAD_ARBITER("head_arbiter", 0, new int[]{0, 50, 0, 0}, 0,
             SoundEvents.ARMOR_EQUIP_GENERIC, 50.0f, 1.0f, () -> Ingredient.EMPTY),
 
     A5_TWILIGHT("s5_twilight", 4000, new int[]{0, 0, 40, 0}, 0,
@@ -174,6 +175,21 @@ public enum ArmorEquips implements ArmorMaterial {
     WCORP_ARMOR_L5("wcorp_armor_class5", 1000, new int[]{0, 0, 20, 0}, 0,
             SoundEvents.ARMOR_EQUIP_GENERIC, 15.0f, 0.5f, () -> Ingredient.of(ItemInit.WCORP_BATTERY.get())),
 
+    TCORP_ARMOR_L1("tcorp_armor_class1", 300, new int[]{0, 0, 12, 0}, 0,
+            SoundEvents.ARMOR_EQUIP_GENERIC, 4.0f, 0.1f, () -> Ingredient.of(ItemInit.TCORP_CLOCK.get())),
+
+    TCORP_ARMOR_L2("tcorp_armor_class2", 500, new int[]{0, 0, 14, 0}, 0,
+            SoundEvents.ARMOR_EQUIP_GENERIC, 8.0f, 0.2f, () -> Ingredient.of(ItemInit.TCORP_CLOCK.get())),
+
+    TCORP_ARMOR_L3("tcorp_armor_class3", 700, new int[]{0, 0, 16, 0}, 0,
+            SoundEvents.ARMOR_EQUIP_GENERIC, 10.0f, 0.3f, () -> Ingredient.of(ItemInit.TCORP_CLOCK.get())),
+
+    TCORP_ARMOR_L4("tcorp_armor_class4", 850, new int[]{0, 0, 18, 0}, 0,
+            SoundEvents.ARMOR_EQUIP_GENERIC, 12.0f, 0.4f, () -> Ingredient.of(ItemInit.TCORP_CLOCK.get())),
+
+    TCORP_ARMOR_L5("tcorp_armor_class5", 1000, new int[]{0, 0, 20, 0}, 0,
+            SoundEvents.ARMOR_EQUIP_GENERIC, 15.0f, 0.5f, () -> Ingredient.of(ItemInit.TCORP_CLOCK.get())),
+
     KCORP_ARMOR_L1("kcorp_armor_class1", 300, new int[]{0, 0, 12, 0}, 0,
             SoundEvents.ARMOR_EQUIP_GENERIC, 4.0f, 0.1f, () -> Ingredient.of(ItemInit.KCORP_AMPOULE.get())),
 
@@ -203,6 +219,9 @@ public enum ArmorEquips implements ArmorMaterial {
 
     RCORP_4TH_RABBIT_ARMOR_L5("rcorp_4th_rabbit_armor_class5", 1000, new int[]{0, 0, 20, 0}, 0,
             SoundEvents.ARMOR_EQUIP_GENERIC, 15.0f, 0.5f, () -> Ingredient.of(ItemInit.RCORP_BATTERY.get())),
+
+    RCORP_ARMOR3("rcorp_armor_nikolai", 4000, new int[]{0, 0, 30, 0}, 0,
+            SoundEvents.ARMOR_EQUIP_GENERIC, 20.0f, 1.0f, () -> Ingredient.of(ItemInit.RCORP_BATTERY.get())),
 
     HCORP_MAO_ARMOR_L1("hcorp_mao_armor_class1", 300, new int[]{0, 0, 12, 0}, 0,
             SoundEvents.ARMOR_EQUIP_GENERIC, 4.0f, 0.1f, () -> Ingredient.of(ItemInit.HCORP_BOLUS_MAO.get())),
@@ -290,7 +309,12 @@ public enum ArmorEquips implements ArmorMaterial {
 
     @Override
     public int getDefenseForType(ArmorItem.Type ptype) {
-        return this.protectionAmounts[ptype.ordinal()];
+        return switch (ptype) {
+            case BOOTS -> protectionAmounts[0];
+            case LEGGINGS -> protectionAmounts[1] + protectionAmounts[2];
+            case CHESTPLATE -> protectionAmounts[2];
+            case HELMET -> protectionAmounts[3];
+        };
     }
 
     @Override

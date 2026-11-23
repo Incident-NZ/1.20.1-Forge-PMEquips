@@ -7,4 +7,3 @@ public class ItemAmmoLogicHG extends Item {
         super(properties);
     }
 }
-

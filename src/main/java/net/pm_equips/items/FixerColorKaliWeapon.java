@@ -5,6 +5,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -23,7 +24,7 @@ public class FixerColorKaliWeapon extends SwordItem {
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, Level level, net.minecraft.world.entity.Entity entity, int slot, boolean selected) {
+    public void inventoryTick(ItemStack stack, Level level, Entity entity, int slot, boolean selected) {
         if (!(entity instanceof Player player)) return;
 
         ItemStack main = player.getMainHandItem();
@@ -110,5 +111,3 @@ public class FixerColorKaliWeapon extends SwordItem {
         }
     }
 }
-
-

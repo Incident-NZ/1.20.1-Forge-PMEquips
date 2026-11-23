@@ -1,5 +1,7 @@
 package net.pm_equips.entity;
 
+import java.util.HashSet;
+import java.util.Set;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.world.entity.Entity;
@@ -18,9 +20,6 @@ import net.minecraftforge.network.NetworkHooks;
 import net.pm_equips.EntityInit;
 import net.pm_equips.ItemInit;
 import net.pm_equips.config.CommonConfig;
-
-import java.util.HashSet;
-import java.util.Set;
 
 public class EGOHeavenP extends ThrowableItemProjectile {
     private static final float DAMAGE = 100.0F;

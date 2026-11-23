@@ -1,5 +1,6 @@
 package net.pm_equips.items;
 
+import java.util.List;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -8,15 +9,13 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.pm_equips.ItemInit;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.pm_equips.client.screen.TooltipLines;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.List;
 
 public class LobEGOWeapon3MK4 extends SwordItem {
 

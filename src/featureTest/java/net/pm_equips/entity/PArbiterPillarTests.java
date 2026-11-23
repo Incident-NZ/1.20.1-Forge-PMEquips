@@ -70,7 +70,7 @@ public class PArbiterPillarTests {
                 new Vec3(0, 1, 0), new Vec3(0, -1, 0), new Vec3(0, 0, 1),
                 new Vec3(0, 0, -1), new Vec3(1, 1, 1).normalize()}) {
             // Forge's test world has terrain above the structure; fly above its surface.
-            PArbiterPillar pillar = pillar(h, new Vec3(7, 160, 7), direction);
+            PArbiterPillar pillar = pillar(h, new Vec3(7, 400, 7), direction);
             Vec3 start = pillar.position();
             for (int i = 0; i < 4; i++) pillar.tick();
             h.assertTrue(pillar.position().distanceTo(start.add(direction.scale(4))) < 1.0E-5,
@@ -86,7 +86,7 @@ public class PArbiterPillarTests {
 
     @GameTest(template = "npc_empty", timeoutTicks = 60)
     public static void rangeIsExactly128AndSurvivesSaving(GameTestHelper h) {
-        PArbiterPillar original = pillar(h, new Vec3(7, 160, 7), new Vec3(0, 10, 0));
+        PArbiterPillar original = pillar(h, new Vec3(7, 400, 7), new Vec3(0, 10, 0));
         Vec3 start = original.position();
         for (int i = 0; i < 12; i++) original.tick();
         h.assertTrue(!original.isRemoved() && Math.abs(original.getY() - start.y - 120) < .00001,

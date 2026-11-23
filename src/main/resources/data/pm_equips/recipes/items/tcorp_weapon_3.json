@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABC"
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:copper_ingot"
+    },
+    "B": {
+      "item": "pm_equips:item_tcorp_clock"
+    },
+    "C": {
+      "item": "pm_equips:item_blade_gear"
+    }
+  },
+  "result": {
+    "item": "pm_equips:wing_tcorp_weapon_3"
+  }
+}

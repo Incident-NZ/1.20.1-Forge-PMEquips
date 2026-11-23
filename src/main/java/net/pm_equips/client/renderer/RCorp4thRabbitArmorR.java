@@ -1,9 +1,9 @@
 package net.pm_equips.client.renderer;
 
 import net.pm_equips.client.models.RCorp4thRabbitArmorM;
-import net.pm_equips.items.WingRCorp4thRabbitArmor;
+import net.pm_equips.items.WingRCorpArmor1;
 
-public class RCorp4thRabbitArmorR extends FullBodyArmorRenderer<WingRCorp4thRabbitArmor> {
+public class RCorp4thRabbitArmorR extends FullBodyArmorRenderer<WingRCorpArmor1> {
     public RCorp4thRabbitArmorR() {
         super(new RCorp4thRabbitArmorM());
     }

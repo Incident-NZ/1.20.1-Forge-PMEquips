@@ -3,9 +3,7 @@
   "minVersion": "0.8",
   "package": "net.pm_equips.mixin",
   "compatibilityLevel": "JAVA_17",
-  "mixins": [
-    "GeckoLib_Mixin"
-  ],
+  "mixins": [],
   "client": [],
   "server": [],
   "injectors": {

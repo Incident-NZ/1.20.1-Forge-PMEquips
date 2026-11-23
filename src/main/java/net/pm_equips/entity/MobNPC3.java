@@ -50,6 +50,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ProjectileWeaponItem;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DoorBlock;
@@ -60,32 +62,30 @@ import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.OnDatapackSyncEvent;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.living.LootingLevelEvent;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.living.LootingLevelEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.event.server.ServerStoppedEvent;
-import net.pm_equips.network.ForgeFeaturePackets;
+import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.loading.FMLPaths;
 import net.pm_equips.EntityInit;
 import net.pm_equips.PMEquipsMain;
-import net.pm_equips.util.FingerEquipment;
 import net.pm_equips.config.CommonConfig;
-import net.pm_equips.items.LobEGOWeapon4Aroma;
 import net.pm_equips.items.LobEGOWeapon4Heaven;
 import net.pm_equips.items.LobEGOWeapon5Star;
 import net.pm_equips.items.LobEGOWeapon5WhiteNight;
-import net.pm_equips.items.WingRCorp4thRabbitWeapon1;
+import net.pm_equips.items.WingRCorpWeapon1;
+import net.pm_equips.items.WingRCorpWeapon3;
+import net.pm_equips.network.ForgeFeaturePackets;
+import net.pm_equips.util.FingerEquipment;
 import net.pm_equips.util.ItemStackData;
 
 /** Shared NPC services; no client class is loaded by a dedicated server. */
@@ -281,6 +281,7 @@ public final class MobNPC3 {
         user.setItemSlot(EquipmentSlot.MAINHAND, npc.getMainHandItem());
         user.setItemSlot(EquipmentSlot.OFFHAND, npc.getOffhandItem());
         for (EquipmentSlot slot : List.of(EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET)) user.setItemSlot(slot, npc.getItemBySlot(slot).copy());
+        if (weapon.getItem() instanceof WingRCorpWeapon3) user.setItemSlot(EquipmentSlot.LEGS, npc.getItemBySlot(EquipmentSlot.LEGS));
         user.getPersistentData().putUUID("PMENPC", npc.getUUID());
         Vec3 delta = target.getEyePosition().subtract(npc.getEyePosition()).normalize();
         Vec3 eye = npc.getEyePosition().add(delta.scale(1.25));
@@ -294,12 +295,9 @@ public final class MobNPC3 {
                         .filter(candidate -> ranged.getAllSupportedProjectiles().test(new ItemStack(candidate))).findFirst().orElse(Items.ARROW)) : Items.ARROW;
         ItemStack ammo = new ItemStack(ammoItem, Math.min(64, ammoItem.getMaxStackSize()));
         user.getInventory().setItem(1, ammo);
-        CompoundTag previousData = ItemStackData.copy(weapon);
-        if (weapon.getItem() instanceof WingRCorp4thRabbitWeapon1) ItemStackData.update(weapon, tag -> {
+        CompoundTag previousData = weapon.getItem() instanceof WingRCorpWeapon1 ? ItemStackData.copy(weapon) : null;
+        if (weapon.getItem() instanceof WingRCorpWeapon1) ItemStackData.update(weapon, tag -> {
             tag.putInt("Ammo", 50); tag.putInt("Reload", 0);
-        });
-        if (weapon.getItem() instanceof LobEGOWeapon4Aroma) ItemStackData.update(weapon, tag -> {
-            tag.put("LoadedArrow", new ItemStack(Items.ARROW).save(new CompoundTag())); tag.putInt("Reload", 0);
         });
         MobNPC1 previous = activeShooter;
         activeShooter = npc;
@@ -324,15 +322,39 @@ public final class MobNPC3 {
             npc.swing(hand);
         } finally {
             activeShooter = previous;
-            if (weapon.getItem() instanceof WingRCorp4thRabbitWeapon1 || weapon.getItem() instanceof LobEGOWeapon4Aroma) {
+            if (weapon.getItem() instanceof WingRCorpWeapon1) {
                 ItemStackData.update(weapon, tag -> {
-                    for (String key : List.of("Ammo", "LoadedArrow", "Reload")) {
+                    for (String key : List.of("Ammo", "Reload")) {
                         if (previousData.contains(key)) tag.put(key, previousData.get(key).copy()); else tag.remove(key);
                     }
                 });
             }
             // Clear temporary supplies without dropping them, including when a modded weapon throws.
             user.getInventory().clearContent();
+        }
+    }
+
+    public static void tickRCorpLaser(MobNPC1 npc) {
+        if (!(npc.level() instanceof ServerLevel)) return;
+        for (InteractionHand hand : InteractionHand.values()) {
+            FakePlayer user = npc.getWeaponUser(hand);
+            ItemStack stack = npc.getItemInHand(hand);
+            if (user == null || !(stack.getItem() instanceof WingRCorpWeapon3) || !WingRCorpWeapon3.isFiring(stack)) continue;
+            user.setItemSlot(EquipmentSlot.MAINHAND, npc.getMainHandItem());
+            user.setItemSlot(EquipmentSlot.OFFHAND, npc.getOffhandItem());
+            user.setItemSlot(EquipmentSlot.LEGS, npc.getItemBySlot(EquipmentSlot.LEGS));
+            LivingEntity target = npc.getTarget();
+            if (target == null || !target.isAlive() || !npc.canAttack(target)) {
+                WingRCorpWeapon3.cancelLaser(user, stack); continue;
+            }
+            Vec3 direction = target.getEyePosition().subtract(npc.getEyePosition()).normalize();
+            Vec3 eye = npc.getEyePosition().add(direction.scale(1.25));
+            user.setPos(eye.x, eye.y - user.getEyeHeight(), eye.z);
+            user.setYRot((float) (Math.atan2(direction.z, direction.x) * 180 / Math.PI) - 90);
+            user.setXRot((float) (-Math.asin(direction.y) * 180 / Math.PI));
+            MobNPC1 previous = activeShooter; activeShooter = npc;
+            try { WingRCorpWeapon3.tickLaser(user, stack); }
+            finally { activeShooter = previous; }
         }
     }
 

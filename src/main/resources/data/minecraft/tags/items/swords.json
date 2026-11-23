@@ -1,9 +1,6 @@
 {
   "replace": false,
   "values": [
-    "pm_equips:finger2_weapon1",
-    "pm_equips:finger2_weapon2",
-    "pm_equips:finger2_weapon3",
     "pm_equips:lobego5_weapon_twilight",
     "pm_equips:lobego5_weapon_whitenight",
     "pm_equips:lobego5_weapon_mimicry",
@@ -53,9 +50,15 @@
     "pm_equips:wing_hcorp_mao_weapon",
     "pm_equips:wing_hcorp_si_weapon",
     "pm_equips:wing_hcorp_you_weapon",
+    "pm_equips:finger2_weapon1",
+    "pm_equips:finger2_weapon2",
+    "pm_equips:finger2_weapon3",
     "pm_equips:lca_khopesh",
     "pm_equips:lccb_baton",
     "pm_equips:lce_ego_dimension_shredder_weapon",
-    "pm_equips:head_claw"
+    "pm_equips:wing_tcorp_weapon_1",
+    "pm_equips:wing_tcorp_weapon_2",
+    "pm_equips:wing_tcorp_weapon_4",
+    "pm_equips:wing_rcorp_weapon4"
   ]
 }

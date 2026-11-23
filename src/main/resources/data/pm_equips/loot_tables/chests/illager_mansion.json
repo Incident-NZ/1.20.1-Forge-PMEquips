@@ -257,6 +257,36 @@
           "type": "minecraft:item",
           "name": "pm_equips:item_enkephalin",
           "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:wing_rcorp_armor2_l1",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:wing_rcorp_armor2_l2",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:wing_rcorp_armor2_l3",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:wing_rcorp_armor2_l4",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:wing_rcorp_armor2_l5",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "pm_equips:wing_rcorp_weapon3",
+          "weight": 1
         }
       ]
     }

@@ -1,7 +1,7 @@
 package net.pm_equips.client.models;
 
-import net.pm_equips.items.LobEGOSuit5Twilight;
 import net.minecraft.resources.ResourceLocation;
+import net.pm_equips.items.LobEGOSuit5Twilight;
 import software.bernie.geckolib.model.GeoModel;
 
 public class EGOS5TwilightM extends GeoModel<LobEGOSuit5Twilight> {

@@ -6,7 +6,7 @@
     }
   ],
   "result": {
-    "item": "pm_equips:item_enkephalin",
-    "count": 3
+    "count": 3,
+    "item": "pm_equips:item_enkephalin"
   }
 }

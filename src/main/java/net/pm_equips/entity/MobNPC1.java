@@ -42,23 +42,25 @@ import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ProjectileWeaponItem;
-import net.minecraft.world.item.AxeItem;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
-import net.pm_equips.items.Finger2Weapon1;
-import net.pm_equips.util.FingerEquipment;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.TridentItem;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.FakePlayer;
 import net.pm_equips.EntityInit;
+import net.pm_equips.items.Finger2Weapon1;
+import net.pm_equips.items.HeadExecutioner;
+import net.pm_equips.items.WingRCorpWeapon4;
+import net.pm_equips.util.FingerEquipment;
 
 /** Server-authoritative companion. Rendering and shared services live in MobNPC2/3. */
 public class MobNPC1 extends TamableAnimal implements RangedAttackMob {
@@ -216,6 +218,9 @@ public class MobNPC1 extends TamableAnimal implements RangedAttackMob {
         InteractionHand previous = attackingHand;
         attackingHand = hand;
         try {
+            if (HeadExecutioner.unarmed(this) && !HeadExecutioner.equipped(this).isEmpty()) {
+                living.hurtTime = 0; living.invulnerableTime = 0;
+            }
             boolean hit = strikeWithWeapon(living, getItemInHand(hand));
             ItemStack weapon = getItemInHand(hand);
             if (hit && !level().isClientSide && !weapon.isEmpty()) {
@@ -387,6 +392,8 @@ public class MobNPC1 extends TamableAnimal implements RangedAttackMob {
         }
         if (tickCount % 200 == getId() % 200 || getSkinName().isEmpty()) MobNPC3.ensureSkin(this);
         if (getTarget() != null && (!getTarget().isAlive() || !canAttack(getTarget()))) setTarget(null);
+        WingRCorpWeapon4.prioritizeTarget(this);
+        MobNPC3.tickRCorpLaser(this);
         if (isResting() && (!level().isNight() || isInWaterOrBubble() || getTarget() != null || (tickCount % 20 == 0 && !safeToRest()))) wakeUp();
         if (tickCount >= restSearchAt && !isResting() && wantsToRest()) {
             restSearchAt = tickCount + 200 + getRandom().nextInt(40);

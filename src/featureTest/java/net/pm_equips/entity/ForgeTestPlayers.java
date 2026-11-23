@@ -10,7 +10,7 @@ import net.minecraft.world.level.GameType;
 final class ForgeTestPlayers {
     private ForgeTestPlayers() {}
     static Player makeMockPlayer(GameTestHelper helper,GameType mode){
-        return new Player(helper.getLevel(),BlockPos.ZERO,0,new GameProfile(UUID.randomUUID(),"test-mock-player")){
+        return new Player(helper.getLevel(),BlockPos.ZERO,0,new GameProfile(UUID.randomUUID(),"test-" + UUID.randomUUID().toString().substring(0,8))){
             @Override public boolean isSpectator(){return mode==GameType.SPECTATOR;}
             @Override public boolean isCreative(){return mode==GameType.CREATIVE;}
         };

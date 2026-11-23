@@ -7,4 +7,3 @@ public class ItemAmmoLogicSG extends Item {
         super(properties);
     }
 }
-

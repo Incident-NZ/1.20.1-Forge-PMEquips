@@ -1,5 +1,8 @@
 package net.pm_equips.network;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Supplier;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -9,10 +12,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.pm_equips.compat.JEIEGORecipeSync;
 import net.pm_equips.recipe.LobotomyEGORecipe;
 import net.pm_equips.recipe.LobotomyEGORecipeManager;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Supplier;
 
 public class SyncEGORecipesPacket {
 

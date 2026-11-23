@@ -2,10 +2,10 @@ package net.pm_equips.client.renderer;
 
 import net.minecraft.world.entity.EquipmentSlot;
 import net.pm_equips.client.models.HeadArbiterArmorM;
-import net.pm_equips.items.HeadArbiterArmor;
+import net.pm_equips.items.HeadArbiter;
 import software.bernie.geckolib.renderer.GeoArmorRenderer;
 
-public class HeadArbiterArmorR extends GeoArmorRenderer<HeadArbiterArmor> {
+public class HeadArbiterArmorR extends GeoArmorRenderer<HeadArbiter> {
     public HeadArbiterArmorR() {
         super(new HeadArbiterArmorM());
     }
