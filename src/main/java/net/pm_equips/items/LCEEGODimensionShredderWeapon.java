@@ -2,7 +2,6 @@ package net.pm_equips.items;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -21,7 +20,6 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.pm_equips.ItemInit;
@@ -42,6 +40,7 @@ public class LCEEGODimensionShredderWeapon extends SwordItem {
                 && player.getItemBySlot(EquipmentSlot.LEGS).getItem() instanceof LCEEGODimensionShredderArmor;
     }
 
+    // Vanilla block/entity interactions take priority; only unhandled clicks reach item use.
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
@@ -111,32 +110,6 @@ public class LCEEGODimensionShredderWeapon extends SwordItem {
         if (!canStrike(player, target)) return;
         if (target instanceof LivingEntity living) living.invulnerableTime = 0;
         target.hurt(player.damageSources().playerAttack(player), damage);
-    }
-
-    // Handle interactable targets before their normal interaction consumes the right click.
-    @SubscribeEvent public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
-        InteractionResult result = interact(event);
-        if (result == InteractionResult.PASS) return;
-        event.setCancellationResult(result);
-        event.setCanceled(true);
-    }
-    @SubscribeEvent public static void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
-        InteractionResult result = interact(event);
-        if (result == InteractionResult.PASS) return;
-        event.setCancellationResult(result);
-        event.setCanceled(true);
-    }
-    @SubscribeEvent public static void onEntityInteractSpecific(PlayerInteractEvent.EntityInteractSpecific event) {
-        InteractionResult result = interact(event);
-        if (result == InteractionResult.PASS) return;
-        event.setCancellationResult(result);
-        event.setCanceled(true);
-    }
-    private static InteractionResult interact(PlayerInteractEvent event) {
-        Player player = event.getEntity();
-        if (event.getHand() != InteractionHand.MAIN_HAND || !hasLoadout(player)) return InteractionResult.PASS;
-        InteractionResult result = player.getMainHandItem().getItem().use(player.level(), player, event.getHand()).getResult();
-        return result == InteractionResult.CONSUME ? InteractionResult.SUCCESS : result;
     }
 
     @SubscribeEvent public static void onFall(LivingFallEvent event) {

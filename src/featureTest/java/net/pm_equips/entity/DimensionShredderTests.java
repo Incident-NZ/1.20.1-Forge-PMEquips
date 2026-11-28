@@ -20,11 +20,17 @@ import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DoorBlock;
+import net.minecraft.world.level.block.LeverBlock;
+import net.minecraft.world.level.block.state.properties.AttachFace;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.MinecraftForge;
@@ -189,25 +195,82 @@ public class DimensionShredderTests {
         h.succeed();
     }
 
+    @GameTest(batch = "dimension_shredder_regression", template = "npc_empty", timeoutTicks = 80)
+    public static void normalBlockActionsWinEvenWhileTheSkillIsOnCooldown(GameTestHelper h) {
+        List<EmbeddedChannel> channels = new ArrayList<>();
+        ServerPlayer player = realPlayer(h, "shredder-blocks", channels);
+        try {
+            clearArena(h, 180); equip(player);
+            Vec3 start = h.absoluteVec(new Vec3(2.5, 180, 5.5));
+            player.teleportTo(start.x, start.y, start.z); player.setYRot(-90); player.setXRot(0);
+            BlockPos pos = h.absolutePos(new BlockPos(4, 180, 5));
+            BlockHitResult hit = new BlockHitResult(Vec3.atCenterOf(pos), Direction.WEST, pos, false);
+            h.getLevel().setBlock(pos.below(), Blocks.STONE.defaultBlockState(), 3);
+            h.getLevel().setBlock(pos, Blocks.LEVER.defaultBlockState().setValue(LeverBlock.FACE, AttachFace.FLOOR), 3);
+            InteractionResult result = player.gameMode.useItemOn(player, h.getLevel(), player.getMainHandItem(), InteractionHand.MAIN_HAND, hit);
+            h.assertTrue(result.consumesAction() && h.getLevel().getBlockState(pos).getValue(LeverBlock.POWERED), "A normal lever click toggles power");
+            h.assertTrue(player.position().equals(start) && !player.getCooldowns().isOnCooldown(player.getMainHandItem().getItem()),
+                    "A handled block interaction neither teleports nor starts the skill cooldown");
+
+            player.getCooldowns().addCooldown(player.getMainHandItem().getItem(), 60);
+            player.gameMode.useItemOn(player, h.getLevel(), player.getMainHandItem(), InteractionHand.MAIN_HAND, hit);
+            h.assertTrue(!h.getLevel().getBlockState(pos).getValue(LeverBlock.POWERED), "The skill cooldown does not block a second lever click");
+            h.getLevel().setBlock(pos, Blocks.OAK_DOOR.defaultBlockState().setValue(DoorBlock.HALF, DoubleBlockHalf.LOWER), 2);
+            h.getLevel().setBlock(pos.above(), Blocks.OAK_DOOR.defaultBlockState().setValue(DoorBlock.HALF, DoubleBlockHalf.UPPER), 3);
+            result = player.gameMode.useItemOn(player, h.getLevel(), player.getMainHandItem(), InteractionHand.MAIN_HAND, hit);
+            h.assertTrue(result.consumesAction() && h.getLevel().getBlockState(pos).getValue(DoorBlock.OPEN), "A door opens while the full set and cooldown are active");
+            h.getLevel().setBlock(pos.above(), Blocks.AIR.defaultBlockState(), 3);
+            h.getLevel().setBlock(pos, Blocks.CHEST.defaultBlockState(), 3);
+            result = player.gameMode.useItemOn(player, h.getLevel(), player.getMainHandItem(), InteractionHand.MAIN_HAND, hit);
+            h.assertTrue(result.consumesAction() && player.containerMenu != player.inventoryMenu, "The actual server block-use path opens a chest menu");
+            h.assertTrue(player.position().equals(start), "Opening menus and doors leaves the wearer in place");
+            player.closeContainer(); ready(player);
+
+            h.getLevel().setBlock(pos, Blocks.STONE.defaultBlockState(), 3);
+            h.getLevel().setBlock(pos.above(), Blocks.STONE.defaultBlockState(), 3);
+            h.getLevel().setBlock(pos.above(2), Blocks.STONE.defaultBlockState(), 3);
+            result = player.gameMode.useItemOn(player, h.getLevel(), player.getMainHandItem(), InteractionHand.MAIN_HAND, hit);
+            h.assertTrue(result == InteractionResult.PASS && player.position().equals(start), "An inert block leaves the click unhandled");
+            result = player.gameMode.useItem(player, h.getLevel(), player.getMainHandItem(), InteractionHand.MAIN_HAND);
+            h.assertTrue(result.consumesAction() && player.getX() > start.x && player.getBoundingBox().maxX < pos.getX(),
+                    "The ordinary item-use fallback still warps up to a solid block");
+        } finally {
+            player.closeContainer(); player.discard();
+            for (EmbeddedChannel channel : channels) channel.finishAndReleaseAll();
+        }
+        h.succeed();
+    }
+
     @GameTest(batch = "dimension_shredder_regression", template = "npc_empty", timeoutTicks = 60)
-    public static void entityAndBlockInteractionEventsActivateTheSkillBeforeVanilla(GameTestHelper h) {
-        Player player = player(h, 180); Villager target = target(h, 8, 180, 5);
-        PlayerInteractEvent.EntityInteractSpecific specific = new PlayerInteractEvent.EntityInteractSpecific(player, InteractionHand.MAIN_HAND, target, Vec3.ZERO);
-        MinecraftForge.EVENT_BUS.post(specific);
-        h.assertTrue(specific.isCanceled() && specific.getCancellationResult() == InteractionResult.SUCCESS && target.getHealth() == 87,
-                "Interact-at consumes the click and attacks instead of opening an entity interaction");
-        ready(player);
-        PlayerInteractEvent.EntityInteract general = new PlayerInteractEvent.EntityInteract(player, InteractionHand.MAIN_HAND, target);
-        MinecraftForge.EVENT_BUS.post(general);
-        h.assertTrue(general.isCanceled() && target.getHealth() == 74, "The general entity interaction also activates the skill");
-        target.discard(); player.setPos(h.absoluteVec(new Vec3(2.5, 180, 5.5))); ready(player);
-        BlockPos wall = h.absolutePos(new BlockPos(7, 180, 5));
-        for (int y = 0; y <= 3; y++) h.getLevel().setBlock(wall.above(y), Blocks.STONE.defaultBlockState(), 2);
-        PlayerInteractEvent.RightClickBlock block = new PlayerInteractEvent.RightClickBlock(player, InteractionHand.MAIN_HAND, wall,
-                new BlockHitResult(Vec3.atCenterOf(wall), Direction.WEST, wall, false));
-        MinecraftForge.EVENT_BUS.post(block);
-        h.assertTrue(block.isCanceled() && block.getCancellationResult() == InteractionResult.SUCCESS
-                && player.getX() > h.absoluteVec(new Vec3(2.5, 180, 5.5)).x, "A block right click activates forward warp");
+    public static void normalEntityInteractionOpensTradingWithoutTeleporting(GameTestHelper h) {
+        Player player = player(h, 175); Villager villager = target(h, 4, 175, 5);
+        villager.setVillagerData(villager.getVillagerData().setProfession(VillagerProfession.FARMER));
+        h.assertTrue(!villager.getOffers().isEmpty(), "The interaction fixture has real trades");
+        Vec3 start = player.position();
+        PlayerInteractEvent.EntityInteractSpecific event = new PlayerInteractEvent.EntityInteractSpecific(player, InteractionHand.MAIN_HAND, villager, Vec3.ZERO);
+        MinecraftForge.EVENT_BUS.post(event);
+        h.assertTrue(!event.isCanceled() && player.position().equals(start) && villager.getHealth() == 100,
+                "The interact-at event is left to vanilla without a skill activation");
+        InteractionResult result = player.interactOn(villager, InteractionHand.MAIN_HAND);
+        h.assertTrue(result.consumesAction() && villager.getTradingPlayer() == player, "Normal entity interaction starts villager trading");
+        h.assertTrue(player.position().equals(start) && villager.getHealth() == 100
+                && !player.getCooldowns().isOnCooldown(player.getMainHandItem().getItem()), "Trading does not teleport, hurt the villager or spend the skill cooldown");
+        villager.setTradingPlayer(null); h.succeed();
+    }
+
+    @GameTest(batch = "dimension_shredder_regression", template = "npc_empty", timeoutTicks = 60)
+    public static void unhandledEntityInteractionStillAllowsTheTargetedSkill(GameTestHelper h) {
+        Player player = player(h, 185); Zombie zombie = h.spawn(EntityType.ZOMBIE, 8, 185, 5);
+        zombie.setNoAi(true); zombie.setNoGravity(true);
+        for (EquipmentSlot slot : EquipmentSlot.values()) if (slot.isArmor()) zombie.setItemSlot(slot, ItemStack.EMPTY);
+        zombie.getAttribute(Attributes.ARMOR).setBaseValue(0);
+        zombie.getAttribute(Attributes.MAX_HEALTH).setBaseValue(100); zombie.setHealth(100);
+        Vec3 start = player.position();
+        h.assertTrue(player.interactOn(zombie, InteractionHand.MAIN_HAND) == InteractionResult.PASS && player.position().equals(start),
+                "An entity with no ordinary sword interaction leaves the click unhandled");
+        h.assertTrue(use(player).consumesAction() && zombie.getHealth() == 87
+                && player.position().distanceTo(zombie.position().add(-2, 0, 0)) < .001,
+                "The item-use fallback retains the targeted teleport and thirteen-damage strike");
         h.succeed();
     }
 
